@@ -1,4 +1,4 @@
-package com.patiun.libraryspring.entity;
+package com.patiun.libraryspring.book;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,8 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
-@Table(name = "publisher")
-public class Publisher {
+@Table(name = "author")
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,10 +19,10 @@ public class Publisher {
     @Column(name = "name")
     private String name;
 
-    protected Publisher() {
+    protected Author() {
     }
 
-    public Publisher(Integer id, String name) {
+    public Author(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -52,12 +52,12 @@ public class Publisher {
             return false;
         }
 
-        Publisher publisher = (Publisher) o;
+        Author author = (Author) o;
 
-        if (!Objects.equals(id, publisher.id)) {
+        if (!Objects.equals(id, author.id)) {
             return false;
         }
-        return Objects.equals(name, publisher.name);
+        return Objects.equals(name, author.name);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class Publisher {
 
     @Override
     public String toString() {
-        return "Publisher{" +
+        return "Author{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

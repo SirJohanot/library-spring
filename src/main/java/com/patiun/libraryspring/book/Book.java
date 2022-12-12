@@ -1,4 +1,4 @@
-package com.patiun.libraryspring.entity;
+package com.patiun.libraryspring.book;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;

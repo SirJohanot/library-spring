@@ -1,4 +1,4 @@
-package com.patiun.libraryspring.entity;
+package com.patiun.libraryspring.book;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,8 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
-@Table(name = "genre")
-public class Genre {
+@Table(name = "publisher")
+public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,10 +19,10 @@ public class Genre {
     @Column(name = "name")
     private String name;
 
-    protected Genre() {
+    protected Publisher() {
     }
 
-    public Genre(Integer id, String name) {
+    public Publisher(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -52,12 +52,12 @@ public class Genre {
             return false;
         }
 
-        Genre genre = (Genre) o;
+        Publisher publisher = (Publisher) o;
 
-        if (!Objects.equals(id, genre.id)) {
+        if (!Objects.equals(id, publisher.id)) {
             return false;
         }
-        return Objects.equals(name, genre.name);
+        return Objects.equals(name, publisher.name);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class Genre {
 
     @Override
     public String toString() {
-        return "Genre{" +
+        return "Publisher{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

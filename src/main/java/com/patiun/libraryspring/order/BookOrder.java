@@ -1,5 +1,7 @@
-package com.patiun.libraryspring.entity;
+package com.patiun.libraryspring.order;
 
+import com.patiun.libraryspring.book.Book;
+import com.patiun.libraryspring.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

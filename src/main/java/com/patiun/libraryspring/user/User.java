@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user")
+@Table(name = "'user'")
 public class User implements UserDetails {
 
     @Id
@@ -21,8 +21,8 @@ public class User implements UserDetails {
 
     @NotNull
     @NotEmpty
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
 
     @NotNull
     @NotEmpty
@@ -53,9 +53,9 @@ public class User implements UserDetails {
     protected User() {
     }
 
-    public User(Integer id, String name, String lastName, String login, String password, Boolean isBlocked, UserRole role) {
+    public User(Integer id, String firstName, String lastName, String login, String password, Boolean isBlocked, UserRole role) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.password = password;
@@ -71,12 +71,12 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firstName = name;
     }
 
     public String getLastName() {
@@ -164,7 +164,7 @@ public class User implements UserDetails {
         if (!Objects.equals(id, user.id)) {
             return false;
         }
-        if (!Objects.equals(name, user.name)) {
+        if (!Objects.equals(firstName, user.firstName)) {
             return false;
         }
         if (!Objects.equals(lastName, user.lastName)) {
@@ -185,7 +185,7 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
@@ -198,7 +198,7 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +

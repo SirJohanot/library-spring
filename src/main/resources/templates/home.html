@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title th:text="#{mainPage.title}">Home | Library</title>
+    <div th:replace="fragments.html :: head" th:remove="tag"></div>
+</head>
+<body>
+<header th:replace="fragments.html :: header">
+</header>
+<section id="main-content">
+    <div id="main-content-centered-element">
+        <div class="container round-bordered-subject main-page-message">
+            <h1 th:text="#{mainPage.greetingsMessage}, ${#authentication.getPrincipal().getDisplayName()}">Greetings,
+                user</h1>
+        </div>
+    </div>
+</section>
+</body>
+</html>

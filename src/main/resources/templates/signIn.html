@@ -1,35 +1,18 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Sign In | Library</title>
-    <link rel="stylesheet" href="static/styles/style.css"/>
-    <meta name="viewport" content="width=device-width">
+    <title th:text="#{authorisation.signInLocale} + ' | ' + #{general.appName}">Sign in | Library</title>
+    <div th:replace="fragments.html :: head" th:remove="tag"></div>
 </head>
 <body>
-<header>
-    <div class="container">
-        <img src="static/resources/white_book_symbol.png" alt="Book symbol">
-        <h1>Library</h1>
-        <h1 class="right-header-buttons">
-            <form method="post" action="controller?command=languageChange" id="language-change">
-                <button type="button">
-                    <img src="static/resources/white_globe_symbol.png" alt="Globe symbol">
-                </button>
-                <div class="dropdown-content">
-                    <button type="submit" name="locale" value="en_US">${en}</button>
-                    <button type="submit" name="locale" value="ru_RU">${ru}</button>
-                    <button type="submit" name="locale" value="bel_BEL">${bel}</button>
-                </div>
-            </form>
-        </h1>
-    </div>
+<header th:replace="fragments.html :: header">
 </header>
 <section id="main-content">
-    <form class="login-form round-bordered-subject" method="post" action="controller" autocomplete="on">
-        <input type="text" name="login" placeholder="Login"/>
-        <input type="password" name="password" placeholder="Password"/>
-        <button type="submit" name="command" value="signIn">Sign In</button>
-        <button type="submit" name="command" value="signUpPage">Sign Up</button>
+    <form class="login-form round-bordered-subject" method="post" action="sign-in" autocomplete="on">
+        <input type="text" name="login" th:placeholder="#{authorisation.loginLocale}" placeholder="Login"/>
+        <input type="password" name="password" th:placeholder="#{authorisation.passwordLocale}" placeholder="Password"/>
+        <button type="submit" th:text="#{authorisation.signInLocale}">Sign in</button>
+        <a href="sign-up-page" th:text="#{userCreation.signUp}">Sign up</a>
         <!--        <div class="error-message">${requestScope.errorMessage}</div>-->
     </form>
 </section>

@@ -2,10 +2,10 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title th:text="#{authorisation.signInLocale} + ' | ' + #{general.appName}">Sign in | Library</title>
-    <div th:replace="fragments.html :: head" th:remove="tag"></div>
+    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
 </head>
 <body>
-<header th:replace="fragments.html :: header">
+<header th:replace="~{fragments.html :: header}">
 </header>
 <section id="main-content">
     <form class="login-form round-bordered-subject" method="post" action="sign-in" autocomplete="on">

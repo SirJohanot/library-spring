@@ -19,8 +19,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests((requests) -> requests
+        http.authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/books", "/").authenticated()
                         .anyRequest().permitAll()
                 )
@@ -29,12 +28,14 @@ public class SecurityConfig {
                         .loginProcessingUrl("/sign-in")
                         .usernameParameter("login")
                         .passwordParameter("password")
+                        .defaultSuccessUrl("/", false)
                 )
                 .logout(logout -> logout
                         .logoutUrl("/sign-out")
                         .logoutSuccessUrl("/sign-in-page")
                         .invalidateHttpSession(true)
                 );
+        http.csrf().disable();
         return http.build();
     }
 

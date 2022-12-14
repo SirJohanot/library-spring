@@ -2,10 +2,10 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title th:text="#{userCreation.signUp} + ' | ' + #{general.appName}">Sign up | Library</title>
-    <div th:replace="fragments.html :: head" th:remove="tag"></div>
+    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
 </head>
 <body>
-<header th:replace="fragments.html :: header">
+<header th:replace="~{fragments.html :: header}">
 </header>
 <section id="main-content">
     <form class="login-form round-bordered-subject" method="post" action="sign-up" autocomplete="on">
@@ -13,11 +13,12 @@
                required="required"/>
         <input type="password" name="password" th:placeholder="#{authorisation.passwordLocale}" placeholder="Password"
                required="required"/>
-        <input type="password" name="confirmedPassword" th:placeholder="#{userCreation.confirmPassword}"
+        <input type="password" name="confirmed-password" th:placeholder="#{userCreation.confirmPassword}"
                placeholder="Confirm password"
                required="required"/>
-        <input type="text" name="firstName" th:placeholder="#{users.firstName}" placeholder="Name" required="required"/>
-        <input type="text" name="lastName" th:placeholder="#{users.lastName}" placeholder="Last name"
+        <input type="text" name="first-name" th:placeholder="#{users.firstName}" placeholder="Name"
+               required="required"/>
+        <input type="text" name="last-name" th:placeholder="#{users.lastName}" placeholder="Last name"
                required="required"/>
         <input type="submit" th:value="#{userCreation.signUp}"/>
         <!--        <div class="error-message">${requestScope.errorMessage}</div>-->

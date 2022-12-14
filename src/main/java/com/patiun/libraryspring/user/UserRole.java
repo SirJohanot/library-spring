@@ -6,8 +6,4 @@ public enum UserRole {
     LIBRARIAN,
     ADMIN;
 
-    @Override
-    public String toString() {
-        return name().toLowerCase();
-    }
 }

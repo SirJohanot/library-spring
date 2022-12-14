@@ -8,8 +8,4 @@ public enum OrderState {
     BOOK_TAKEN,
     BOOK_RETURNED;
 
-    @Override
-    public String toString() {
-        return name().toLowerCase();
-    }
 }

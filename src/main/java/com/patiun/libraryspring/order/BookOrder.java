@@ -37,15 +37,15 @@ public class BookOrder {
 
     @NotNull
     @NotEmpty
-    @Column(name = "startDate")
+    @Column(name = "start_date")
     private LocalDate startDate;
 
     @NotNull
     @NotEmpty
-    @Column(name = "endDate")
+    @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "returnDate")
+    @Column(name = "return_date")
     private LocalDate returnDate;
 
     @NotNull

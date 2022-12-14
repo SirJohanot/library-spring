@@ -12,22 +12,12 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "'user'")
+@Table(name = "\"user\"")
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    @NotNull
-    @NotEmpty
-    @Column(name = "first_name")
-    private String firstName;
-
-    @NotNull
-    @NotEmpty
-    @Column(name = "last_name")
-    private String lastName;
 
     @NotNull
     @NotEmpty
@@ -41,11 +31,19 @@ public class User implements UserDetails {
 
     @NotNull
     @NotEmpty
+    @Column(name = "first_name")
+    private String firstName;
+
+    @NotNull
+    @NotEmpty
+    @Column(name = "last_name")
+    private String lastName;
+
+    @NotNull
     @Column(name = "is_blocked")
     private Boolean isBlocked;
 
     @NotNull
-    @NotEmpty
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -53,8 +51,7 @@ public class User implements UserDetails {
     protected User() {
     }
 
-    public User(Integer id, String firstName, String lastName, String login, String password, Boolean isBlocked, UserRole role) {
-        this.id = id;
+    public User(String login, String password, String firstName, String lastName, Boolean isBlocked, UserRole role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
@@ -69,22 +66,6 @@ public class User implements UserDetails {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String name) {
-        this.firstName = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getLogin() {
@@ -102,6 +83,22 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String name) {
+        this.firstName = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Boolean getBlocked() {
@@ -132,7 +129,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -142,7 +139,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -164,16 +161,16 @@ public class User implements UserDetails {
         if (!Objects.equals(id, user.id)) {
             return false;
         }
-        if (!Objects.equals(firstName, user.firstName)) {
-            return false;
-        }
-        if (!Objects.equals(lastName, user.lastName)) {
-            return false;
-        }
         if (!Objects.equals(login, user.login)) {
             return false;
         }
         if (!Objects.equals(password, user.password)) {
+            return false;
+        }
+        if (!Objects.equals(firstName, user.firstName)) {
+            return false;
+        }
+        if (!Objects.equals(lastName, user.lastName)) {
             return false;
         }
         if (!Objects.equals(isBlocked, user.isBlocked)) {
@@ -185,10 +182,10 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (isBlocked != null ? isBlocked.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
@@ -198,10 +195,10 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", isBlocked=" + isBlocked +
                 ", role=" + role +
                 '}';

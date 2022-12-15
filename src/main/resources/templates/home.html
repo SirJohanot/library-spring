@@ -10,7 +10,7 @@
 <section id="main-content">
     <div id="main-content-centered-element">
         <div class="container round-bordered-subject main-page-message">
-            <h1 th:text="#{mainPage.greetingsMessage} + ', ' + ${#authentication.getPrincipal().getUsername()}">
+            <h1 th:text="#{mainPage.greetingsMessage} + ', ' + ${#authentication.name}">
                 Greetings,
                 user</h1>
         </div>

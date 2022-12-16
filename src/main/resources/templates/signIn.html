@@ -12,7 +12,8 @@
         <input type="text" name="login" th:placeholder="#{authorisation.loginLocale}" placeholder="Login"/>
         <input type="password" name="password" th:placeholder="#{authorisation.passwordLocale}" placeholder="Password"/>
         <button type="submit" th:text="#{authorisation.signInLocale}">Sign in</button>
-        <a href="sign-up-page" th:text="#{userCreation.signUp}">Sign up</a>
+        <button type="button" onclick="window.location.href='/sign-up-page';" th:text="#{userCreation.signUp}">Sign up
+        </button>
         <!--        <div class="error-message">${requestScope.errorMessage}</div>-->
     </form>
 </section>

@@ -122,13 +122,13 @@ nav {
     border-bottom: 2px solid rgba(49, 44, 44, 0.55);
 }
 
-nav form {
+nav div {
     display: flex;
     margin: 0;
     padding: 0;
 }
 
-nav form button {
+nav div button {
     flex-grow: 1;
     display: block;
     min-height: 40px;

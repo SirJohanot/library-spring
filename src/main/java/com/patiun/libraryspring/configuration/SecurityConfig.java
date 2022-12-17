@@ -21,6 +21,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/books", "/").authenticated()
+                        .requestMatchers("/add-book-page", "/add-book").hasAuthority("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin((form) -> form

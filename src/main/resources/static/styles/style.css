@@ -192,12 +192,12 @@ nav div button {
     padding: 5px;
 }
 
-#pagination form {
+#pagination form, #pagination div {
     display: block;
     margin: 0 5px;
 }
 
-#pagination form input, #pagination form button {
+#pagination form *, #pagination div * {
     font-size: 20px;
 }
 
@@ -292,19 +292,19 @@ nav div button {
 }
 
 /* Edit book page */
-#bookChanges {
+#book-changes {
     padding: 15px;
 }
 
-#bookChanges label, #bookChanges input {
+#book-changes label, #book-changes input {
     display: block;
 }
 
-#bookChanges input[type="text"] {
+#book-changes input[type="text"] {
     width: 100%;
 }
 
-#bookChanges input {
+#book-changes input {
     padding: 5px 12px;
     line-height: 20px;
     margin: 14px 0;
@@ -315,20 +315,20 @@ nav div button {
 }
 
 /* Edit user page */
-#userChanges {
+#user-changes {
     padding: 15px;
 }
 
-#userChanges label, #userChanges input {
+#user-changes label, #user-changes input {
     display: block;
     width: 100%;
 }
 
-#userChanges input[type="text"] {
+#user-changes input[type="text"] {
     width: 100%;
 }
 
-#userChanges input, #userChanges select {
+#user-changes input, #user-changes select {
     padding: 5px 12px;
     line-height: 20px;
     margin: 14px 0;

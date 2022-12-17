@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head th:fragment="head">
-    <link rel="stylesheet" href="static/styles/style.css" th:href="@{styles/style.css}"/>
+    <link rel="stylesheet" href="/static/styles/style.css" th:href="@{styles/style.css}"/>
     <meta name="viewport" content="width=device-width">
 </head>
 <body>
 <header th:fragment="header">
     <div class="container">
-        <img src="static/resources/white_book_symbol.png" th:src="@{resources/white_book_symbol.png}" alt="Book symbol">
+        <img src="/static/resources/white_book_symbol.png" th:src="@{resources/white_book_symbol.png}"
+             alt="Book symbol">
         <h1 th:text="#{general.appName}">Library</h1>
         <h1 class="right-header-buttons">
             <form method="get" action="/sign-out" class="sign-out-button">
                 <button type="submit">
-                    <img src="static/resources/sign_out_symbol.png" th:src="@{resources/sign_out_symbol.png}"
+                    <img src="/static/resources/sign_out_symbol.png" th:src="@{resources/sign_out_symbol.png}"
                          alt="Sign out symbol">
                 </button>
             </form>
-            <form method="get" action="#{httpServletRequest.requestURI}" id="language-change">
+            <form method="get" id="language-change">
                 <button type="button">
-                    <img src="static/resources/white_globe_symbol.png" th:src="@{resources/white_globe_symbol.png}"
+                    <img src="/static/resources/white_globe_symbol.png" th:src="@{resources/white_globe_symbol.png}"
                          alt="Globe symbol">
                 </button>
                 <div class="dropdown-content">
@@ -44,7 +45,7 @@
                 </button>
             </th:block>
             <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).ADMIN}">
-                <button type="button" onclick="window.location.href='/add-a-book';"
+                <button type="button" onclick="window.location.href='/add-book-page';"
                         th:text="#{navigation.addABook}">Add a Book
                 </button>
                 <button type="button" onclick="window.location.href='/users';" th:text="#{navigation.users}">Users

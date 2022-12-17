@@ -1,6 +1,8 @@
 package com.patiun.libraryspring.book;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -31,29 +33,28 @@ public class Book {
     private List<Author> authors;
 
     @NotNull
-    @NotEmpty
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Valid
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
     @NotNull
-    @NotEmpty
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Valid
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
     @NotNull
-    @NotEmpty
+    @Min(1900)
     @Column(name = "publishment_year")
     private Integer publishmentYear;
 
     @NotNull
-    @NotEmpty
+    @Min(0)
     @Column(name = "amount")
     private Integer amount;
 
     @NotNull
-    @NotEmpty
     @Column(name = "is_deleted")
     private boolean isDeleted;
 

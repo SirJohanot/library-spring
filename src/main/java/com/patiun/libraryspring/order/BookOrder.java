@@ -3,7 +3,7 @@ package com.patiun.libraryspring.order;
 import com.patiun.libraryspring.book.Book;
 import com.patiun.libraryspring.user.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -18,30 +18,27 @@ public class BookOrder {
     private Integer id;
 
     @NotNull
-    @NotEmpty
+    @Valid
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
 
     @NotNull
-    @NotEmpty
+    @Valid
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @NotNull
-    @NotEmpty
     @Column(name = "rental_type")
     @Enumerated(EnumType.STRING)
     private RentalType rentalType;
 
     @NotNull
-    @NotEmpty
     @Column(name = "start_date")
     private LocalDate startDate;
 
     @NotNull
-    @NotEmpty
     @Column(name = "end_date")
     private LocalDate endDate;
 
@@ -49,7 +46,6 @@ public class BookOrder {
     private LocalDate returnDate;
 
     @NotNull
-    @NotEmpty
     @Column(name = "state")
     @Enumerated(EnumType.STRING)
     private OrderState state;

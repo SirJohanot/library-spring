@@ -21,7 +21,7 @@
         <input type="text" name="last-name" th:placeholder="#{users.lastName}" placeholder="Last name"
                required="required"/>
         <input type="submit" th:value="#{userCreation.signUp}"/>
-        <!--        <div class="error-message">${requestScope.errorMessage}</div>-->
+        <div class="error-message" th:text="${error}">error</div>
     </form>
 </section>
 </body>

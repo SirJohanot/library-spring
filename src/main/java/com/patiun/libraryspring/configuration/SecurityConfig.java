@@ -20,7 +20,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/books", "/").authenticated()
+                        .requestMatchers("/books", "/", "/book").authenticated()
                         .requestMatchers("/add-book-page", "/add-book").hasAuthority("ADMIN")
                         .anyRequest().permitAll()
                 )

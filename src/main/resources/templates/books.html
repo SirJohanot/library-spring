@@ -14,11 +14,11 @@
         <form method="get" action="/books/search" class="search-field">
             <input type="text" name="searchValue" th:placeholder="#{general.search}" placeholder="Search..."/>
         </form>
-        <form method="get" action="/books/view">
+        <form method="get" action="/book">
             <th:block th:each="book : ${books}">
                 <th:block
                         th:if="${#authentication.getPrincipal().getRole() != T(com.patiun.libraryspring.user.UserRole).READER || book.amount > 0}">
-                    <button type="submit" name="bookId" th:value="${book.id}" value="0"
+                    <button type="submit" name="id" th:value="${book.id}" value="0"
                             class="block-container round-bordered-subject">
                         <h1 th:text="${book.title}">title</h1>
                         <div class="block-parameters">
@@ -39,29 +39,7 @@
                 </th:block>
             </th:block>
         </form>
-        <div id="pagination" class="round-bordered-subject">
-            <div>
-                <button type="button" onclick="window.location.href='/books?page=1'">|&lt;</button>
-            </div>
-            <div>
-                <button type="button" th:onclick="|window.location.href=&#39;/books?page=${currentPage - 1}&#39;|">
-                    &lt;
-                </button>
-            </div>
-            <form method="get" action="/books">
-                <input type="number" min="1" th:max="${maxPage}" step="1" name="page" th:value="${currentPage}"
-                       value="1"/>
-            </form>
-            <div>
-                <button type="button" th:onclick="|window.location.href=&#39;/books?page=${currentPage + 1}&#39;|">
-                    &gt;
-                </button>
-            </div>
-            <div>
-                <button type="button" th:onclick="|window.location.href=&#39;/books?page=${maxPage}&#39;|">&gt;|
-                </button>
-            </div>
-        </div>
+        <div th:replace="~{fragments.html :: pagination}"></div>
     </div>
 </section>
 </body>

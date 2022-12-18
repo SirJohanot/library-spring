@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title th:text="${book.title} + ' | ' + #{general.appName}">BookName | Library</title>
+    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+    <script>
+        function setDaysRadiosDisabled(disabled) {
+            let daysRadios = document.getElementsByName("days");
+            for (let i = 0; i < daysRadios.length; i++) {
+                daysRadios[i].disabled = Boolean(disabled);
+            }
+        }
+    </script>
+</head>
+<body>
+<header th:replace="~{fragments.html :: header}">
+</header>
+<nav th:replace="~{fragments.html :: nav}">
+</nav>
+<section id="main-content">
+    <div id="main-content-centered-element">
+        <div class="round-bordered-subject block-container">
+            <h1 th:text="|#{books.bookTitle}: ${book.title}|">Title: BookName</h1>
+            <p th:inline="text">
+                [[#{books.authors}]]:
+                <th:block th:each="author,iterStat : ${book.authors}">
+                    <span th:text="${iterStat.last} ? ${author.name} : ${author.name} + ','"
+                          th:remove="tag">authors</span>
+                </th:block>
+            </p>
+            <p th:text="#{books.genre} + ': ' + ${book.genre.name}">Genre: Horror</p>
+            <p th:text="#{books.publisher} + ': ' + ${book.publisher.name}">Publisher: Some
+                publisher</p>
+            <p th:text="#{books.publishmentYear} + ': ' + ${book.publishmentYear}">Publishment Year:
+                2022</p>
+            <th:block
+                    th:if="${#authentication.getPrincipal().getRole() != T(com.patiun.libraryspring.user.UserRole).READER}">
+                <p th:text="|#{books.inStock}: ${book.amount}|">In stock: 1</p>
+            </th:block>
+        </div>
+        <th:block th:switch="${#authentication.getPrincipal().getRole()}">
+            <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).ADMIN}">
+                <form class="buttons-container">
+                    <input type="hidden" name="id" th:value="${book.id}"/>
+                    <button type="submit" formaction="/edit-book-page" formmethod="get" th:text="#{general.edit}">Edit
+                    </button>
+                    <button type="submit" formaction="/delete-book" formmethod="post"
+                            th:onclick="|return confirm(&#39;#{books.deleteConfirmation}&#39;)|" class="red"
+                            th:text="#{books.delete}">Delete
+                    </button>
+                </form>
+            </th:block>
+            <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).READER}">
+                <form method="post" class="round-bordered-subject order-options-container"
+                      action="/place-order">
+                    <input type="hidden" name="id" th:value="${book.id}"/>
+                    <p th:text="|#{orders.rentalType}:|">Rental Type:</p>
+                    <input id="out-of-library" type="radio" name="type" value="OUT_OF_LIBRARY"
+                           onchange="setDaysRadiosDisabled(0)" checked="checked"/>
+                    <label for="out-of-library" th:text="#{OUT_OF_LIBRARY}">out of library</label>
+                    <input id="to-reading-hall" type="radio" name="type" value="TO_READING_HALL"
+                           onchange="setDaysRadiosDisabled(1)"/>
+                    <label for="to-reading-hall" th:text="#{TO_READING_HALL}">to reading hall</label>
+                    <p th:text="|#{orders.days}:|">Days:</p>
+                    <input id="7" type="radio" name="days" value="7" checked="checked"/>
+                    <label for="7">7</label>
+                    <input id="14" type="radio" name="days" value="14"/>
+                    <label for="14">14</label>
+                    <input id="21" type="radio" name="days" value="21"/>
+                    <label for="21">21</label>
+                    <button type="submit" th:text="#{books.order}">Order</button>
+                </form>
+            </th:block>
+        </th:block>
+    </div>
+</section>
+</body>
+</html>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -33,5 +34,9 @@ public class BookService {
     public List<Book> getAllBooks() {
         return StreamSupport.stream(bookRepository.findAll().spliterator(), false)
                 .toList();
+    }
+
+    public Optional<Book> getBookById(Integer id) {
+        return bookRepository.findById(id);
     }
 }

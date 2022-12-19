@@ -13,6 +13,10 @@ public class Paginator<T> {
     }
 
     public List<T> getEntitiesOfPage(List<T> entitiesList, int targetPage, int entitiesPerPage) {
+        if (entitiesList.isEmpty()) {
+            return entitiesList;
+        }
+
         int acceptableTargetPage = getClosestAcceptableTargetPage(entitiesList, targetPage, entitiesPerPage);
         int entitiesNumber = entitiesList.size();
 

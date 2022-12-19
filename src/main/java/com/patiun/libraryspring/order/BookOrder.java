@@ -30,7 +30,7 @@ public class BookOrder {
     private User user;
 
     @NotNull
-    @Column(name = "rental_type")
+    @Column(name = "rental_type", length = 64)
     @Enumerated(EnumType.STRING)
     private RentalType rentalType;
 
@@ -46,7 +46,7 @@ public class BookOrder {
     private LocalDate returnDate;
 
     @NotNull
-    @Column(name = "state")
+    @Column(name = "state", length = 64)
     @Enumerated(EnumType.STRING)
     private OrderState state;
 

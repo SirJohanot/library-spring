@@ -21,22 +21,22 @@ public class User implements UserDetails {
 
     @NotNull
     @NotEmpty
-    @Column(name = "login", unique = true)
+    @Column(name = "login", length = 64, unique = true)
     private String login;
 
     @NotNull
     @NotEmpty
-    @Column(name = "password")
+    @Column(name = "password", length = 64)
     private String password;
 
     @NotNull
     @NotEmpty
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 64)
     private String firstName;
 
     @NotNull
     @NotEmpty
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 64)
     private String lastName;
 
     @NotNull
@@ -44,7 +44,7 @@ public class User implements UserDetails {
     private Boolean isBlocked;
 
     @NotNull
-    @Column(name = "role")
+    @Column(name = "role", length = 64)
     @Enumerated(EnumType.STRING)
     private UserRole role;
 

@@ -16,7 +16,7 @@ public class Genre {
 
     @NotNull
     @NotEmpty
-    @Column(name = "name")
+    @Column(name = "name", length = 64, unique = true)
     private String name;
 
     protected Genre() {

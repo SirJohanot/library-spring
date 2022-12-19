@@ -22,7 +22,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User foundUser = userRepository.findUserByLogin(username);
+        User foundUser = userRepository.findByLogin(username);
         if (foundUser == null) {
             throw new UsernameNotFoundException("Could not find a user by username '" + username + "'");
         }
@@ -30,7 +30,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void signUp(String login, String password, String confirmedPassword, String firstName, String lastName) {
-        if (userRepository.findUserByLogin(login) != null) {
+        if (userRepository.findByLogin(login) != null) {
             throw new ServiceException("A user with such login already exists");
         }
         String encodedPassword = passwordEncoder.encode(password);

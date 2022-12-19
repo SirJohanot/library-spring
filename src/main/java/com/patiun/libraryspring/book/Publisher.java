@@ -16,7 +16,7 @@ public class Publisher {
 
     @NotNull
     @NotEmpty
-    @Column(name = "name")
+    @Column(name = "name", length = 64, unique = true)
     private String name;
 
     protected Publisher() {

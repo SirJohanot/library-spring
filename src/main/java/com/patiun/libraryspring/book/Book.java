@@ -19,12 +19,12 @@ public class Book {
 
     @NotNull
     @NotEmpty
-    @Column(name = "title")
+    @Column(name = "title", length = 64)
     private String title;
 
     @NotNull
     @NotEmpty
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "book_author",
             joinColumns = {@JoinColumn(name = "book_id")},
@@ -34,13 +34,13 @@ public class Book {
 
     @NotNull
     @Valid
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
     @NotNull
     @Valid
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 

@@ -16,7 +16,7 @@ public class Author {
 
     @NotNull
     @NotEmpty
-    @Column(name = "name")
+    @Column(name = "name", length = 128, unique = true)
     private String name;
 
     protected Author() {

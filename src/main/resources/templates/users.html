@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title th:text="#{navigation.users} + ' | ' + #{general.appName}">Users | Library</title>
+    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+</head>
+<body>
+<header th:replace="~{fragments.html :: header}">
+</header>
+<nav th:replace="~{fragments.html :: nav}">
+</nav>
+<section id="main-content">
+    <div id="main-content-centered-element">
+        <form method="get" action="/users/search" class="search-field">
+            <input type="text" name="by" th:placeholder="#{general.search}"/>
+        </form>
+        <form method="get" action="/user">
+            <th:block th:each="user : ${users}">
+                <button type="submit" name="id" th:value="${user.id}" value="0"
+                        class="block-container round-bordered-subject">
+                    <h1 th:text="${user.login}">userLogin</h1>
+                    <div class="block-parameters">
+                        <p th:text="#{users.firstName} + ': ' + ${user.firstName}">First name: John</p>
+                        <p th:text="#{users.lastName} + ': ' + ${user.lastName}">Last name: Smith</p>
+                        <p th:text="#{users.role} + ': ' + #{${user.role}}">Role: reader</p>
+                        <p th:text="#{users.blocked} + ': ' + #{${user.blocked}}">Blocked:
+                            false</p>
+                    </div>
+                </button>
+            </th:block>
+        </form>
+        <div th:replace="~{fragments.html :: pagination}"></div>
+    </div>
+</section>
+</body>
+</html>

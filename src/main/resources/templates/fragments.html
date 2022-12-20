@@ -36,19 +36,19 @@
         <button type="button" onclick="window.location.href='/books';" th:text="#{navigation.books}">Books</button>
         <th:block th:switch="${#authentication.getPrincipal().getRole()}">
             <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).READER}">
-                <button type="button" onclick="window.location.href='/my-orders/';"
+                <button type="button" onclick="window.location.href='/my-orders';"
                         th:text="#{navigation.myOrders}">My Orders
                 </button>
             </th:block>
             <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).LIBRARIAN}">
-                <button type="button" onclick="window.location.href='/orders/';" th:text="#{navigation.orders}">Orders
+                <button type="button" onclick="window.location.href='/orders';" th:text="#{navigation.orders}">Orders
                 </button>
             </th:block>
             <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).ADMIN}">
                 <button type="button" onclick="window.location.href='/add-book-page';"
                         th:text="#{navigation.addABook}">Add a Book
                 </button>
-                <button type="button" onclick="window.location.href='/users/';" th:text="#{navigation.users}">Users
+                <button type="button" onclick="window.location.href='/users';" th:text="#{navigation.users}">Users
                 </button>
             </th:block>
         </th:block>

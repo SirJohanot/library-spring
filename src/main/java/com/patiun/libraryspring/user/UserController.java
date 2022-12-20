@@ -1,22 +1,30 @@
 package com.patiun.libraryspring.user;
 
+import com.patiun.libraryspring.utility.Paginator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class UserController {
 
+    private static final Integer USERS_PER_PAGE = 5;
+
     private final UserService userService;
+    private final Paginator<User> userPaginator;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, Paginator<User> userPaginator) {
         this.userService = userService;
+        this.userPaginator = userPaginator;
     }
 
     @PostMapping("/sign-up")
@@ -29,6 +37,21 @@ public class UserController {
         }
         request.login(login, password);
         return "redirect:/";
+    }
+
+    @GetMapping("/users")
+    public String users(@RequestParam(defaultValue = "1") Integer page, final Model model) {
+        List<User> users = userService.getAllUsers();
+
+        List<User> usersOfTheTargetPage = userPaginator.getEntitiesOfPage(users, page, USERS_PER_PAGE);
+        int pagesNeededToContainAllUsers = userPaginator.getNumberOfPagesToContainEntities(users, USERS_PER_PAGE);
+        int acceptableTargetPage = userPaginator.getClosestAcceptableTargetPage(users, page, USERS_PER_PAGE);
+
+        model.addAttribute("users", usersOfTheTargetPage);
+        model.addAttribute("currentPage", acceptableTargetPage);
+        model.addAttribute("maxPage", pagesNeededToContainAllUsers);
+
+        return "users";
     }
 
 }

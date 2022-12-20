@@ -8,6 +8,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.StreamSupport;
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -36,5 +39,10 @@ public class UserService implements UserDetailsService {
         String encodedPassword = passwordEncoder.encode(password);
 
         userRepository.save(new User(login, encodedPassword, firstName, lastName, false, UserRole.READER));
+    }
+
+    public List<User> getAllUsers() {
+        return StreamSupport.stream(userRepository.findAll().spliterator(), false)
+                .toList();
     }
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title th:text="${user.login} + ' | ' + #{general.appName}">userName | Library</title>
+    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+</head>
+<body>
+<header th:replace="~{fragments.html :: header}">
+</header>
+<nav th:replace="~{fragments.html :: nav}">
+</nav>
+<section id="main-content">
+    <div id="main-content-centered-element">
+        <div class="round-bordered-subject block-container">
+            <h1 th:text="|#{authorisation.loginLocale}: ${user.login}|">Login: userLogin</h1>
+            <p th:text="|#{users.firstName}: ${user.firstName}|">First name: John</p>
+            <p th:text="|#{users.lastName}: ${user.lastName}|">Last name: Smith</p>
+            <p th:text="#{users.role} + ': ' + #{${user.role}}">Role: reader</p>
+            <p th:text="#{users.blocked} + ': ' + #{${user.blocked}}">Blocked: false</p>
+        </div>
+        <form class="buttons-container">
+            <input type="hidden" name="id" th:value="${user.id}"/>
+            <th:block th:if="${user.role != T(com.patiun.libraryspring.user.UserRole).ADMIN}">
+                <button type="submit" formaction="/edit-user-page" formmethod="get" th:text="#{general.edit}">Edit
+                </button>
+                <button th:unless="${user.blocked}" type="submit" formaction="/block-user" formmethod="post"
+                        th:onclick="|return confirm(&#39;#{users.blockConfirmation}&#39;)|" class="red"
+                        th:text="#{users.block}">Block
+                </button>
+                <button th:if="${user.blocked}" type="submit" formaction="/unblock-user" formmethod="post"
+                        th:onclick="|return confirm(&#39;#{users.unblockConfirmation}&#39;)|" class="red"
+                        th:text="#{users.unblock}">Unblock
+                </button>
+            </th:block>
+        </form>
+    </div>
+</section>
+</body>
+</html>

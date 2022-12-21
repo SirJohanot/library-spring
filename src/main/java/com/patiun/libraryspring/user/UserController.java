@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -52,6 +54,19 @@ public class UserController {
         model.addAttribute("maxPage", pagesNeededToContainAllUsers);
 
         return "users";
+    }
+
+    @GetMapping("/user")
+    public String user(@RequestParam Integer id, final Model model) {
+        Optional<User> userOptional = userService.getUserById(id);
+        if (userOptional.isEmpty()) {
+            throw new NoSuchElementException("Could not find a user by id = " + id);
+        }
+        User user = userOptional.get();
+
+        model.addAttribute("user", user);
+
+        return "user";
     }
 
 }

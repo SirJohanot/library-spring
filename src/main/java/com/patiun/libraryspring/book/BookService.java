@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.book;
 
+import com.patiun.libraryspring.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,18 +38,19 @@ public class BookService {
                 .toList();
     }
 
-    public Optional<Book> getBookById(Integer id) {
-        return bookRepository.findById(id);
+    public Book getBookById(Integer id) throws ServiceException {
+        return getExistingBookById(id);
     }
 
-    public void deleteBookById(Integer id) {
+    public void deleteBookById(Integer id) throws ServiceException {
+        getExistingBookById(id);
         bookRepository.deleteById(id);
     }
 
-    public void updateBookById(Integer id, String title, String authors, String genreName, String publisherName, Integer publishmentYear, Integer amount) {
+    public void updateBookById(Integer id, String title, String authors, String genreName, String publisherName, Integer publishmentYear, Integer amount) throws ServiceException {
+        getExistingBookById(id);
         List<Author> authorList = authorsStringToList(authors);
         Book updatedBook = setupBookToPersist(id, title, authorList, genreName, publisherName, publishmentYear, amount);
-        System.out.println(updatedBook);
         bookRepository.save(updatedBook);
     }
 
@@ -76,4 +78,13 @@ public class BookService {
 
         return new Book(id, title, authors, genre, publisher, publishmentYear, amount, false);
     }
+
+    private Book getExistingBookById(Integer id) throws ServiceException {
+        Optional<Book> bookOptional = bookRepository.findById(id);
+        if (bookOptional.isEmpty()) {
+            throw new ServiceException("Could not find a book by id = " + id);
+        }
+        return bookOptional.get();
+    }
+
 }

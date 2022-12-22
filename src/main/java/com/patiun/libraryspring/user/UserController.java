@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -58,15 +56,17 @@ public class UserController {
 
     @GetMapping("/user")
     public String user(@RequestParam Integer id, final Model model) {
-        Optional<User> userOptional = userService.getUserById(id);
-        if (userOptional.isEmpty()) {
-            throw new NoSuchElementException("Could not find a user by id = " + id);
-        }
-        User user = userOptional.get();
+        User user = userService.getUserById(id);
 
         model.addAttribute("user", user);
 
         return "user";
+    }
+
+    @PostMapping("/switch-user-blocked")
+    public String switchUserBlocked(@RequestParam Integer id) {
+        userService.switchUserBlockedById(id);
+        return "redirect:/user?id=" + id;
     }
 
 }

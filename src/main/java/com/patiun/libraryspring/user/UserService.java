@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
@@ -47,7 +48,29 @@ public class UserService implements UserDetailsService {
                 .toList();
     }
 
-    public Optional<User> getUserById(Integer id) {
-        return userRepository.findById(id);
+    public User getUserById(Integer id) {
+        return getExistingUserById(id);
     }
+
+    public void switchUserBlockedById(Integer id) {
+        Optional<User> foundUserOptional = userRepository.findById(id);
+        if (foundUserOptional.isEmpty()) {
+            throw new NoSuchElementException("Could not find user by id = " + id);
+        }
+        User foundUser = foundUserOptional.get();
+
+        Boolean currentUserBlocked = foundUser.getBlocked();
+        foundUser.setBlocked(!currentUserBlocked);
+
+        userRepository.save(foundUser);
+    }
+
+    private User getExistingUserById(Integer id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            throw new NoSuchElementException("Could not find a user by id = " + id);
+        }
+        return userOptional.get();
+    }
+
 }

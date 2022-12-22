@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.book;
 
+import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.utility.Paginator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Controller
 public class BookController {
@@ -48,12 +47,8 @@ public class BookController {
     }
 
     @GetMapping("/book")
-    public String book(@RequestParam Integer id, final Model model) {
-        Optional<Book> bookOptional = bookService.getBookById(id);
-        if (bookOptional.isEmpty()) {
-            throw new NoSuchElementException("Could not find a book by id = " + id);
-        }
-        Book book = bookOptional.get();
+    public String book(@RequestParam Integer id, final Model model) throws ServiceException {
+        Book book = bookService.getBookById(id);
 
         model.addAttribute("book", book);
 
@@ -61,18 +56,14 @@ public class BookController {
     }
 
     @PostMapping("/delete-book")
-    public String deleteBook(@RequestParam Integer id) {
+    public String deleteBook(@RequestParam Integer id) throws ServiceException {
         bookService.deleteBookById(id);
         return "redirect:/books";
     }
 
     @GetMapping("/edit-book-page")
-    public String editBookPage(@RequestParam Integer id, final Model model) {
-        Optional<Book> bookOptional = bookService.getBookById(id);
-        if (bookOptional.isEmpty()) {
-            throw new NoSuchElementException("Could not find a book by id = " + id);
-        }
-        Book book = bookOptional.get();
+    public String editBookPage(@RequestParam Integer id, final Model model) throws ServiceException {
+        Book book = bookService.getBookById(id);
 
         model.addAttribute("book", book);
 
@@ -80,7 +71,7 @@ public class BookController {
     }
 
     @PostMapping("/edit-book")
-    public String addBook(@RequestParam Integer id, @RequestParam String title, @RequestParam String authors, @RequestParam String genre, @RequestParam String publisher, @RequestParam("publishment-year") Integer publishmentYear, @RequestParam Integer amount) {
+    public String editBook(@RequestParam Integer id, @RequestParam String title, @RequestParam String authors, @RequestParam String genre, @RequestParam String publisher, @RequestParam("publishment-year") Integer publishmentYear, @RequestParam Integer amount) throws ServiceException {
         bookService.updateBookById(id, title, authors, genre, publisher, publishmentYear, amount);
         return "redirect:/book?id=" + id;
     }

@@ -23,13 +23,10 @@
             <th:block th:if="${user.role != T(com.patiun.libraryspring.user.UserRole).ADMIN}">
                 <button type="submit" formaction="/edit-user-page" formmethod="get" th:text="#{general.edit}">Edit
                 </button>
-                <button th:unless="${user.blocked}" type="submit" formaction="/block-user" formmethod="post"
-                        th:onclick="|return confirm(&#39;#{users.blockConfirmation}&#39;)|" class="red"
-                        th:text="#{users.block}">Block
-                </button>
-                <button th:if="${user.blocked}" type="submit" formaction="/unblock-user" formmethod="post"
-                        th:onclick="|return confirm(&#39;#{users.unblockConfirmation}&#39;)|" class="red"
-                        th:text="#{users.unblock}">Unblock
+                <button type="submit" formaction="/switch-user-blocked" formmethod="post"
+                        th:onclick="'return confirm(\'' + (${user.blocked} ? #{users.unblockConfirmation} : #{users.blockConfirmation}) + '\')'"
+                        class="red"
+                        th:text="${user.blocked} ? #{users.unblock} : #{users.block}">Block/Unblock
                 </button>
             </th:block>
         </form>

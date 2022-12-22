@@ -1,6 +1,6 @@
 package com.patiun.libraryspring.user;
 
-import org.hibernate.service.spi.ServiceException;
+import com.patiun.libraryspring.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
@@ -34,7 +33,7 @@ public class UserService implements UserDetailsService {
         return foundUser;
     }
 
-    public void signUp(String login, String password, String confirmedPassword, String firstName, String lastName) {
+    public void signUp(String login, String password, String confirmedPassword, String firstName, String lastName) throws ServiceException {
         if (userRepository.findByLogin(login) != null) {
             throw new ServiceException("A user with such login already exists");
         }
@@ -48,14 +47,14 @@ public class UserService implements UserDetailsService {
                 .toList();
     }
 
-    public User getUserById(Integer id) {
+    public User getUserById(Integer id) throws ServiceException {
         return getExistingUserById(id);
     }
 
-    public void switchUserBlockedById(Integer id) {
+    public void switchUserBlockedById(Integer id) throws ServiceException {
         Optional<User> foundUserOptional = userRepository.findById(id);
         if (foundUserOptional.isEmpty()) {
-            throw new NoSuchElementException("Could not find user by id = " + id);
+            throw new ServiceException("Could not find user by id = " + id);
         }
         User foundUser = foundUserOptional.get();
 
@@ -65,10 +64,10 @@ public class UserService implements UserDetailsService {
         userRepository.save(foundUser);
     }
 
-    private User getExistingUserById(Integer id) {
+    private User getExistingUserById(Integer id) throws ServiceException {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isEmpty()) {
-            throw new NoSuchElementException("Could not find a user by id = " + id);
+            throw new ServiceException("Could not find a user by id = " + id);
         }
         return userOptional.get();
     }

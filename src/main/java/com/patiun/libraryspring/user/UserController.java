@@ -1,9 +1,9 @@
 package com.patiun.libraryspring.user;
 
+import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.utility.Paginator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String user(@RequestParam Integer id, final Model model) {
+    public String user(@RequestParam Integer id, final Model model) throws ServiceException {
         User user = userService.getUserById(id);
 
         model.addAttribute("user", user);
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @PostMapping("/switch-user-blocked")
-    public String switchUserBlocked(@RequestParam Integer id) {
+    public String switchUserBlocked(@RequestParam Integer id) throws ServiceException {
         userService.switchUserBlockedById(id);
         return "redirect:/user?id=" + id;
     }

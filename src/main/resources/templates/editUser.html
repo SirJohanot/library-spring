@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title th:text="${user.login} + ' | ' + #{general.appName}">userName | Library</title>
+    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+</head>
+<body>
+<header th:replace="~{fragments.html :: header}">
+</header>
+<nav th:replace="~{fragments.html :: nav}">
+</nav>
+<section id="main-content">
+    <div id="main-content-centered-element">
+        <form id="user-changes" class="round-bordered-subject block-container" method="post"
+              action="/edit-user">
+            <input type="hidden" name="id" th:value="${user.id}"/>
+            <h1 th:text="|#{authorisation.loginLocale}: ${user.login}|">Login: userLogin</h1>
+            <label for="first-name" th:text="|#{users.firstName}:|">First name:</label>
+            <input id="first-name" name="first-name" type="text"
+                   th:value="${user.firstName}"
+                   required="required"/>
+            <label for="last-name" th:text="|#{users.lastName}:|">Last name:</label>
+            <input id="last-name" name="last-name" type="text"
+                   th:value="${user.lastName}"
+                   required="required"/>
+            <label for="role" th:text="|#{users.role}:|">Role:</label>
+            <select id="role" name="role" required="required">
+                <option value="READER" th:selected="${user.role == T(com.patiun.libraryspring.user.UserRole).READER}"
+                        th:text="#{READER}">
+                    READER
+                </option>
+                <option value="LIBRARIAN"
+                        th:selected="${user.role == T(com.patiun.libraryspring.user.UserRole).LIBRARIAN}"
+                        th:text="#{LIBRARIAN}">
+                    LIBRARIAN
+                </option>
+            </select>
+            <!--            <div class="error-message">${requestScope.errorMessage}</div>-->
+        </form>
+        <form class="buttons-container">
+            <button type="submit" class="red" formaction="/user" formmethod="get" name="id" th:value="${user.id}"
+                    th:text="#{general.cancel}">Cancel
+            </button>
+            <button type="submit" form="user-changes" class="green" th:text="#{general.commitChanges}">Commit changes
+            </button>
+        </form>
+    </div>
+</section>
+</body>
+</html>

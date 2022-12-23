@@ -48,9 +48,7 @@ public class BookController {
 
     @GetMapping("/book")
     public String book(@RequestParam Integer id, final Model model) throws ServiceException {
-        Book book = bookService.getBookById(id);
-
-        model.addAttribute("book", book);
+        getBookByIdAndAddToModel(id, model);
 
         return "book";
     }
@@ -63,9 +61,7 @@ public class BookController {
 
     @GetMapping("/edit-book-page")
     public String editBookPage(@RequestParam Integer id, final Model model) throws ServiceException {
-        Book book = bookService.getBookById(id);
-
-        model.addAttribute("book", book);
+        getBookByIdAndAddToModel(id, model);
 
         return "editBook";
     }
@@ -74,6 +70,12 @@ public class BookController {
     public String editBook(@RequestParam Integer id, @RequestParam String title, @RequestParam String authors, @RequestParam String genre, @RequestParam String publisher, @RequestParam("publishment-year") Integer publishmentYear, @RequestParam Integer amount) throws ServiceException {
         bookService.updateBookById(id, title, authors, genre, publisher, publishmentYear, amount);
         return "redirect:/book?id=" + id;
+    }
+
+    private void getBookByIdAndAddToModel(Integer id, final Model model) throws ServiceException {
+        Book book = bookService.getBookById(id);
+
+        model.addAttribute("book", book);
     }
 
 }

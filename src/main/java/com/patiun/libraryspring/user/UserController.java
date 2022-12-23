@@ -56,17 +56,28 @@ public class UserController {
 
     @GetMapping("/user")
     public String user(@RequestParam Integer id, final Model model) throws ServiceException {
-        User user = userService.getUserById(id);
-
-        model.addAttribute("user", user);
+        getUserByIdAndAddToModel(id, model);
 
         return "user";
+    }
+
+    @GetMapping("/edit-user-page")
+    public String editUserPage(@RequestParam Integer id, final Model model) throws ServiceException {
+        getUserByIdAndAddToModel(id, model);
+
+        return "editUser";
     }
 
     @PostMapping("/switch-user-blocked")
     public String switchUserBlocked(@RequestParam Integer id) throws ServiceException {
         userService.switchUserBlockedById(id);
         return "redirect:/user?id=" + id;
+    }
+
+    private void getUserByIdAndAddToModel(Integer id, final Model model) throws ServiceException {
+        User user = userService.getUserById(id);
+
+        model.addAttribute("user", user);
     }
 
 }

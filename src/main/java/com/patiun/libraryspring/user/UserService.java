@@ -51,6 +51,16 @@ public class UserService implements UserDetailsService {
         return getExistingUserById(id);
     }
 
+    public void updateUserById(Integer id, String firstName, String lastName, UserRole role) throws ServiceException {
+        User targetUser = getExistingUserById(id);
+
+        targetUser.setFirstName(firstName);
+        targetUser.setLastName(lastName);
+        targetUser.setRole(role);
+
+        userRepository.save(targetUser);
+    }
+
     public void switchUserBlockedById(Integer id) throws ServiceException {
         Optional<User> foundUserOptional = userRepository.findById(id);
         if (foundUserOptional.isEmpty()) {

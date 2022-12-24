@@ -68,6 +68,13 @@ public class UserController {
         return "editUser";
     }
 
+    @PostMapping("/edit-user")
+    public String editUser(@RequestParam Integer id, @RequestParam("first-name") String firstName, @RequestParam("last-name") String lastName, @RequestParam UserRole role) throws ServiceException {
+        userService.updateUserById(id, firstName, lastName, role);
+
+        return "redirect:/user?id=" + id;
+    }
+
     @PostMapping("/switch-user-blocked")
     public String switchUserBlocked(@RequestParam Integer id) throws ServiceException {
         userService.switchUserBlockedById(id);

@@ -53,7 +53,7 @@
             <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).READER}">
                 <form method="post" class="round-bordered-subject order-options-container"
                       action="/place-order">
-                    <input type="hidden" name="id" th:value="${book.id}"/>
+                    <input type="hidden" name="book-id" th:value="${book.id}"/>
                     <p th:text="|#{orders.rentalType}:|">Rental Type:</p>
                     <input id="out-of-library" type="radio" name="type" value="OUT_OF_LIBRARY"
                            onchange="setDaysRadiosDisabled(0)" checked="checked"/>

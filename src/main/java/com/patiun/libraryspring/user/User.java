@@ -48,10 +48,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    protected User() {
+    public User() {
     }
 
-    public User(String login, String password, String firstName, String lastName, Boolean isBlocked, UserRole role) {
+    public User(Integer id, String login, String password, String firstName, String lastName, Boolean isBlocked, UserRole role) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;

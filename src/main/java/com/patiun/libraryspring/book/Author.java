@@ -18,8 +18,8 @@ public class Author {
     @NotEmpty
     @Column(name = "name", length = 128, unique = true)
     private String name;
-
-    protected Author() {
+    
+    public Author() {
     }
 
     public Author(Integer id, String name) {

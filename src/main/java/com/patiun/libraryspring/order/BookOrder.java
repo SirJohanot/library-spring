@@ -50,7 +50,7 @@ public class BookOrder {
     @Enumerated(EnumType.STRING)
     private OrderState state;
 
-    protected BookOrder() {
+    public BookOrder() {
     }
 
     public BookOrder(Integer id, Book book, User user, RentalType rentalType, LocalDate startDate, LocalDate endDate, LocalDate returnDate, OrderState state) {

@@ -58,7 +58,7 @@ public class Book {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    protected Book() {
+    public Book() {
     }
 
     public Book(Integer id, String title, List<Author> authors, Genre genre, Publisher publisher, Integer publishmentYear, Integer amount, boolean isDeleted) {

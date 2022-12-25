@@ -22,6 +22,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/books", "/", "/book").authenticated()
                         .requestMatchers("/add-book-page", "/add-book", "/edit-book-page", "/edit-book", "/users", "/user", "/edit-user-page", "/edit-user", "/switch-user-blocked").hasAuthority("ADMIN")
+                        .requestMatchers("/place-order").hasAuthority("READER")
                         .anyRequest().permitAll()
                 )
                 .formLogin((form) -> form

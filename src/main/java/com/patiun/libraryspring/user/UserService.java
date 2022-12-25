@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
         }
         String encodedPassword = passwordEncoder.encode(password);
 
-        userRepository.save(new User(login, encodedPassword, firstName, lastName, false, UserRole.READER));
+        userRepository.save(new User(null, login, encodedPassword, firstName, lastName, false, UserRole.READER));
     }
 
     public List<User> getAllUsers() {

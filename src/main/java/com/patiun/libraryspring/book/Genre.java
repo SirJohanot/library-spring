@@ -18,8 +18,8 @@ public class Genre {
     @NotEmpty
     @Column(name = "name", length = 64, unique = true)
     private String name;
-
-    protected Genre() {
+    
+    public Genre() {
     }
 
     public Genre(Integer id, String name) {

@@ -18,8 +18,8 @@ public class Publisher {
     @NotEmpty
     @Column(name = "name", length = 64, unique = true)
     private String name;
-
-    protected Publisher() {
+    
+    public Publisher() {
     }
 
     public Publisher(Integer id, String name) {

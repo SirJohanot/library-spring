@@ -14,9 +14,10 @@
         <form method="get" action="/users/search" class="search-field">
             <input type="text" name="by" th:placeholder="#{general.search}"/>
         </form>
-        <form method="get" action="/user">
+        <div>
             <th:block th:each="user : ${users}">
-                <button type="submit" name="id" th:value="${user.id}" value="0"
+                <button type="button" th:data-parameter1="${user.login}"
+                        onclick="window.location.href='/user/'+this.getAttribute('data-parameter1')"
                         class="block-container round-bordered-subject">
                     <h1 th:text="${user.login}">userLogin</h1>
                     <div class="block-parameters">
@@ -28,7 +29,7 @@
                     </div>
                 </button>
             </th:block>
-        </form>
+        </div>
         <div th:replace="~{fragments.html :: pagination}"></div>
     </div>
 </section>

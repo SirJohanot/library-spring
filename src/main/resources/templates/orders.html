@@ -14,9 +14,9 @@
         <form method="get" action="/orders/search" class="search-field">
             <input type="text" name="by" th:placeholder="#{general.search}"/>
         </form>
-        <form method="get" action="/order">
+        <div>
             <th:block th:each="order : ${orders}">
-                <button type="submit" name="id" th:value="${order.id}" value="0"
+                <button type="button" th:onclick="|window.location.href=&#39;/order/${order.id}&#39;|"
                         class="block-container round-bordered-subject">
                     <h1 th:text="${order.book.title} + (${#authentication.getPrincipal().role != T(com.patiun.libraryspring.user.UserRole).READER} ? (' | ' + ${order.user.login}) : '')">
                         bookTitle | userLogin
@@ -40,7 +40,7 @@
                     </div>
                 </button>
             </th:block>
-        </form>
+        </div>
         <div th:replace="~{fragments.html :: pagination}"></div>
     </div>
 </section>

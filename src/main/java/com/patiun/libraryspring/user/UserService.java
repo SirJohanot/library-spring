@@ -51,6 +51,10 @@ public class UserService implements UserDetailsService {
         return getExistingUserById(id);
     }
 
+    public User getUserByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
+
     public void updateUserById(Integer id, String firstName, String lastName, UserRole role) throws ServiceException {
         User targetUser = getExistingUserById(id);
 

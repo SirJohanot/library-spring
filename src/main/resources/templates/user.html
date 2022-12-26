@@ -11,17 +11,12 @@
 </nav>
 <section id="main-content">
     <div id="main-content-centered-element">
-        <div class="round-bordered-subject block-container">
-            <h1 th:text="|#{authorisation.loginLocale}: ${user.login}|">Login: userLogin</h1>
-            <p th:text="|#{users.firstName}: ${user.firstName}|">First name: John</p>
-            <p th:text="|#{users.lastName}: ${user.lastName}|">Last name: Smith</p>
-            <p th:text="#{users.role} + ': ' + #{${user.role}}">Role: reader</p>
-            <p th:text="#{users.blocked} + ': ' + #{${user.blocked}}">Blocked: false</p>
-        </div>
+        <div th:replace="~{fragments.html :: user-parameters(${user})}"></div>
         <form class="buttons-container">
             <input type="hidden" name="id" th:value="${user.id}"/>
             <th:block th:if="${user.role != T(com.patiun.libraryspring.user.UserRole).ADMIN}">
-                <button type="submit" formaction="/edit-user-page" formmethod="get" th:text="#{general.edit}">Edit
+                <button type="button" th:onclick="|window.location.href=&#39;/edit-user-page/${user.id}&#39;|"
+                        th:text="#{general.edit}">Edit
                 </button>
                 <button type="submit" formaction="/switch-user-blocked" formmethod="post"
                         th:onclick="'return confirm(\'' + (${user.blocked} ? #{users.unblockConfirmation} : #{users.blockConfirmation}) + '\')'"

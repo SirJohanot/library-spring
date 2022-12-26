@@ -20,10 +20,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/books", "/", "/book").authenticated()
-                        .requestMatchers("/add-book-page", "/add-book", "/edit-book-page", "/edit-book", "/users", "/user", "/edit-user-page", "/edit-user", "/switch-user-blocked").hasAuthority("ADMIN")
+                        .requestMatchers("/books/**", "/", "/book/**").authenticated()
+                        .requestMatchers("/add-book-page", "/add-book", "/edit-book-page/**", "/edit-book", "/users/**", "/user/**", "/edit-user-page/**", "/edit-user", "/switch-user-blocked").hasAuthority("ADMIN")
                         .requestMatchers("/place-order").hasAuthority("READER")
-                        .requestMatchers("/orders").hasAnyAuthority("READER", "LIBRARIAN")
+                        .requestMatchers("/orders/**", "/order/**").hasAnyAuthority("READER", "LIBRARIAN")
                         .anyRequest().permitAll()
                 )
                 .formLogin((form) -> form

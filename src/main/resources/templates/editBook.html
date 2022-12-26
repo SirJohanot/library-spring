@@ -32,7 +32,7 @@
             <!--            <div class="error-message">${requestScope.errorMessage}</div>-->
         </form>
         <form class="buttons-container">
-            <button type="submit" class="red" formaction="/book" formmethod="get" name="id" th:value="${book.id}"
+            <button type="submit" class="red" th:formaction="'/book/' + ${book.id}" formmethod="get"
                     th:text="#{general.cancel}">Cancel
             </button>
             <button type="submit" form="book-changes" class="green" th:text="#{general.commitChanges}">Commit changes

@@ -18,7 +18,7 @@
             <th:block th:each="book : ${books}">
                 <th:block
                         th:if="${#authentication.getPrincipal().getRole() != T(com.patiun.libraryspring.user.UserRole).READER || book.amount > 0}">
-                    <button type="submit" name="id" th:value="${book.id}" value="0"
+                    <button type="button" th:onclick="|window.location.href=&#39;/book/${book.id}&#39;|"
                             class="block-container round-bordered-subject">
                         <h1 th:text="${book.title}">title</h1>
                         <div class="block-parameters">

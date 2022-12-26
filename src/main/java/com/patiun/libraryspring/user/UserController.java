@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -39,8 +41,10 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/users")
-    public String users(@RequestParam(defaultValue = "1") Integer page, final Model model) {
+    @GetMapping({"/users/", "/users/{page}"})
+    public String users(@PathVariable("page") Optional<Integer> optionalPage, final Model model) {
+        int page = optionalPage.orElse(1);
+
         List<User> users = userService.getAllUsers();
 
         List<User> usersOfTheTargetPage = userPaginator.getEntitiesOfPage(users, page, USERS_PER_PAGE);
@@ -54,15 +58,17 @@ public class UserController {
         return "users";
     }
 
-    @GetMapping("/user")
-    public String user(@RequestParam Integer id, final Model model) throws ServiceException {
-        getUserByIdAndAddToModel(id, model);
+    @GetMapping("/user/{login}")
+    public String user(@PathVariable String login, final Model model) throws ServiceException {
+        User user = userService.getUserByLogin(login);
+
+        model.addAttribute("user", user);
 
         return "user";
     }
 
-    @GetMapping("/edit-user-page")
-    public String editUserPage(@RequestParam Integer id, final Model model) throws ServiceException {
+    @GetMapping("/edit-user-page/{id}")
+    public String editUserPage(@PathVariable Integer id, final Model model) throws ServiceException {
         getUserByIdAndAddToModel(id, model);
 
         return "editUser";
@@ -72,19 +78,25 @@ public class UserController {
     public String editUser(@RequestParam Integer id, @RequestParam("first-name") String firstName, @RequestParam("last-name") String lastName, @RequestParam UserRole role) throws ServiceException {
         userService.updateUserById(id, firstName, lastName, role);
 
-        return "redirect:/user?id=" + id;
+        return "redirect:/user/" + getLoginOfUserById(id);
     }
 
     @PostMapping("/switch-user-blocked")
     public String switchUserBlocked(@RequestParam Integer id) throws ServiceException {
         userService.switchUserBlockedById(id);
-        return "redirect:/user?id=" + id;
+        return "redirect:/user/" + getLoginOfUserById(id);
     }
 
     private void getUserByIdAndAddToModel(Integer id, final Model model) throws ServiceException {
         User user = userService.getUserById(id);
 
         model.addAttribute("user", user);
+    }
+
+    private String getLoginOfUserById(Integer id) throws ServiceException {
+        User user = userService.getUserById(id);
+
+        return user.getLogin();
     }
 
 }

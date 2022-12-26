@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title th:text="${order.user.login} + ' - ' + ${order.book.title} + ' | ' + #{general.appName}">userName - bookTitle
+        | Library</title>
+    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+</head>
+<body>
+<header th:replace="~{fragments.html :: header}">
+</header>
+<nav th:replace="~{fragments.html :: nav}">
+</nav>
+<section id="main-content">
+    <div id="main-content-centered-element">
+        <div class="round-bordered-subject block-container">
+            <h1 th:text="|#{orders.startDate}: ${#temporals.format(order.startDate, #messages.msg('general.dateFormat'))}|">
+                Start date: 01.01.2001
+            </h1>
+            <p th:text="|#{orders.endDate}: ${#temporals.format(order.endDate, #messages.msg('general.dateFormat'))}|">
+                End date: 02.01.2001
+            </p>
+            <p th:text="|#{orders.returnDate}: ${#temporals.format(order.returnDate, #messages.msg('general.dateFormat'))}|">
+                Return date: 01.01.2001
+            </p>
+            <p th:text="|#{orders.rentalType}: #{${order.rentalType}}|">
+                Rental type: out of library
+            </p>
+            <p th:text="|#{orders.rentalState}: #{${order.state}}|">
+                State: placed
+            </p>
+        </div>
+        <div th:replace="~{fragments.html :: book-parameters(${order.book})}"></div>
+        <div th:replace="~{fragments.html :: user-parameters(${order.user})}"
+             th:unless="${#authentication.getPrincipal().role == T(com.patiun.libraryspring.user.UserRole).READER}"></div>
+        <form class="buttons-container">
+            <input type="hidden" name="id" th:value="${order.id}"/>
+            <th:block th:switch="${#authentication.getPrincipal().getRole()}">
+                <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).LIBRARIAN}"
+                          th:if="${order.state == T(com.patiun.libraryspring.order.OrderState).PLACED}">
+                    <button type="submit" formaction="/approve-order" formmethod="post"
+                            th:text="#{orders.approveOrder}">
+                        Approve order
+                    </button>
+                    <button type="submit" formaction="/decline-order" formmethod="post" class="red"
+                            th:text="#{orders.decline}">Decline order
+                    </button>
+                </th:block>
+                <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).READER}">
+                    <button type="submit" formaction="/collect-order" formmethod="post"
+                            th:text="#{orders.collectOrder}">
+                        Collect order
+                    </button>
+                    <button type="submit" formaction="/return-order" formmethod="post"
+                            th:text="#{orders.returnOrder}">Return order
+                    </button>
+                </th:block>
+            </th:block>
+        </form>
+    </div>
+</section>
+</body>
+</html>

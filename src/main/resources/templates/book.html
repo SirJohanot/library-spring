@@ -19,30 +19,13 @@
 </nav>
 <section id="main-content">
     <div id="main-content-centered-element">
-        <div class="round-bordered-subject block-container">
-            <h1 th:text="|#{books.bookTitle}: ${book.title}|">Title: BookName</h1>
-            <p th:inline="text">
-                [[#{books.authors}]]:
-                <th:block th:each="author,iterStat : ${book.authors}">
-                    <span th:text="${iterStat.last} ? ${author.name} : ${author.name} + ','"
-                          th:remove="tag">authors</span>
-                </th:block>
-            </p>
-            <p th:text="#{books.genre} + ': ' + ${book.genre.name}">Genre: Horror</p>
-            <p th:text="#{books.publisher} + ': ' + ${book.publisher.name}">Publisher: Some
-                publisher</p>
-            <p th:text="#{books.publishmentYear} + ': ' + ${book.publishmentYear}">Publishment Year:
-                2022</p>
-            <th:block
-                    th:if="${#authentication.getPrincipal().getRole() != T(com.patiun.libraryspring.user.UserRole).READER}">
-                <p th:text="|#{books.inStock}: ${book.amount}|">In stock: 1</p>
-            </th:block>
-        </div>
+        <div th:replace="~{fragments.html :: book-parameters(${book})}"></div>
         <th:block th:switch="${#authentication.getPrincipal().getRole()}">
             <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).ADMIN}">
                 <form class="buttons-container">
                     <input type="hidden" name="id" th:value="${book.id}"/>
-                    <button type="submit" formaction="/edit-book-page" formmethod="get" th:text="#{general.edit}">Edit
+                    <button type="button" th:onclick="|window.location.href=&#39;/edit-book-page/${book.id}&#39;|"
+                            th:text="#{general.edit}">Edit
                     </button>
                     <button type="submit" formaction="/delete-book" formmethod="post"
                             th:onclick="|return confirm(&#39;#{books.deleteConfirmation}&#39;)|" class="red"

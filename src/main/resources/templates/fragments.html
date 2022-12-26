@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head th:fragment="head">
-    <link rel="stylesheet" href="/static/styles/style.css" th:href="@{styles/style.css}"/>
-    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/static/styles/style.css" th:href="@{/styles/style.css}"/>
+    <meta name="viewport" content="width=device-width"/>
 </head>
 <body>
 <header th:fragment="header">
     <div class="container">
-        <img src="/static/resources/white_book_symbol.png" th:src="@{resources/white_book_symbol.png}"
+        <img src="/static/resources/white_book_symbol.png" th:src="@{/resources/white_book_symbol.png}"
              alt="Book symbol">
         <h1 th:text="#{general.appName}">Library</h1>
         <h1 class="right-header-buttons">
             <form method="get" action="/sign-out" class="sign-out-button">
                 <button type="submit">
-                    <img src="/static/resources/sign_out_symbol.png" th:src="@{resources/sign_out_symbol.png}"
+                    <img src="/static/resources/sign_out_symbol.png" th:src="@{/resources/sign_out_symbol.png}"
                          alt="Sign out symbol">
                 </button>
             </form>
             <form method="get" id="language-change">
                 <button type="button">
-                    <img src="/static/resources/white_globe_symbol.png" th:src="@{resources/white_globe_symbol.png}"
+                    <img src="/static/resources/white_globe_symbol.png" th:src="@{/resources/white_globe_symbol.png}"
                          alt="Globe symbol">
                 </button>
                 <div class="dropdown-content">
@@ -33,22 +33,22 @@
 </header>
 <nav th:fragment="nav">
     <div>
-        <button type="button" onclick="window.location.href='/books';" th:text="#{navigation.books}">Books</button>
+        <button type="button" onclick="window.location.href='/books/';" th:text="#{navigation.books}">Books</button>
         <th:block th:switch="${#authentication.getPrincipal().getRole()}">
             <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).READER}">
-                <button type="button" onclick="window.location.href='/orders';"
+                <button type="button" onclick="window.location.href='/orders/';"
                         th:text="#{navigation.myOrders}">My Orders
                 </button>
             </th:block>
             <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).LIBRARIAN}">
-                <button type="button" onclick="window.location.href='/orders';" th:text="#{navigation.orders}">Orders
+                <button type="button" onclick="window.location.href='/orders/';" th:text="#{navigation.orders}">Orders
                 </button>
             </th:block>
             <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).ADMIN}">
                 <button type="button" onclick="window.location.href='/add-book-page';"
                         th:text="#{navigation.addABook}">Add a Book
                 </button>
-                <button type="button" onclick="window.location.href='/users';" th:text="#{navigation.users}">Users
+                <button type="button" onclick="window.location.href='/users/';" th:text="#{navigation.users}">Users
                 </button>
             </th:block>
         </th:block>
@@ -56,26 +56,50 @@
 </nav>
 <div id="pagination" class="round-bordered-subject" th:fragment="pagination">
     <div>
-        <button type="button" onclick="window.location.href='?page=1'">|&lt;</button>
+        <button type="button" onclick="window.location.href='./1'">|&lt;</button>
     </div>
     <div>
-        <button type="button" th:onclick="|window.location.href=&#39;?page=${currentPage - 1}&#39;|">
+        <button type="button" th:onclick="|window.location.href=&#39;./${currentPage - 1}&#39;|">
             &lt;
         </button>
     </div>
-    <form method="get">
-        <input type="number" min="1" th:max="${maxPage}" step="1" name="page" th:value="${currentPage}"
-               value="1"/>
+    <form method="get" onsubmit="window.location.href=document.getElementById('target-page').value; return false;">
+        <input id="target-page" type="number" min="1" th:max="${maxPage}" step="1" value="1"/>
     </form>
     <div>
-        <button type="button" th:onclick="|window.location.href=&#39;?page=${currentPage + 1}&#39;|">
+        <button type="button" th:onclick="|window.location.href=&#39;./${currentPage + 1}&#39;|">
             &gt;
         </button>
     </div>
     <div>
-        <button type="button" th:onclick="|window.location.href=&#39;?page=${maxPage}&#39;|">&gt;|
+        <button type="button" th:onclick="|window.location.href=&#39;./${maxPage}&#39;|">&gt;|
         </button>
     </div>
+</div>
+<div class="round-bordered-subject block-container" th:fragment="book-parameters(book)">
+    <h1 th:text="|#{books.bookTitle}: ${book.title}|">Title: BookName</h1>
+    <p th:inline="text">
+        [[#{books.authors}]]:
+        <th:block th:each="author,iterStat : ${book.authors}">
+            <span th:text="${iterStat.last} ? ${author.name} : ${author.name} + ','" th:remove="tag">authors</span>
+        </th:block>
+    </p>
+    <p th:text="#{books.genre} + ': ' + ${book.genre.name}">Genre: Horror</p>
+    <p th:text="#{books.publisher} + ': ' + ${book.publisher.name}">Publisher: Some
+        publisher</p>
+    <p th:text="#{books.publishmentYear} + ': ' + ${book.publishmentYear}">Publishment Year:
+        2022</p>
+    <th:block
+            th:if="${#authentication.getPrincipal().getRole() != T(com.patiun.libraryspring.user.UserRole).READER}">
+        <p th:text="|#{books.inStock}: ${book.amount}|">In stock: 1</p>
+    </th:block>
+</div>
+<div class="round-bordered-subject block-container" th:fragment="user-parameters(user)">
+    <h1 th:text="|#{authorisation.loginLocale}: ${user.login}|">Login: userLogin</h1>
+    <p th:text="|#{users.firstName}: ${user.firstName}|">First name: John</p>
+    <p th:text="|#{users.lastName}: ${user.lastName}|">Last name: Smith</p>
+    <p th:text="#{users.role} + ': ' + #{${user.role}}">Role: reader</p>
+    <p th:text="#{users.blocked} + ': ' + #{${user.blocked}}">Blocked: false</p>
 </div>
 </body>
 </html>

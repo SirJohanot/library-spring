@@ -1,6 +1,7 @@
 package com.patiun.libraryspring.order;
 
 import com.patiun.libraryspring.book.Book;
+import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -47,5 +49,17 @@ public class BookOrderService {
                     return Objects.equals(orderingUser.getId(), userId);
                 })
                 .toList();
+    }
+
+    public BookOrder getOrderById(Integer id) throws ServiceException {
+        return getExistingOrderById(id);
+    }
+
+    private BookOrder getExistingOrderById(Integer id) throws ServiceException {
+        Optional<BookOrder> orderOptional = orderRepository.findById(id);
+        if (orderOptional.isEmpty()) {
+            throw new ServiceException("Could not find an order by id = " + id);
+        }
+        return orderOptional.get();
     }
 }

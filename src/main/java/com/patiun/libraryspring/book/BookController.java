@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class BookController {
@@ -31,8 +33,10 @@ public class BookController {
         return "redirect:/books";
     }
 
-    @GetMapping("/books")
-    public String books(@RequestParam(defaultValue = "1") Integer page, final Model model) {
+    @GetMapping({"/books/", "/books/{page}"})
+    public String books(@PathVariable(name = "page") Optional<Integer> optionalPage, final Model model) {
+        int page = optionalPage.orElse(1);
+
         List<Book> books = bookService.getAllBooks();
 
         List<Book> booksOfTheTargetPage = bookPaginator.getEntitiesOfPage(books, page, BOOKS_PER_PAGE);
@@ -46,8 +50,8 @@ public class BookController {
         return "books";
     }
 
-    @GetMapping("/book")
-    public String book(@RequestParam Integer id, final Model model) throws ServiceException {
+    @GetMapping("/book/{id}")
+    public String book(@PathVariable Integer id, final Model model) throws ServiceException {
         getBookByIdAndAddToModel(id, model);
 
         return "book";
@@ -56,11 +60,11 @@ public class BookController {
     @PostMapping("/delete-book")
     public String deleteBook(@RequestParam Integer id) throws ServiceException {
         bookService.deleteBookById(id);
-        return "redirect:/books";
+        return "redirect:/books/";
     }
 
-    @GetMapping("/edit-book-page")
-    public String editBookPage(@RequestParam Integer id, final Model model) throws ServiceException {
+    @GetMapping("/edit-book-page/{id}")
+    public String editBookPage(@PathVariable Integer id, final Model model) throws ServiceException {
         getBookByIdAndAddToModel(id, model);
 
         return "editBook";
@@ -69,7 +73,7 @@ public class BookController {
     @PostMapping("/edit-book")
     public String editBook(@RequestParam Integer id, @RequestParam String title, @RequestParam String authors, @RequestParam String genre, @RequestParam String publisher, @RequestParam("publishment-year") Integer publishmentYear, @RequestParam Integer amount) throws ServiceException {
         bookService.updateBookById(id, title, authors, genre, publisher, publishmentYear, amount);
-        return "redirect:/book?id=" + id;
+        return "redirect:/book/" + id;
     }
 
     private void getBookByIdAndAddToModel(Integer id, final Model model) throws ServiceException {

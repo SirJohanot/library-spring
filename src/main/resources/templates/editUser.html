@@ -38,7 +38,8 @@
             <!--            <div class="error-message">${requestScope.errorMessage}</div>-->
         </form>
         <form class="buttons-container">
-            <button type="submit" class="red" formaction="/user" formmethod="get" name="id" th:value="${user.id}"
+            <button type="button" class="red" th:data-parameter1="${user.login}"
+                    onclick="window.location.href='/user/'+this.getAttribute('data-parameter1')"
                     th:text="#{general.cancel}">Cancel
             </button>
             <button type="submit" form="user-changes" class="green" th:text="#{general.commitChanges}">Commit changes

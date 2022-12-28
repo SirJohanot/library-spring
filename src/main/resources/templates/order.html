@@ -47,10 +47,12 @@
                 </th:block>
                 <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).READER}">
                     <button type="submit" formaction="/collect-order" formmethod="post"
+                            th:if="${order.state == T(com.patiun.libraryspring.order.OrderState).APPROVED}"
                             th:text="#{orders.collectOrder}">
                         Collect order
                     </button>
                     <button type="submit" formaction="/return-order" formmethod="post"
+                            th:if="${order.state == T(com.patiun.libraryspring.order.OrderState).BOOK_TAKEN}"
                             th:text="#{orders.returnOrder}">Return order
                     </button>
                 </th:block>

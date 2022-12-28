@@ -56,13 +56,28 @@ public class BookOrderService {
     }
 
     public void approveOrderById(Integer id) throws ServiceException {
+        advanceOrderStateById(id, OrderState.APPROVED);
+    }
+
+    public void declineOrderById(Integer id) throws ServiceException {
+        advanceOrderStateById(id, OrderState.DECLINED);
+    }
+
+    public void advanceOrderStateById(Integer id, OrderState newState) throws ServiceException {
         BookOrder targetOrder = getExistingOrderById(id);
 
-        if (targetOrder.getState() != OrderState.PLACED) {
-            throw new ServiceException("Cannot approve order by id = " + id + ": This order's state is not " + OrderState.PLACED);
+        OrderState currentState = targetOrder.getState();
+        if (currentState.compareTo(newState) >= 0) {
+            throw new ServiceException("Cannot change the state of order by id = " + id + " from " + currentState + " to " + newState + ": that would regress its state");
+        }
+        if (newState == OrderState.DECLINED && currentState == OrderState.APPROVED) {
+            throw new ServiceException("Cannot decline the approved order by id = " + id);
+        }
+        if (newState == OrderState.BOOK_RETURNED && currentState != OrderState.BOOK_TAKEN) {
+            throw new ServiceException("Cannot change the state of the order by id = " + id + ": The book has not been taken yet, it cannot yet be returned");
         }
 
-        targetOrder.setState(OrderState.APPROVED);
+        targetOrder.setState(newState);
         orderRepository.save(targetOrder);
     }
 
@@ -73,4 +88,5 @@ public class BookOrderService {
         }
         return orderOptional.get();
     }
+
 }

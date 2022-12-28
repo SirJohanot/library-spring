@@ -55,6 +55,17 @@ public class BookOrderService {
         return getExistingOrderById(id);
     }
 
+    public void approveOrderById(Integer id) throws ServiceException {
+        BookOrder targetOrder = getExistingOrderById(id);
+
+        if (targetOrder.getState() != OrderState.PLACED) {
+            throw new ServiceException("Cannot approve order by id = " + id + ": This order's state is not " + OrderState.PLACED);
+        }
+
+        targetOrder.setState(OrderState.APPROVED);
+        orderRepository.save(targetOrder);
+    }
+
     private BookOrder getExistingOrderById(Integer id) throws ServiceException {
         Optional<BookOrder> orderOptional = orderRepository.findById(id);
         if (orderOptional.isEmpty()) {

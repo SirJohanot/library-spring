@@ -67,6 +67,13 @@ public class BookOrderController {
         return "orders";
     }
 
+    @PostMapping("/approve-order")
+    public String approveOrder(@RequestParam Integer id) throws ServiceException {
+        orderService.approveOrderById(id);
+
+        return "redirect:/order/" + id;
+    }
+
     @GetMapping("/order/{id}")
     public String order(@PathVariable Integer id, final Model model, final Authentication authentication) throws ServiceException {
         BookOrder targetOrder = orderService.getOrderById(id);

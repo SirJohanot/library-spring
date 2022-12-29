@@ -63,10 +63,17 @@ public class BookOrderService {
         advanceOrderStateById(id, OrderState.DECLINED);
     }
 
+    public void collectOrderById(Integer id) throws ServiceException {
+        advanceOrderStateById(id, OrderState.BOOK_TAKEN);
+    }
+
     public void advanceOrderStateById(Integer id, OrderState newState) throws ServiceException {
         BookOrder targetOrder = getExistingOrderById(id);
 
         OrderState currentState = targetOrder.getState();
+        if (currentState == OrderState.DECLINED || currentState == OrderState.BOOK_RETURNED) {
+            throw new ServiceException("Cannot change the state of order by id = " + id + " from " + currentState + " to " + newState + ": the order has already reaches the end of its lifecycle");
+        }
         if (currentState.compareTo(newState) >= 0) {
             throw new ServiceException("Cannot change the state of order by id = " + id + " from " + currentState + " to " + newState + ": that would regress its state");
         }

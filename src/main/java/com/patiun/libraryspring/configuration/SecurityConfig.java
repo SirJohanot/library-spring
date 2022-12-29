@@ -22,7 +22,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/books/**", "/", "/book/**").authenticated()
                         .requestMatchers("/add-book-page", "/add-book", "/edit-book-page/**", "/edit-book", "/users/**", "/user/**", "/edit-user-page/**", "/edit-user", "/switch-user-blocked").hasAuthority("ADMIN")
-                        .requestMatchers("/place-order").hasAuthority("READER")
+                        .requestMatchers("/place-order", "/collect-order", "/return-order").hasAuthority("READER")
                         .requestMatchers("/approve-order", "/decline-order").hasAuthority("LIBRARIAN")
                         .requestMatchers("/orders/**", "/order/**").hasAnyAuthority("READER", "LIBRARIAN")
                         .anyRequest().permitAll()

@@ -81,6 +81,24 @@ public class BookOrderController {
         return "redirect:/order/" + id;
     }
 
+    @PostMapping("/collect-order")
+    public String declineOrder(@RequestParam Integer id, final Authentication authentication) throws ServiceException {
+        User currentUser = (User) authentication.getPrincipal();
+        Integer currentUserId = currentUser.getId();
+
+        BookOrder targetOrder = orderService.getOrderById(id);
+        User targetOrderUser = targetOrder.getUser();
+        Integer targetOrderUserId = targetOrderUser.getId();
+
+        if (!currentUserId.equals(targetOrderUserId)) {
+            throw new UnsupportedOperationException("You cannot collect an order which is not yours");
+        }
+        
+        orderService.collectOrderById(id);
+
+        return "redirect:/order/" + id;
+    }
+
     @GetMapping("/order/{id}")
     public String order(@PathVariable Integer id, final Model model, final Authentication authentication) throws ServiceException {
         BookOrder targetOrder = orderService.getOrderById(id);

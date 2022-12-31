@@ -82,21 +82,36 @@ public class BookOrderController {
     }
 
     @PostMapping("/collect-order")
-    public String declineOrder(@RequestParam Integer id, final Authentication authentication) throws ServiceException {
-        User currentUser = (User) authentication.getPrincipal();
-        Integer currentUserId = currentUser.getId();
-
-        BookOrder targetOrder = orderService.getOrderById(id);
-        User targetOrderUser = targetOrder.getUser();
-        Integer targetOrderUserId = targetOrderUser.getId();
-
-        if (!currentUserId.equals(targetOrderUserId)) {
+    public String collectOrder(@RequestParam Integer id, final Authentication authentication) throws ServiceException {
+        if (orderDoesNotBelongToTheAuthenticatedUser(id, authentication)) {
             throw new UnsupportedOperationException("You cannot collect an order which is not yours");
         }
-        
+
         orderService.collectOrderById(id);
 
         return "redirect:/order/" + id;
+    }
+
+    @PostMapping("/return-order")
+    public String returnOrder(@RequestParam Integer id, final Authentication authentication) throws ServiceException {
+        if (orderDoesNotBelongToTheAuthenticatedUser(id, authentication)) {
+            throw new UnsupportedOperationException("You cannot return an order which is not yours");
+        }
+
+        orderService.returnOrderById(id);
+
+        return "redirect:/order/" + id;
+    }
+
+    private boolean orderDoesNotBelongToTheAuthenticatedUser(final Integer orderId, final Authentication authentication) throws ServiceException {
+        User currentUser = (User) authentication.getPrincipal();
+        Integer currentUserId = currentUser.getId();
+
+        BookOrder targetOrder = orderService.getOrderById(orderId);
+        User targetOrderUser = targetOrder.getUser();
+        Integer targetOrderUserId = targetOrderUser.getId();
+
+        return !currentUserId.equals(targetOrderUserId);
     }
 
     @GetMapping("/order/{id}")

@@ -67,6 +67,15 @@ public class BookOrderService {
         advanceOrderStateById(id, OrderState.BOOK_TAKEN);
     }
 
+    public void returnOrderById(Integer id) throws ServiceException {
+        BookOrder targetOrder = getExistingOrderById(id);
+        LocalDate currentDate = LocalDate.now();
+        targetOrder.setReturnDate(currentDate);
+        orderRepository.save(targetOrder);
+
+        advanceOrderStateById(id, OrderState.BOOK_RETURNED);
+    }
+
     public void advanceOrderStateById(Integer id, OrderState newState) throws ServiceException {
         BookOrder targetOrder = getExistingOrderById(id);
 

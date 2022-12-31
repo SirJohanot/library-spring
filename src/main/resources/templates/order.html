@@ -19,7 +19,8 @@
             <p th:text="|#{orders.endDate}: ${#temporals.format(order.endDate, #messages.msg('general.dateFormat'))}|">
                 End date: 02.01.2001
             </p>
-            <p th:text="|#{orders.returnDate}: ${#temporals.format(order.returnDate, #messages.msg('general.dateFormat'))}|">
+            <p th:if="${order.returnDate != null}"
+               th:text="|#{orders.returnDate}: ${#temporals.format(order.returnDate, #messages.msg('general.dateFormat'))}|">
                 Return date: 01.01.2001
             </p>
             <p th:text="|#{orders.rentalType}: #{${order.rentalType}}|">

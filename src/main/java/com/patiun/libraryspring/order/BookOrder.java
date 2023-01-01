@@ -4,7 +4,9 @@ import com.patiun.libraryspring.book.Book;
 import com.patiun.libraryspring.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -35,10 +37,12 @@ public class BookOrder {
     private RentalType rentalType;
 
     @NotNull
+    @PastOrPresent
     @Column(name = "start_date")
     private LocalDate startDate;
 
     @NotNull
+    @FutureOrPresent
     @Column(name = "end_date")
     private LocalDate endDate;
 

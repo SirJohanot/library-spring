@@ -2,9 +2,7 @@ package com.patiun.libraryspring.book;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,12 +11,14 @@ import java.util.Objects;
 @Table(name = "book")
 public class Book {
 
+    private static final String IS_A_WORD_REGEX = "[\\p{L}\\w]+.*";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
+    @Pattern(regexp = IS_A_WORD_REGEX)
     @Column(name = "title", length = 64)
     private String title;
 
@@ -46,6 +46,7 @@ public class Book {
 
     @NotNull
     @Min(1900)
+    @Max(2500)
     @Column(name = "publishment_year")
     private Integer publishmentYear;
 

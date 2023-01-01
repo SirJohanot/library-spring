@@ -1,8 +1,9 @@
 package com.patiun.libraryspring.user;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,27 +16,29 @@ import java.util.Objects;
 @Table(name = "\"user\"")
 public class User implements UserDetails {
 
+    private static final String IS_A_WORD_REGEX = "[\\p{L}\\w]+.*";
+    private static final String PASSWORD_REGEX = "^[\\p{L}(0-9)]+$";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
     @Column(name = "login", length = 64, unique = true)
     private String login;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
+    @Pattern(regexp = PASSWORD_REGEX)
     @Column(name = "password", length = 64)
     private String password;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
+    @Pattern(regexp = IS_A_WORD_REGEX)
     @Column(name = "first_name", length = 64)
     private String firstName;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
+    @Pattern(regexp = IS_A_WORD_REGEX)
     @Column(name = "last_name", length = 64)
     private String lastName;
 

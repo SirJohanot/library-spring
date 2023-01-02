@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title th:text="#{errorPage.title}">Error | Library</title>
+    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+</head>
+<body>
+<header th:replace="~{fragments.html :: header}">
+</header>
+<section id="main-content">
+    <div class="main-content-centered-element">
+        <div class="round-bordered-subject block-container">
+            <h1 th:text="${error}">error</h1>
+            <p th:text="${timestamp}">date</p>
+            <p th:text="${path}">path</p>
+            <p th:text="${status}">status</p>
+            <p th:text="${message}">message</p>
+            <p th:text="${exception}">exception</p>
+            <p th:text="${trace}">trace</p>
+        </div>
+    </div>
+</section>
+</body>
+</html>

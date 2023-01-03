@@ -4,13 +4,13 @@ import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.utility.Paginator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,10 +29,29 @@ public class UserController {
         this.userPaginator = userPaginator;
     }
 
+    @GetMapping("/sign-up")
+    public String signUpPage(final Model model) throws ServletException {
+        UserRegistrationDto registrationDto = new UserRegistrationDto();
+        model.addAttribute("registrationDto", registrationDto);
+        return "signUp";
+    }
+
     @PostMapping("/sign-up")
-    public String signUp(@RequestParam String login, @RequestParam String password, @RequestParam("confirmed-password") String confirmedPassword, @RequestParam("first-name") String firstName, @RequestParam("last-name") String lastName, final Model model, final HttpServletRequest request) throws ServletException {
+    public String signUp(@ModelAttribute("registrationDto") @Valid UserRegistrationDto registrationDto, final BindingResult result, final Model model, final HttpServletRequest request) throws ServletException {
+        if (result.hasErrors()) {
+            List<ObjectError> allErrors = result.getAllErrors();
+            ObjectError firstError = allErrors.get(0);
+            String errorMessage = firstError.getDefaultMessage();
+            model.addAttribute("error", errorMessage);
+            return "signUp";
+        }
+
+        String login = registrationDto.getLogin();
+        String password = registrationDto.getPassword();
+        String firstName = registrationDto.getFirstName();
+        String lastName = registrationDto.getLastName();
         try {
-            userService.signUp(login, password, confirmedPassword, firstName, lastName);
+            userService.signUp(login, password, firstName, lastName);
         } catch (ServiceException e) {
             model.addAttribute("error", e.getMessage());
             return "signUp";

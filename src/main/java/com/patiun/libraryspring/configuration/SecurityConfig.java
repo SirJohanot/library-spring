@@ -28,15 +28,16 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .formLogin((form) -> form
-                        .loginPage("/sign-in-page")
+                        .loginPage("/sign-in")
                         .loginProcessingUrl("/sign-in")
                         .usernameParameter("login")
                         .passwordParameter("password")
                         .defaultSuccessUrl("/", false)
+                        .failureUrl("/sign-in?error=true")
                 )
                 .logout(logout -> logout
                         .logoutUrl("/sign-out")
-                        .logoutSuccessUrl("/sign-in-page")
+                        .logoutSuccessUrl("/sign-in")
                         .invalidateHttpSession(true)
                 );
         http.csrf().disable();

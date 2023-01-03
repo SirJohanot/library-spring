@@ -22,8 +22,8 @@ public class Book {
     @Column(name = "title", length = 64)
     private String title;
 
-    @NotNull
     @NotEmpty
+    @Valid
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "book_author",

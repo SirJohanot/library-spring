@@ -10,14 +10,14 @@ import java.util.Objects;
 @Table(name = "author")
 public class Author {
 
-    private static final String IS_A_WORD_REGEX = "[\\p{L}\\w]+.*";
+    private static final String HUMAN_NAME_REGEX = "\\p{L}+.*";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @NotBlank
-    @Pattern(regexp = IS_A_WORD_REGEX)
+    @Pattern(regexp = HUMAN_NAME_REGEX)
     @Column(name = "name", length = 128, unique = true)
     private String name;
 

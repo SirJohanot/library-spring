@@ -16,7 +16,7 @@ import java.util.Objects;
 @Table(name = "\"user\"")
 public class User implements UserDetails {
 
-    private static final String IS_A_WORD_REGEX = "\\p{L}+.*";
+    private static final String HUMAN_NAME_REGEX = "\\p{L}+.*";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,12 +31,12 @@ public class User implements UserDetails {
     private String password;
 
     @NotBlank(message = "First name must not be blank")
-    @Pattern(regexp = IS_A_WORD_REGEX, message = "First name must start with an alphabetical character")
+    @Pattern(regexp = HUMAN_NAME_REGEX, message = "First name must start with an alphabetical character")
     @Column(name = "first_name", length = 64)
     private String firstName;
 
     @NotBlank(message = "Last name must not be blank")
-    @Pattern(regexp = IS_A_WORD_REGEX, message = "Last name must start with an alphabetical character")
+    @Pattern(regexp = HUMAN_NAME_REGEX, message = "Last name must start with an alphabetical character")
     @Column(name = "last_name", length = 64)
     private String lastName;
 

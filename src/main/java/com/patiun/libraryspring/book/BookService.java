@@ -43,8 +43,9 @@ public class BookService {
     }
 
     public void deleteBookById(Integer id) throws ServiceException {
-        getExistingBookById(id);
-        bookRepository.deleteById(id);
+        Book targetBook = getExistingBookById(id);
+        targetBook.setDeleted(true);
+        bookRepository.save(targetBook);
     }
 
     public void updateBookById(Integer id, String title, String authors, String genreName, String publisherName, Integer publishmentYear, Integer amount) throws ServiceException {

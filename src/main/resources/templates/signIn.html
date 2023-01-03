@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title th:text="#{authorisation.signInLocale} + ' | ' + #{general.appName}">Sign in | Library</title>
+    <title th:text="#{authentication.signInLocale} + ' | ' + #{general.appName}">Sign in | Library</title>
     <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
 </head>
 <body>
@@ -9,12 +9,13 @@
 </header>
 <section id="main-content">
     <form class="login-form round-bordered-subject" method="post" action="/sign-in" autocomplete="on">
-        <input type="text" name="login" th:placeholder="#{authorisation.loginLocale}" placeholder="Login"/>
-        <input type="password" name="password" th:placeholder="#{authorisation.passwordLocale}" placeholder="Password"/>
-        <button type="submit" th:text="#{authorisation.signInLocale}">Sign in</button>
-        <button type="button" onclick="window.location.href='/sign-up-page';" th:text="#{userCreation.signUp}">Sign up
+        <input type="text" name="login" th:placeholder="#{authentication.loginLocale}" placeholder="Login"/>
+        <input type="password" name="password" th:placeholder="#{authentication.passwordLocale}"
+               placeholder="Password"/>
+        <button type="submit" th:text="#{authentication.signInLocale}">Sign in</button>
+        <button type="button" onclick="window.location.href='/sign-up';" th:text="#{userCreation.signUp}">Sign up
         </button>
-        <!--        <div class="error-message">${requestScope.errorMessage}</div>-->
+        <div th:if="${param.error}" th:text="#{authentication.error}" class="error-message">Invalid credentials</div>
     </form>
 </section>
 </body>

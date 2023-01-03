@@ -95,7 +95,7 @@
     </th:block>
 </div>
 <div class="round-bordered-subject block-container" th:fragment="user-parameters(user)">
-    <h1 th:text="|#{authorisation.loginLocale}: ${user.login}|">Login: userLogin</h1>
+    <h1 th:text="|#{authentication.loginLocale}: ${user.login}|">Login: userLogin</h1>
     <p th:text="|#{users.firstName}: ${user.firstName}|">First name: John</p>
     <p th:text="|#{users.lastName}: ${user.lastName}|">Last name: Smith</p>
     <p th:text="#{users.role} + ': ' + #{${user.role}}">Role: reader</p>

@@ -16,37 +16,35 @@ import java.util.Objects;
 @Table(name = "\"user\"")
 public class User implements UserDetails {
 
-    private static final String IS_A_WORD_REGEX = "[\\p{L}\\w]+.*";
-    private static final String PASSWORD_REGEX = "^[\\p{L}(0-9)]+$";
+    private static final String IS_A_WORD_REGEX = "\\p{L}+.*";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotBlank
+    @NotBlank(message = "Login must not be blank")
     @Column(name = "login", length = 64, unique = true)
     private String login;
 
-    @NotBlank
-    @Pattern(regexp = PASSWORD_REGEX)
+    @NotBlank(message = "Password must not be blank")
     @Column(name = "password", length = 64)
     private String password;
 
-    @NotBlank
-    @Pattern(regexp = IS_A_WORD_REGEX)
+    @NotBlank(message = "First name must not be blank")
+    @Pattern(regexp = IS_A_WORD_REGEX, message = "First name must start with an alphabetical character")
     @Column(name = "first_name", length = 64)
     private String firstName;
 
-    @NotBlank
-    @Pattern(regexp = IS_A_WORD_REGEX)
+    @NotBlank(message = "Last name must not be blank")
+    @Pattern(regexp = IS_A_WORD_REGEX, message = "Last name must start with an alphabetical character")
     @Column(name = "last_name", length = 64)
     private String lastName;
 
-    @NotNull
+    @NotNull(message = "Blocked must not be null")
     @Column(name = "is_blocked")
     private Boolean isBlocked;
 
-    @NotNull
+    @NotNull(message = "Role must not be null")
     @Column(name = "role", length = 64)
     @Enumerated(EnumType.STRING)
     private UserRole role;

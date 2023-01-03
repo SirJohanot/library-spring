@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
         return foundUser;
     }
 
-    public void signUp(String login, String password, String confirmedPassword, String firstName, String lastName) throws ServiceException {
+    public void signUp(String login, String password, String firstName, String lastName) throws ServiceException {
         if (userRepository.findByLogin(login) != null) {
             throw new ServiceException("A user with such login already exists");
         }

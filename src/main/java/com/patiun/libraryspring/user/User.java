@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.user;
 
+import com.patiun.libraryspring.validation.Regexp;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,8 +17,6 @@ import java.util.Objects;
 @Table(name = "\"user\"")
 public class User implements UserDetails {
 
-    private static final String IS_A_WORD_REGEX = "\\p{L}+.*";
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -31,12 +30,12 @@ public class User implements UserDetails {
     private String password;
 
     @NotBlank(message = "First name must not be blank")
-    @Pattern(regexp = IS_A_WORD_REGEX, message = "First name must start with an alphabetical character")
+    @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character")
     @Column(name = "first_name", length = 64)
     private String firstName;
 
     @NotBlank(message = "Last name must not be blank")
-    @Pattern(regexp = IS_A_WORD_REGEX, message = "Last name must start with an alphabetical character")
+    @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character")
     @Column(name = "last_name", length = 64)
     private String lastName;
 

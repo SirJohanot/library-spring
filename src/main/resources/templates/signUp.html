@@ -22,7 +22,7 @@
                required="required"/>
         <input type="text" th:field="*{lastName}" th:placeholder="#{users.lastName}" placeholder="Last name"
                required="required"/>
-        <input type="submit" th:value="#{userCreation.signUp}"/>
+        <button type="submit" th:text="#{userCreation.signUp}">Sign up</button>
         <div class="error-message" th:text="${error}">error</div>
     </form>
 </section>

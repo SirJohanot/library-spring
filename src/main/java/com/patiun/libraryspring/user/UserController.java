@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/sign-up")
-    public String signUpPage(final Model model) throws ServletException {
+    public String signUpPage(final Model model) {
         UserRegistrationDto registrationDto = new UserRegistrationDto();
         model.addAttribute("registrationDto", registrationDto);
         return "signUp";
@@ -39,10 +39,7 @@ public class UserController {
     @PostMapping("/sign-up")
     public String signUp(@ModelAttribute("registrationDto") @Valid UserRegistrationDto registrationDto, final BindingResult result, final Model model, final HttpServletRequest request) throws ServletException {
         if (result.hasErrors()) {
-            List<ObjectError> allErrors = result.getAllErrors();
-            ObjectError firstError = allErrors.get(0);
-            String errorMessage = firstError.getDefaultMessage();
-            model.addAttribute("error", errorMessage);
+            bindErrorToModelAttribute(result, model);
             return "signUp";
         }
 
@@ -86,7 +83,7 @@ public class UserController {
         return "user";
     }
 
-    @GetMapping("/edit-user-page/{id}")
+    @GetMapping("/edit-user/{id}")
     public String editUserPage(@PathVariable Integer id, final Model model) throws ServiceException {
         getUserByIdAndAddToModel(id, model);
 
@@ -94,8 +91,16 @@ public class UserController {
     }
 
     @PostMapping("/edit-user")
-    public String editUser(@RequestParam Integer id, @RequestParam("first-name") String firstName, @RequestParam("last-name") String lastName, @RequestParam UserRole role) throws ServiceException {
-        userService.updateUserById(id, firstName, lastName, role);
+    public String editUser(@RequestParam Integer id, @ModelAttribute("user") @Valid UserEditDto editDto, final BindingResult result, final Model model) throws ServiceException {
+        if (result.hasErrors()) {
+            bindErrorToModelAttribute(result, model);
+            return editUserPage(id, model);
+        }
+
+        String newFirstName = editDto.getFirstName();
+        String newLastName = editDto.getLastName();
+        UserRole newRole = editDto.getRole();
+        userService.updateUserById(id, newFirstName, newLastName, newRole);
 
         return "redirect:/user/" + getLoginOfUserById(id);
     }
@@ -116,6 +121,13 @@ public class UserController {
         User user = userService.getUserById(id);
 
         return user.getLogin();
+    }
+
+    private void bindErrorToModelAttribute(final BindingResult result, final Model model) {
+        List<ObjectError> allErrors = result.getAllErrors();
+        ObjectError firstError = allErrors.get(0);
+        String errorMessage = firstError.getDefaultMessage();
+        model.addAttribute("error", errorMessage);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.book;
 
+import com.patiun.libraryspring.validation.Regexp;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -10,14 +11,12 @@ import java.util.Objects;
 @Table(name = "author")
 public class Author {
 
-    private static final String HUMAN_NAME_REGEX = "\\p{L}+.*";
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @NotBlank
-    @Pattern(regexp = HUMAN_NAME_REGEX)
+    @Pattern(regexp = Regexp.HUMAN_NAME)
     @Column(name = "name", length = 128, unique = true)
     private String name;
 

@@ -1,6 +1,7 @@
 package com.patiun.libraryspring.user;
 
 import com.patiun.libraryspring.validation.PasswordsMatch;
+import com.patiun.libraryspring.validation.Regexp;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -8,8 +9,6 @@ import java.util.Objects;
 
 @PasswordsMatch
 public class UserRegistrationDto {
-
-    private static final String IS_A_WORD_REGEX = "\\p{L}+.*";
 
     @NotBlank(message = "Login must not be blank")
     private String login;
@@ -19,11 +18,11 @@ public class UserRegistrationDto {
     private String confirmedPassword;
 
     @NotBlank(message = "First name must not be blank")
-    @Pattern(regexp = IS_A_WORD_REGEX, message = "First name must start with an alphabetical character")
+    @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character")
     private String firstName;
 
     @NotBlank(message = "Last name must not be blank")
-    @Pattern(regexp = IS_A_WORD_REGEX, message = "Last name must start with an alphabetical character")
+    @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character")
     private String lastName;
 
     public UserRegistrationDto() {

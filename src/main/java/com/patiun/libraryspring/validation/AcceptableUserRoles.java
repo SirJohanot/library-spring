@@ -1,15 +1,16 @@
 package com.patiun.libraryspring.validation;
 
+import com.patiun.libraryspring.user.UserRole;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
-@Target({ElementType.TYPE})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordsMatchValidator.class)
+@Constraint(validatedBy = AcceptableUserRolesValidator.class)
 @Documented
-public @interface PasswordsMatch {
+public @interface AcceptableUserRoles {
 
     String message() default "Passwords must match";
 
@@ -17,4 +18,5 @@ public @interface PasswordsMatch {
 
     Class<? extends Payload>[] payload() default {};
 
+    UserRole[] value();
 }

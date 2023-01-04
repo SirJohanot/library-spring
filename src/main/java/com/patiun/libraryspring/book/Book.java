@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.book;
 
+import com.patiun.libraryspring.validation.Regexp;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -11,14 +12,12 @@ import java.util.Objects;
 @Table(name = "book")
 public class Book {
 
-    private static final String IS_A_WORD_REGEX = "[\\p{L}\\w]+.*";
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @NotBlank
-    @Pattern(regexp = IS_A_WORD_REGEX)
+    @Pattern(regexp = Regexp.WORD)
     @Column(name = "title", length = 64)
     private String title;
 

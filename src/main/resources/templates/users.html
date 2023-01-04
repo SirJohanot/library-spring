@@ -16,18 +16,20 @@
         </form>
         <div>
             <th:block th:each="user : ${users}">
-                <button type="button" th:data-parameter1="${user.login}"
-                        onclick="window.location.href='/user/'+this.getAttribute('data-parameter1')"
-                        class="block-container round-bordered-subject">
-                    <h1 th:text="${user.login}">userLogin</h1>
-                    <div class="block-parameters">
-                        <p th:text="#{users.firstName} + ': ' + ${user.firstName}">First name: John</p>
-                        <p th:text="#{users.lastName} + ': ' + ${user.lastName}">Last name: Smith</p>
-                        <p th:text="#{users.role} + ': ' + #{${user.role}}">Role: reader</p>
-                        <p th:text="#{users.blocked} + ': ' + #{${user.blocked}}">Blocked:
-                            false</p>
-                    </div>
-                </button>
+                <th:block th:object="${user}">
+                    <button type="button" th:data-parameter1="*{login}"
+                            onclick="window.location.href='/user/'+this.getAttribute('data-parameter1')"
+                            class="block-container round-bordered-subject">
+                        <h1 th:text="${user.login}">userLogin</h1>
+                        <div class="block-parameters">
+                            <p th:text="#{users.firstName} + ': ' + *{firstName}">First name: John</p>
+                            <p th:text="#{users.lastName} + ': ' + *{lastName}">Last name: Smith</p>
+                            <p th:text="#{users.role} + ': ' + #{*{role}}">Role: reader</p>
+                            <p th:text="#{users.blocked} + ': ' + #{*{blocked}}">Blocked:
+                                false</p>
+                        </div>
+                    </button>
+                </th:block>
             </th:block>
         </div>
         <div th:replace="~{fragments.html :: pagination}"></div>

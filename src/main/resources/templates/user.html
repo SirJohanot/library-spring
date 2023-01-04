@@ -12,16 +12,16 @@
 <section id="main-content">
     <div id="main-content-centered-element">
         <div th:replace="~{fragments.html :: user-parameters(${user})}"></div>
-        <form class="buttons-container">
-            <input type="hidden" name="id" th:value="${user.id}"/>
-            <th:block th:if="${user.role != T(com.patiun.libraryspring.user.UserRole).ADMIN}">
-                <button type="button" th:onclick="|window.location.href=&#39;/edit-user-page/${user.id}&#39;|"
+        <form class="buttons-container" th:object="${user}">
+            <input type="hidden" name="id" th:value="*{id}"/>
+            <th:block th:if="*{role != T(com.patiun.libraryspring.user.UserRole).ADMIN}">
+                <button type="button" th:onclick="|window.location.href=&#39;/edit-user/*{id}&#39;|"
                         th:text="#{general.edit}">Edit
                 </button>
                 <button type="submit" formaction="/switch-user-blocked" formmethod="post"
-                        th:onclick="'return confirm(\'' + (${user.blocked} ? #{users.unblockConfirmation} : #{users.blockConfirmation}) + '\')'"
+                        th:onclick="'return confirm(\'' + (*{blocked} ? #{users.unblockConfirmation} : #{users.blockConfirmation}) + '\')'"
                         class="red"
-                        th:text="${user.blocked} ? #{users.unblock} : #{users.block}">Block/Unblock
+                        th:text="*{blocked} ? #{users.unblock} : #{users.block}">Block/Unblock
                 </button>
             </th:block>
         </form>

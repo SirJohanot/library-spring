@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title th:text="#{mainPage.title}">Home | Library</title>
-    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+<head th:insert="~{fragments.html :: head(#{mainPage.title})}">
 </head>
 <body>
 <header th:replace="~{fragments.html :: header}">

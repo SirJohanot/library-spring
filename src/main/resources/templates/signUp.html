@@ -1,8 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title th:text="#{userCreation.signUp} + ' | ' + #{general.appName}">Sign up | Library</title>
-    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+<head th:insert="~{fragments.html :: head(#{userCreation.signUp} + ' | ' + #{general.appName})}">
 </head>
 <body>
 <header th:replace="~{fragments.html :: header}">

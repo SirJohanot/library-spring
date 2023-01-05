@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title th:text="${order.user.login} + ' - ' + ${order.book.title} + ' | ' + #{general.appName}">userName - bookTitle
-        | Library</title>
-    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+<head th:insert="~{fragments.html :: head(${order.user.login} + ' - ' + ${order.book.title} + ' | ' + #{general.appName})}">
 </head>
 <body>
 <header th:replace="~{fragments.html :: header}">

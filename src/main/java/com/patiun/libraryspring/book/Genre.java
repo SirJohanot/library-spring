@@ -15,8 +15,8 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotBlank
-    @Pattern(regexp = Regexp.WORD)
+    @NotBlank(message = "Genre name must not be blank")
+    @Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number")
     @Column(name = "name", length = 64, unique = true)
     private String name;
 

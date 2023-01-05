@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title th:text="${book.title} + ' | ' + #{general.appName}">BookName | Library</title>
-    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+    <th:block th:insert="~{fragments.html :: head(${book.title} + ' | ' + #{general.appName})}"></th:block>
     <script>
         function setDaysRadiosDisabled(disabled) {
             let daysRadios = document.getElementsByName("days");
@@ -24,7 +23,7 @@
             <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).ADMIN}">
                 <form class="buttons-container">
                     <input type="hidden" name="id" th:value="${book.id}"/>
-                    <button type="button" th:onclick="|window.location.href=&#39;/edit-book-page/${book.id}&#39;|"
+                    <button type="button" th:onclick="|window.location.href=&#39;/edit-book/${book.id}&#39;|"
                             th:text="#{general.edit}">Edit
                     </button>
                     <button type="submit" formaction="/delete-book" formmethod="post"

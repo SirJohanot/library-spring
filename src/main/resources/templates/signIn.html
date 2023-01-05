@@ -1,8 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title th:text="#{authentication.signInLocale} + ' | ' + #{general.appName}">Sign in | Library</title>
-    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+<head th:insert="~{fragments.html :: head(#{authentication.signInLocale} + ' | ' + #{general.appName})}">
 </head>
 <body>
 <header th:replace="~{fragments.html :: header}">

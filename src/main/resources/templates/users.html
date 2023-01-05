@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title th:text="#{navigation.users} + ' | ' + #{general.appName}">Users | Library</title>
-    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+<head th:insert="~{fragments.html :: head(#{navigation.users} + ' | ' + #{general.appName})}">
 </head>
 <body>
 <header th:replace="~{fragments.html :: header}">

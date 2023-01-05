@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head th:fragment="head">
+<head th:fragment="head(title)">
+    <title th:text="${title}">Page | Library</title>
     <link rel="stylesheet" href="/static/styles/style.css" th:href="@{/styles/style.css}"/>
     <meta name="viewport" content="width=device-width"/>
 </head>
@@ -45,7 +46,7 @@
                 </button>
             </th:block>
             <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).ADMIN}">
-                <button type="button" onclick="window.location.href='/add-book-page';"
+                <button type="button" onclick="window.location.href='/add-book';"
                         th:text="#{navigation.addABook}">Add a Book
                 </button>
                 <button type="button" onclick="window.location.href='/users/';" th:text="#{navigation.users}">Users
@@ -103,5 +104,27 @@
         <p th:text="#{users.blocked} + ': ' + #{*{blocked}}">Blocked: false</p>
     </th:block>
 </div>
+<th:block th:fragment="book-changes-form(editDto, action, id)">
+    <form id="book-changes" class="round-bordered-subject block-container" method="post"
+          th:action="${action}" th:object="${editDto}">
+        <input th:if="${id!=null}" type="hidden" name="id" th:value="${id}"/>
+        <label for="title" th:text="|#{books.bookTitle}:|">Title:</label>
+        <input id="title" type="text" th:field="*{title}" required="required"/>
+        <label for="authors" th:text="|#{books.authors} (#{books.commaSeparated}):|">Author(s) (comma
+            separated):</label>
+        <input id="authors" type="text" th:field="*{authors}" required="required"/>
+        <label for="genre" th:text="|#{books.genre}:|">Genre:</label>
+        <input id="genre" type="text" th:field="*{genre}" required="required"/>
+        <label for="publisher" th:text="|#{books.publisher}:|">Publisher:</label>
+        <input id="publisher" type="text" th:field="*{publisher}" required="required"/>
+        <label for="publishment-year" th:text="|#{books.publishmentYear}:|">Publishment year:</label>
+        <input id="publishment-year" type="number" min="1900" max="2025" step="1"
+               th:field="*{publishmentYear}" required="required"/>
+        <label for="amount" th:text="|#{books.inStock}:|">In stock:</label>
+        <input id="amount" type="number" min="0" step="1" th:field="*{amount}"
+               required="required"/>
+        <div class="error-message" th:text="${error}">error</div>
+    </form>
+</th:block>
 </body>
 </html>

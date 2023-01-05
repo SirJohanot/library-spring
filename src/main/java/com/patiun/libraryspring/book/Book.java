@@ -16,12 +16,12 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotBlank
-    @Pattern(regexp = Regexp.WORD)
+    @NotBlank(message = "Book title must not be blank")
+    @Pattern(regexp = Regexp.HUMAN_NAME, message = "Book title must start with an alphabetical character or a number")
     @Column(name = "title", length = 64)
     private String title;
 
-    @NotEmpty
+    @NotEmpty(message = "Author list must not be empty")
     @Valid
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -31,30 +31,30 @@ public class Book {
     )
     private List<Author> authors;
 
-    @NotNull
+    @NotNull(message = "Genre must not be null")
     @Valid
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @NotNull
+    @NotNull(message = "Publisher must not be null")
     @Valid
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
-    @NotNull
-    @Min(1900)
-    @Max(2500)
+    @NotNull(message = "Publishment year must not be null")
+    @Min(value = 1900, message = "Publishment year must be at least 1900")
+    @Max(value = 2500, message = "Publishment year must be at most 2500")
     @Column(name = "publishment_year")
     private Integer publishmentYear;
 
-    @NotNull
-    @Min(0)
+    @NotNull(message = "Amount must not be null")
+    @Min(value = 0, message = "Amount must be at least 0")
     @Column(name = "amount")
     private Integer amount;
 
-    @NotNull
+    @NotNull(message = "Deleted must not be null")
     @Column(name = "is_deleted")
     private boolean isDeleted;
 

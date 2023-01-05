@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title th:text="#{navigation.addABook} + ' | ' + #{general.appName}">Add a Book | Library</title>
-    <div th:replace="~{fragments.html :: head}" th:remove="tag"></div>
+<head th:insert="~{fragments.html :: head(#{navigation.addABook} + ' | ' + #{general.appName})}">
 </head>
 <body>
 <header th:replace="~{fragments.html :: header}">
@@ -11,23 +9,7 @@
 </nav>
 <section id="main-content">
     <div id="main-content-centered-element">
-        <form id="book-changes" class="round-bordered-subject block-container" method="post"
-              action="/add-book">
-            <label for="title" th:text="#{books.bookTitle} + ':'">Title: </label>
-            <input id="title" name="title" type="text" required="required"/>
-            <label for="authors" th:text="#{books.authors} + ' (' + #{books.commaSeparated} + '):'">Author(s) (comma
-                separated):</label>
-            <input id="authors" name="authors" type="text" required="required"/>
-            <label for="genre" th:text="#{books.genre} + ':'">Genre:</label>
-            <input id="genre" name="genre" type="text" required="required"/>
-            <label for="publisher" th:text="#{books.publisher} + ':'">Publisher:</label>
-            <input id="publisher" name="publisher" type="text" required="required"/>
-            <label for="publishment-year" th:text="#{books.publishmentYear} + ':'">Publishment Year:</label>
-            <input id="publishment-year" name="publishment-year" type="number" min="1000" max="2022" step="1"
-                   required="required"/>
-            <label for="amount" th:text="#{books.inStock} + ':'">In stock:</label>
-            <input id="amount" name="amount" type="number" min="0" step="1" required="required"/>
-            <!--            <div class="error-message">${requestScope.errorMessage}</div>-->
+        <form id="book-changes" th:replace="~{fragments.html :: book-changes-form(${editDto}, '/add-book', null)}">
         </form>
         <div class="buttons-container">
             <button type="button" class="red" th:text="#{general.cancel}" onclick="window.location.href='/books/'">

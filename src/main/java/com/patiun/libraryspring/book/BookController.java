@@ -2,13 +2,13 @@ package com.patiun.libraryspring.book;
 
 import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.utility.Paginator;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +27,30 @@ public class BookController {
         this.bookPaginator = bookPaginator;
     }
 
+    @GetMapping("/add-book")
+    public String addBookPage(final Model model) {
+        BookEditDto editDto = new BookEditDto();
+
+        model.addAttribute("editDto", editDto);
+
+        return "addABook";
+    }
+
     @PostMapping("/add-book")
-    public String addBook(@RequestParam String title, @RequestParam String authors, @RequestParam String genre, @RequestParam String publisher, @RequestParam("publishment-year") Integer publishmentYear, @RequestParam Integer amount) {
+    public String addBook(@ModelAttribute("editDto") @Valid BookEditDto editDto, final BindingResult result, final Model model) {
+        if (result.hasErrors()) {
+            bindErrorToModelAttribute(result, model);
+            return addBookPage(model);
+        }
+        String title = editDto.getTitle();
+        String authors = editDto.getAuthors();
+        String genre = editDto.getGenre();
+        String publisher = editDto.getPublisher();
+        Integer publishmentYear = editDto.getPublishmentYear();
+        Integer amount = editDto.getAmount();
+
         bookService.createBook(title, authors, genre, publisher, publishmentYear, amount);
-        return "redirect:/books";
+        return "redirect:/books/";
     }
 
     @GetMapping({"/books/", "/books/{page}"})
@@ -52,7 +72,9 @@ public class BookController {
 
     @GetMapping("/book/{id}")
     public String book(@PathVariable Integer id, final Model model) throws ServiceException {
-        getBookByIdAndAddToModel(id, model);
+        Book book = bookService.getBookById(id);
+
+        model.addAttribute("book", book);
 
         return "book";
     }
@@ -63,23 +85,39 @@ public class BookController {
         return "redirect:/books/";
     }
 
-    @GetMapping("/edit-book-page/{id}")
+    @GetMapping("/edit-book/{id}")
     public String editBookPage(@PathVariable Integer id, final Model model) throws ServiceException {
-        getBookByIdAndAddToModel(id, model);
+        Book book = bookService.getBookById(id);
+
+        BookEditDto editDto = new BookEditDto(book);
+        model.addAttribute("editDto", editDto);
 
         return "editBook";
     }
 
     @PostMapping("/edit-book")
-    public String editBook(@RequestParam Integer id, @RequestParam String title, @RequestParam String authors, @RequestParam String genre, @RequestParam String publisher, @RequestParam("publishment-year") Integer publishmentYear, @RequestParam Integer amount) throws ServiceException {
+    public String editBook(@RequestParam Integer id, @ModelAttribute("editDto") @Valid BookEditDto editDto, final BindingResult result, final Model model) throws ServiceException {
+        if (result.hasErrors()) {
+            bindErrorToModelAttribute(result, model);
+            return editBookPage(id, model);
+        }
+
+        String title = editDto.getTitle();
+        String authors = editDto.getAuthors();
+        String genre = editDto.getGenre();
+        String publisher = editDto.getPublisher();
+        Integer publishmentYear = editDto.getPublishmentYear();
+        Integer amount = editDto.getAmount();
+
         bookService.updateBookById(id, title, authors, genre, publisher, publishmentYear, amount);
         return "redirect:/book/" + id;
     }
 
-    private void getBookByIdAndAddToModel(Integer id, final Model model) throws ServiceException {
-        Book book = bookService.getBookById(id);
-
-        model.addAttribute("book", book);
+    private void bindErrorToModelAttribute(final BindingResult result, final Model model) {
+        List<ObjectError> allErrors = result.getAllErrors();
+        ObjectError firstError = allErrors.get(0);
+        String errorMessage = firstError.getDefaultMessage();
+        model.addAttribute("error", errorMessage);
     }
 
 }

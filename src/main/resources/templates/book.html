@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <th:block th:insert="~{fragments.html :: head(${book.title} + ' | ' + #{general.appName})}"></th:block>
+    <th:block th:replace="~{fragments.html :: head(${book.title} + ' | ' + #{general.appName})}"></th:block>
     <script>
         function setDaysRadiosDisabled(disabled) {
             let daysRadios = document.getElementsByName("days");
@@ -18,41 +18,45 @@
 </nav>
 <section id="main-content">
     <div id="main-content-centered-element">
-        <div th:replace="~{fragments.html :: book-parameters(${book})}"></div>
-        <th:block th:switch="${#authentication.getPrincipal().getRole()}">
-            <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).ADMIN}">
-                <form class="buttons-container">
-                    <input type="hidden" name="id" th:value="${book.id}"/>
-                    <button type="button" th:onclick="|window.location.href=&#39;/edit-book/${book.id}&#39;|"
-                            th:text="#{general.edit}">Edit
-                    </button>
-                    <button type="submit" formaction="/delete-book" formmethod="post"
-                            th:onclick="|return confirm(&#39;#{books.deleteConfirmation}&#39;)|" class="red"
-                            th:text="#{books.delete}">Delete
-                    </button>
-                </form>
-            </th:block>
-            <th:block th:case="${T(com.patiun.libraryspring.user.UserRole).READER}">
-                <form method="post" class="round-bordered-subject order-options-container"
-                      action="/place-order">
-                    <input type="hidden" name="book-id" th:value="${book.id}"/>
-                    <p th:text="|#{orders.rentalType}:|">Rental Type:</p>
-                    <input id="out-of-library" type="radio" name="type" value="OUT_OF_LIBRARY"
-                           onchange="setDaysRadiosDisabled(0)" checked="checked"/>
-                    <label for="out-of-library" th:text="#{OUT_OF_LIBRARY}">out of library</label>
-                    <input id="to-reading-hall" type="radio" name="type" value="TO_READING_HALL"
-                           onchange="setDaysRadiosDisabled(1)"/>
-                    <label for="to-reading-hall" th:text="#{TO_READING_HALL}">to reading hall</label>
-                    <p th:text="|#{orders.days}:|">Days:</p>
-                    <input id="7" type="radio" name="days" value="7" checked="checked"/>
-                    <label for="7">7</label>
-                    <input id="14" type="radio" name="days" value="14"/>
-                    <label for="14">14</label>
-                    <input id="21" type="radio" name="days" value="21"/>
-                    <label for="21">21</label>
-                    <button type="submit" th:text="#{books.order}">Order</button>
-                </form>
-            </th:block>
+        <div class="round-bordered-subject block-container"
+             th:insert="~{fragments.html :: book-parameters(${book})}">
+            <h1>Title: bookTitle</h1>
+            <p>Authors: George Orwell, H. P. Lovecraft</p>
+            <p>Genre: Horror</p>
+            <p>Publisher: Some publisher</p>
+            <p>Publishment Year: 2022</p>
+        </div>
+        <th:block th:switch="${#authentication.getPrincipal().getRole()}" th:object="${book}">
+            <form th:case="${T(com.patiun.libraryspring.user.UserRole).ADMIN}" class="buttons-container">
+                <input type="hidden" name="id" th:value="*{id}"/>
+                <button type="button" th:onclick="|window.location.href=&#39;/edit-book/*{id}&#39;|"
+                        th:text="#{general.edit}">Edit
+                </button>
+                <button type="submit" formaction="/delete-book" formmethod="post"
+                        th:onclick="|return confirm(&#39;#{books.deleteConfirmation}&#39;)|" class="red"
+                        th:text="#{books.delete}">Delete
+                </button>
+            </form>
+            <form th:case="${T(com.patiun.libraryspring.user.UserRole).READER}" method="post"
+                  class="round-bordered-subject order-options-container"
+                  action="/place-order">
+                <input type="hidden" name="book-id" th:value="*{id}"/>
+                <p th:text="|#{orders.rentalType}:|">Rental Type:</p>
+                <input id="out-of-library" type="radio" name="type" value="OUT_OF_LIBRARY"
+                       onchange="setDaysRadiosDisabled(0)" checked="checked"/>
+                <label for="out-of-library" th:text="#{OUT_OF_LIBRARY}">out of library</label>
+                <input id="to-reading-hall" type="radio" name="type" value="TO_READING_HALL"
+                       onchange="setDaysRadiosDisabled(1)"/>
+                <label for="to-reading-hall" th:text="#{TO_READING_HALL}">to reading hall</label>
+                <p th:text="|#{orders.days}:|">Days:</p>
+                <input id="7" type="radio" name="days" value="7" checked="checked"/>
+                <label for="7">7</label>
+                <input id="14" type="radio" name="days" value="14"/>
+                <label for="14">14</label>
+                <input id="21" type="radio" name="days" value="21"/>
+                <label for="21">21</label>
+                <button type="submit" th:text="#{books.order}">Order</button>
+            </form>
         </th:block>
     </div>
 </section>

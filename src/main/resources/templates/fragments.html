@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head th:fragment="head(title)">
+<th:block th:fragment="head(title)">
     <title th:text="${title}">Page | Library</title>
     <link rel="stylesheet" href="/static/styles/style.css" th:href="@{/styles/style.css}"/>
     <meta name="viewport" content="width=device-width"/>
-</head>
+</th:block>
 <body>
 <header th:fragment="header">
     <div class="container">
@@ -12,21 +12,24 @@
              alt="Book symbol">
         <h1 th:text="#{general.appName}">Library</h1>
         <h1 class="right-header-buttons">
-            <form method="get" action="/sign-out" class="sign-out-button">
-                <button type="submit">
+            <div th:if="${#authorization.expression('isAuthenticated()')}" class="sign-out-button">
+                <button type="button" onclick="window.location.href='/sign-out'">
                     <img src="/static/resources/sign_out_symbol.png" th:src="@{/resources/sign_out_symbol.png}"
                          alt="Sign out symbol">
                 </button>
-            </form>
-            <form method="get" id="language-change">
+            </div>
+            <form id="language-change" method="get">
                 <button type="button">
                     <img src="/static/resources/white_globe_symbol.png" th:src="@{/resources/white_globe_symbol.png}"
                          alt="Globe symbol">
                 </button>
                 <div class="dropdown-content">
-                    <button type="submit" name="lang" value="en" th:text="#{general.englishCode}">EN</button>
-                    <button type="submit" name="lang" value="ru" th:text="#{general.russianCode}">RU</button>
-                    <button type="submit" name="lang" value="bel" th:text="#{general.belarusianCode}">BEL</button>
+                    <button type="submit" name="lang" value="en" th:text="#{general.englishCode}">EN
+                    </button>
+                    <button type="submit" name="lang" value="ru" th:text="#{general.russianCode}">RU
+                    </button>
+                    <button type="submit" name="lang" value="bel" th:text="#{general.belarusianCode}">BEL
+                    </button>
                 </div>
             </form>
         </h1>
@@ -77,54 +80,55 @@
         </button>
     </div>
 </div>
-<div class="round-bordered-subject block-container" th:fragment="book-parameters(book)">
-    <h1 th:text="|#{books.bookTitle}: ${book.title}|">Title: BookName</h1>
+<th:block th:fragment="book-parameters(book)" th:object="${book}">
+    <h1 th:text="|#{books.bookTitle}: *{title}|"></h1>
     <p th:inline="text">
         [[#{books.authors}]]:
-        <th:block th:each="author,iterStat : ${book.authors}">
-            <span th:text="${iterStat.last} ? ${author.name} : ${author.name} + ','" th:remove="tag">authors</span>
+        <th:block th:each="author,iterStat : *{authors}">
+            <span th:text="${iterStat.last} ? ${author.name} : ${author.name} + ','" th:remove="tag"></span>
         </th:block>
     </p>
-    <p th:text="#{books.genre} + ': ' + ${book.genre.name}">Genre: Horror</p>
-    <p th:text="#{books.publisher} + ': ' + ${book.publisher.name}">Publisher: Some
-        publisher</p>
-    <p th:text="#{books.publishmentYear} + ': ' + ${book.publishmentYear}">Publishment Year:
-        2022</p>
-    <th:block
-            th:if="${#authentication.getPrincipal().getRole() != T(com.patiun.libraryspring.user.UserRole).READER}">
-        <p th:text="|#{books.inStock}: ${book.amount}|">In stock: 1</p>
-    </th:block>
-</div>
-<div class="round-bordered-subject block-container" th:fragment="user-parameters(user)">
-    <th:block th:object="${user}">
-        <h1 th:text="|#{authentication.loginLocale}: *{login}|">Login: userLogin</h1>
-        <p th:text="|#{users.firstName}: *{firstName}|">First name: John</p>
-        <p th:text="|#{users.lastName}: *{lastName}|">Last name: Smith</p>
-        <p th:text="#{users.role} + ': ' + #{*{role}}">Role: reader</p>
-        <p th:text="#{users.blocked} + ': ' + #{*{blocked}}">Blocked: false</p>
-    </th:block>
-</div>
-<th:block th:fragment="book-changes-form(editDto, action, id)">
-    <form id="book-changes" class="round-bordered-subject block-container" method="post"
-          th:action="${action}" th:object="${editDto}">
-        <input th:if="${id!=null}" type="hidden" name="id" th:value="${id}"/>
-        <label for="title" th:text="|#{books.bookTitle}:|">Title:</label>
-        <input id="title" type="text" th:field="*{title}" required="required"/>
-        <label for="authors" th:text="|#{books.authors} (#{books.commaSeparated}):|">Author(s) (comma
-            separated):</label>
-        <input id="authors" type="text" th:field="*{authors}" required="required"/>
-        <label for="genre" th:text="|#{books.genre}:|">Genre:</label>
-        <input id="genre" type="text" th:field="*{genre}" required="required"/>
-        <label for="publisher" th:text="|#{books.publisher}:|">Publisher:</label>
-        <input id="publisher" type="text" th:field="*{publisher}" required="required"/>
-        <label for="publishment-year" th:text="|#{books.publishmentYear}:|">Publishment year:</label>
-        <input id="publishment-year" type="number" min="1900" max="2025" step="1"
-               th:field="*{publishmentYear}" required="required"/>
-        <label for="amount" th:text="|#{books.inStock}:|">In stock:</label>
-        <input id="amount" type="number" min="0" step="1" th:field="*{amount}"
-               required="required"/>
-        <div class="error-message" th:text="${error}">error</div>
-    </form>
+    <p th:text="#{books.genre} + ': ' + *{genre.name}"></p>
+    <p th:text="#{books.publisher} + ': ' + *{publisher.name}"></p>
+    <p th:text="#{books.publishmentYear} + ': ' + *{publishmentYear}"></p>
+    <p th:if="${#authentication.getPrincipal().getRole() != T(com.patiun.libraryspring.user.UserRole).READER}"
+       th:text="|#{books.inStock}: *{amount}|"></p>
 </th:block>
+<th:block th:fragment="user-parameters(user)" th:object="${user}">
+    <h1 th:text="|#{authentication.loginLocale}: *{login}|"></h1>
+    <p th:text="|#{users.firstName}: *{firstName}|"></p>
+    <p th:text="|#{users.lastName}: *{lastName}|"></p>
+    <p th:text="#{users.role} + ': ' + #{*{role}}"></p>
+    <p th:text="#{users.blocked} + ': ' + #{*{blocked}}"></p>
+</th:block>
+<th:block th:fragment="order-parameters(order)" th:object="${order}">
+    <p th:text="|#{orders.startDate}: *{#temporals.format(startDate, #messages.msg('general.dateFormat'))}|"></p>
+    <p th:text="|#{orders.endDate}: *{#temporals.format(endDate, #messages.msg('general.dateFormat'))}|"></p>
+    <p th:if="*{returnDate != null}"
+       th:text="|#{orders.returnDate}: *{#temporals.format(returnDate, #messages.msg('general.dateFormat'))}|"></p>
+    <p th:text="|#{orders.rentalType}: #{*{rentalType}}|"></p>
+    <p th:text="|#{orders.rentalState}: #{*{state}}|"></p>
+</th:block>
+<form id="book-changes" class="round-bordered-subject block-container" method="post"
+      th:fragment="book-changes-form(editDto, action, id)"
+      th:action="${action}" th:object="${editDto}">
+    <input th:if="${id!=null}" type="hidden" name="id" th:value="${id}"/>
+    <label for="title" th:text="|#{books.bookTitle}:|">Title:</label>
+    <input id="title" type="text" th:field="*{title}" required="required"/>
+    <label for="authors" th:text="|#{books.authors} (#{books.commaSeparated}):|">Author(s) (comma
+        separated):</label>
+    <input id="authors" type="text" th:field="*{authors}" required="required"/>
+    <label for="genre" th:text="|#{books.genre}:|">Genre:</label>
+    <input id="genre" type="text" th:field="*{genre}" required="required"/>
+    <label for="publisher" th:text="|#{books.publisher}:|">Publisher:</label>
+    <input id="publisher" type="text" th:field="*{publisher}" required="required"/>
+    <label for="publishment-year" th:text="|#{books.publishmentYear}:|">Publishment year:</label>
+    <input id="publishment-year" type="number" min="1900" max="2025" step="1"
+           th:field="*{publishmentYear}" required="required"/>
+    <label for="amount" th:text="|#{books.inStock}:|">In stock:</label>
+    <input id="amount" type="number" min="0" step="1" th:field="*{amount}"
+           required="required"/>
+    <div class="error-message" th:text="${error}">error</div>
+</form>
 </body>
 </html>

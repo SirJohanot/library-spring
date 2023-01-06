@@ -10,33 +10,22 @@
 <section id="main-content">
     <div id="main-content-centered-element">
         <form method="get" action="/books/search" class="search-field">
-            <input type="text" name="by" th:placeholder="#{general.search}" placeholder="Search..."/>
+            <input type="text" name="for" th:placeholder="#{general.search}" placeholder="Search..."/>
         </form>
-        <form method="get" action="/book">
-            <th:block th:each="book : ${books}">
-                <th:block
-                        th:if="${#authentication.getPrincipal().getRole() != T(com.patiun.libraryspring.user.UserRole).READER || book.amount > 0}">
-                    <button type="button" th:onclick="|window.location.href=&#39;/book/${book.id}&#39;|"
-                            class="block-container round-bordered-subject">
-                        <h1 th:text="${book.title}">title</h1>
-                        <div class="block-parameters">
-                            <p th:inline="text">
-                                [[#{books.authors}]]:
-                                <th:block th:each="author,iterStat : ${book.authors}">
-                                    <span th:text="${iterStat.last} ? ${author.name} : ${author.name} + ','"
-                                          th:remove="tag">authors</span>
-                                </th:block>
-                            </p>
-                            <p th:text="#{books.genre} + ': ' + ${book.genre.name}">Genre: Horror</p>
-                            <p th:text="#{books.publisher} + ': ' + ${book.publisher.name}">Publisher: Some
-                                publisher</p>
-                            <p th:text="#{books.publishmentYear} + ': ' + ${book.publishmentYear}">Publishment Year:
-                                2022</p>
-                        </div>
-                    </button>
-                </th:block>
-            </th:block>
-        </form>
+        <div>
+            <button th:each="book : ${books}" th:object="${book}"
+                    th:if="*{#authentication.getPrincipal().getRole() != T(com.patiun.libraryspring.user.UserRole).READER || amount > 0}"
+                    type="button" th:onclick="|window.location.href=&#39;/book/*{id}&#39;|"
+                    class="block-container round-bordered-subject"
+                    th:insert="~{fragments.html :: book-parameters(${book})}">
+                <h1>Title: bookTitle</h1>
+                <p>Authors: George Orwell, H. P. Lovecraft</p>
+                <p>Genre: Horror</p>
+                <p>Publisher: Some publisher</p>
+                <p>Publishment Year: 2022</p>
+                <p>In stock: 1</p>
+            </button>
+        </div>
         <div th:replace="~{fragments.html :: pagination}"></div>
     </div>
 </section>

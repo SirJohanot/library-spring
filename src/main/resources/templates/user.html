@@ -9,19 +9,25 @@
 </nav>
 <section id="main-content">
     <div id="main-content-centered-element">
-        <div th:replace="~{fragments.html :: user-parameters(${user})}"></div>
-        <form class="buttons-container" th:object="${user}">
+        <div class="round-bordered-subject block-container"
+             th:insert="~{fragments.html :: user-parameters(${user})}">
+            <h1>Login: userLogin</h1>
+            <p>First name: John</p>
+            <p>Last name: Smith</p>
+            <p>Role: reader</p>
+            <p>Blocked: false</p>
+        </div>
+        <form th:if="*{role != T(com.patiun.libraryspring.user.UserRole).ADMIN}" class="buttons-container"
+              th:object="${user}">
             <input type="hidden" name="id" th:value="*{id}"/>
-            <th:block th:if="*{role != T(com.patiun.libraryspring.user.UserRole).ADMIN}">
-                <button type="button" th:onclick="|window.location.href=&#39;/edit-user/*{id}&#39;|"
-                        th:text="#{general.edit}">Edit
-                </button>
-                <button type="submit" formaction="/switch-user-blocked" formmethod="post"
-                        th:onclick="'return confirm(\'' + (*{blocked} ? #{users.unblockConfirmation} : #{users.blockConfirmation}) + '\')'"
-                        class="red"
-                        th:text="*{blocked} ? #{users.unblock} : #{users.block}">Block/Unblock
-                </button>
-            </th:block>
+            <button type="button" th:onclick="|window.location.href=&#39;/edit-user/*{id}&#39;|"
+                    th:text="#{general.edit}">Edit
+            </button>
+            <button type="submit" formaction="/switch-user-blocked" formmethod="post"
+                    th:onclick="'return confirm(\'' + (*{blocked} ? #{users.unblockConfirmation} : #{users.blockConfirmation}) + '\')'"
+                    class="red"
+                    th:text="*{blocked} ? #{users.unblock} : #{users.block}">Block/Unblock
+            </button>
         </form>
     </div>
 </section>

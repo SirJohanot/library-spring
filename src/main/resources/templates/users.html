@@ -10,25 +10,19 @@
 <section id="main-content">
     <div id="main-content-centered-element">
         <form method="get" action="/users/search" class="search-field">
-            <input type="text" name="by" th:placeholder="#{general.search}"/>
+            <input type="text" name="for" th:placeholder="#{general.search}" placeholder="Search..."/>
         </form>
         <div>
-            <th:block th:each="user : ${users}">
-                <th:block th:object="${user}">
-                    <button type="button" th:data-parameter1="*{login}"
-                            onclick="window.location.href='/user/'+this.getAttribute('data-parameter1')"
-                            class="block-container round-bordered-subject">
-                        <h1 th:text="${user.login}">userLogin</h1>
-                        <div class="block-parameters">
-                            <p th:text="#{users.firstName} + ': ' + *{firstName}">First name: John</p>
-                            <p th:text="#{users.lastName} + ': ' + *{lastName}">Last name: Smith</p>
-                            <p th:text="#{users.role} + ': ' + #{*{role}}">Role: reader</p>
-                            <p th:text="#{users.blocked} + ': ' + #{*{blocked}}">Blocked:
-                                false</p>
-                        </div>
-                    </button>
-                </th:block>
-            </th:block>
+            <button th:each="user : ${users}" type="button" th:data-parameter1="${user.login}"
+                    onclick="window.location.href='/user/'+this.getAttribute('data-parameter1')"
+                    class="block-container round-bordered-subject"
+                    th:insert="~{fragments.html :: user-parameters(${user})}">
+                <h1>Login: userLogin</h1>
+                <p>First name: John</p>
+                <p>Last name: Smith</p>
+                <p>Role: reader</p>
+                <p>Blocked: false</p>
+            </button>
         </div>
         <div th:replace="~{fragments.html :: pagination}"></div>
     </div>

@@ -26,8 +26,9 @@
             <p>Publisher: Some publisher</p>
             <p>Publishment Year: 2022</p>
         </div>
-        <th:block th:switch="${#authentication.getPrincipal().getRole()}" th:object="${book}">
-            <form th:case="${T(com.patiun.libraryspring.user.UserRole).ADMIN}" class="buttons-container">
+        <th:block th:switch="${#authentication.getPrincipal().getRole()}">
+            <form th:case="${T(com.patiun.libraryspring.user.UserRole).ADMIN}" class="buttons-container"
+                  th:object="${book}">
                 <input type="hidden" name="id" th:value="*{id}"/>
                 <button type="button" th:onclick="|window.location.href=&#39;/edit-book/*{id}&#39;|"
                         th:text="#{general.edit}">Edit
@@ -39,22 +40,23 @@
             </form>
             <form th:case="${T(com.patiun.libraryspring.user.UserRole).READER}" method="post"
                   class="round-bordered-subject order-options-container"
-                  action="/place-order">
-                <input type="hidden" name="book-id" th:value="*{id}"/>
+                  action="/place-order" th:object="${orderDto}">
+                <input type="hidden" name="book-id" th:value="${book.id}"/>
                 <p th:text="|#{orders.rentalType}:|">Rental Type:</p>
                 <input id="out-of-library" type="radio" name="type" value="OUT_OF_LIBRARY"
-                       onchange="setDaysRadiosDisabled(0)" checked="checked"/>
+                       onchange="setDaysRadiosDisabled(0)" checked="checked" th:field="*{rentalType}"/>
                 <label for="out-of-library" th:text="#{OUT_OF_LIBRARY}">out of library</label>
                 <input id="to-reading-hall" type="radio" name="type" value="TO_READING_HALL"
-                       onchange="setDaysRadiosDisabled(1)"/>
+                       onchange="setDaysRadiosDisabled(1)" th:field="*{rentalType}"/>
                 <label for="to-reading-hall" th:text="#{TO_READING_HALL}">to reading hall</label>
                 <p th:text="|#{orders.days}:|">Days:</p>
-                <input id="7" type="radio" name="days" value="7" checked="checked"/>
+                <input id="7" type="radio" name="days" value="7" checked="checked" th:field="*{days}"/>
                 <label for="7">7</label>
-                <input id="14" type="radio" name="days" value="14"/>
+                <input id="14" type="radio" name="days" value="14" th:field="*{days}"/>
                 <label for="14">14</label>
-                <input id="21" type="radio" name="days" value="21"/>
+                <input id="21" type="radio" name="days" value="21" th:field="*{days}"/>
                 <label for="21">21</label>
+                <div class="error-message" th:text="${error}">error</div>
                 <button type="submit" th:text="#{books.order}">Order</button>
             </form>
         </th:block>

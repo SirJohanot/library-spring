@@ -13,18 +13,20 @@
             <input type="text" name="for" th:placeholder="#{general.search}" placeholder="Search..."/>
         </form>
         <div>
-            <button th:each="book : ${books}" th:object="${book}"
-                    th:if="*{#authentication.getPrincipal().getRole() != T(com.patiun.libraryspring.user.UserRole).READER || amount > 0}"
-                    type="button" th:onclick="|window.location.href=&#39;/book/*{id}&#39;|"
-                    class="block-container round-bordered-subject"
-                    th:insert="~{fragments.html :: book-parameters(${book})}">
-                <h1>Title: bookTitle</h1>
-                <p>Authors: George Orwell, H. P. Lovecraft</p>
-                <p>Genre: Horror</p>
-                <p>Publisher: Some publisher</p>
-                <p>Publishment Year: 2022</p>
-                <p>In stock: 1</p>
-            </button>
+            <th:block th:each="book : ${books}">
+                <button th:object="${book}"
+                        th:if="${#authentication.getPrincipal().getRole() != T(com.patiun.libraryspring.user.UserRole).READER || book.amount > 0}"
+                        type="button" th:onclick="|window.location.href=&#39;/book/*{id}&#39;|"
+                        class="block-container round-bordered-subject"
+                        th:insert="~{fragments.html :: book-parameters(${book})}">
+                    <h1>Title: bookTitle</h1>
+                    <p>Authors: George Orwell, H. P. Lovecraft</p>
+                    <p>Genre: Horror</p>
+                    <p>Publisher: Some publisher</p>
+                    <p>Publishment Year: 2022</p>
+                    <p>In stock: 1</p>
+                </button>
+            </th:block>
         </div>
         <div th:replace="~{fragments.html :: pagination}"></div>
     </div>

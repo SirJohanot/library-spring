@@ -4,14 +4,15 @@ import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.user.User;
 import com.patiun.libraryspring.user.UserRole;
 import com.patiun.libraryspring.utility.Paginator;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,13 +33,22 @@ public class BookOrderController {
     }
 
     @PostMapping("/place-order")
-    public String placeOrder(@RequestParam("book-id") Integer bookId, @RequestParam RentalType type, @RequestParam(defaultValue = "0") Integer days, final Authentication authentication) {
+    public String placeOrder(@RequestParam("book-id") Integer bookId, @ModelAttribute("orderDto") @Valid BookOrderDto orderDto, final BindingResult result, final Authentication authentication, final RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            List<ObjectError> allErrors = result.getAllErrors();
+            ObjectError firstError = allErrors.get(0);
+            String errorMessage = firstError.getDefaultMessage();
+            redirectAttributes.addFlashAttribute("error", errorMessage);
+            return "redirect:/book/" + bookId;
+        }
         User currentUser = (User) authentication.getPrincipal();
         Integer currentUserId = currentUser.getId();
 
+        RentalType type = orderDto.getRentalType();
+        Integer days = orderDto.getDays();
         orderService.createOrder(bookId, currentUserId, type, days);
 
-        return "redirect:/books/";
+        return "redirect:/orders/";
     }
 
     @GetMapping({"/orders/", "/orders/{page}"})

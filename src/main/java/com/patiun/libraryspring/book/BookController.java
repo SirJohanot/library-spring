@@ -1,6 +1,7 @@
 package com.patiun.libraryspring.book;
 
 import com.patiun.libraryspring.exception.ServiceException;
+import com.patiun.libraryspring.order.BookOrderDto;
 import com.patiun.libraryspring.utility.Paginator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +74,10 @@ public class BookController {
     @GetMapping("/book/{id}")
     public String book(@PathVariable Integer id, final Model model) throws ServiceException {
         Book book = bookService.getBookById(id);
+        BookOrderDto orderDto = new BookOrderDto();
 
         model.addAttribute("book", book);
+        model.addAttribute("orderDto", orderDto);
 
         return "book";
     }

@@ -6,12 +6,12 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.List;
 
-public class AcceptableUserRolesValidator implements ConstraintValidator<AcceptableUserRoles, UserRole> {
+public class AcceptableRolesValidator implements ConstraintValidator<AcceptableRoles, UserRole> {
 
     private List<UserRole> acceptableRoles;
 
     @Override
-    public void initialize(AcceptableUserRoles constraintAnnotation) {
+    public void initialize(AcceptableRoles constraintAnnotation) {
         UserRole[] acceptableRolesArray = constraintAnnotation.value();
         acceptableRoles = List.of(acceptableRolesArray);
     }

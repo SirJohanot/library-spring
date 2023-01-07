@@ -8,11 +8,11 @@ import java.lang.annotation.*;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = AcceptableUserRolesValidator.class)
+@Constraint(validatedBy = AcceptableRolesValidator.class)
 @Documented
-public @interface AcceptableUserRoles {
+public @interface AcceptableRoles {
 
-    String message() default "Passwords must match";
+    String message() default "The user role is unacceptable";
 
     Class<?>[] groups() default {};
 

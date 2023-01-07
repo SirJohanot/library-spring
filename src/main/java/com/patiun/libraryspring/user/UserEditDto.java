@@ -1,6 +1,6 @@
 package com.patiun.libraryspring.user;
 
-import com.patiun.libraryspring.validation.AcceptableUserRoles;
+import com.patiun.libraryspring.validation.AcceptableRoles;
 import com.patiun.libraryspring.validation.Regexp;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +19,7 @@ public class UserEditDto {
     private String lastName;
 
     @NotNull(message = "Role must not be null")
-    @AcceptableUserRoles({UserRole.READER, UserRole.LIBRARIAN})
+    @AcceptableRoles({UserRole.READER, UserRole.LIBRARIAN})
     private UserRole role;
 
     public UserEditDto() {

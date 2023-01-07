@@ -18,37 +18,37 @@ public class BookOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotNull
+    @NotNull(message = "Book must not be null")
     @Valid
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @NotNull
+    @NotNull(message = "User must not be null")
     @Valid
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @NotNull
+    @NotNull(message = "Rental type must not be null")
     @Column(name = "rental_type", length = 64)
     @Enumerated(EnumType.STRING)
     private RentalType rentalType;
 
-    @NotNull
-    @PastOrPresent
+    @NotNull(message = "Start date must not be null")
+    @PastOrPresent(message = "Start date must be either in the past or in the present")
     @Column(name = "start_date")
     private LocalDate startDate;
 
-    @NotNull
+    @NotNull(message = "End date must not be null")
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @PastOrPresent
+    @PastOrPresent(message = "Return date must be either in the past or in the present")
     @Column(name = "return_date")
     private LocalDate returnDate;
 
-    @NotNull
+    @NotNull(message = "State must not be null")
     @Column(name = "state", length = 64)
     @Enumerated(EnumType.STRING)
     private OrderState state;

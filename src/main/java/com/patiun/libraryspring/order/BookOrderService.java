@@ -1,6 +1,7 @@
 package com.patiun.libraryspring.order;
 
 import com.patiun.libraryspring.book.Book;
+import com.patiun.libraryspring.book.BookRepository;
 import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +17,26 @@ import java.util.stream.StreamSupport;
 public class BookOrderService {
 
     private final BookOrderRepository orderRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public BookOrderService(BookOrderRepository orderRepository) {
+    public BookOrderService(BookOrderRepository orderRepository, BookRepository bookRepository) {
         this.orderRepository = orderRepository;
+        this.bookRepository = bookRepository;
     }
 
-    public void createOrder(Integer bookId, Integer userId, RentalType type, Integer days) {
+    public void createOrder(Integer bookId, Integer userId, RentalType type, Integer days) throws ServiceException {
         User orderingUser = new User();
         orderingUser.setId(userId);
 
-        Book orderedBook = new Book();
-        orderedBook.setId(bookId);
+        Optional<Book> orderedBookOptional = bookRepository.findById(bookId);
+        if (orderedBookOptional.isEmpty()) {
+            throw new ServiceException("Could not find a book by id = " + bookId);
+        }
+        Book orderedBook = orderedBookOptional.get();
+        if (orderedBook.isDeleted() || orderedBook.getAmount() <= 0) {
+            throw new ServiceException("Could not place an order on book by id = " + bookId + ": the book's either deleted or not in stock");
+        }
 
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = startDate.plusDays(days);
@@ -78,6 +87,8 @@ public class BookOrderService {
 
     public void advanceOrderStateById(Integer id, OrderState newState) throws ServiceException {
         BookOrder targetOrder = getExistingOrderById(id);
+        Book targetOrderBook = targetOrder.getBook();
+        Integer targetOrderBookAmount = targetOrderBook.getAmount();
 
         OrderState currentState = targetOrder.getState();
         if (currentState == OrderState.DECLINED || currentState == OrderState.BOOK_RETURNED) {
@@ -91,6 +102,20 @@ public class BookOrderService {
         }
         if (newState == OrderState.BOOK_RETURNED && currentState != OrderState.BOOK_TAKEN) {
             throw new ServiceException("Cannot change the state of the order by id = " + id + ": The book has not been taken yet, it cannot yet be returned");
+        }
+        if (newState == OrderState.APPROVED && targetOrderBookAmount <= 0) {
+            throw new ServiceException("Cannot approve the order by id = " + id + ": The book is not in stock");
+        }
+
+        switch (newState) {
+            case BOOK_RETURNED -> {
+                targetOrderBook.setAmount(targetOrderBookAmount + 1);
+                bookRepository.save(targetOrderBook);
+            }
+            case APPROVED -> {
+                targetOrderBook.setAmount(targetOrderBookAmount - 1);
+                bookRepository.save(targetOrderBook);
+            }
         }
 
         targetOrder.setState(newState);

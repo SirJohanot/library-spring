@@ -33,7 +33,7 @@ public class BookOrderController {
     }
 
     @PostMapping("/place-order")
-    public String placeOrder(@RequestParam("book-id") Integer bookId, @ModelAttribute("orderDto") @Valid BookOrderDto orderDto, final BindingResult result, final Authentication authentication, final RedirectAttributes redirectAttributes) {
+    public String placeOrder(@RequestParam("book-id") Integer bookId, @ModelAttribute("orderDto") @Valid BookOrderDto orderDto, final BindingResult result, final Authentication authentication, final RedirectAttributes redirectAttributes) throws ServiceException {
         if (result.hasErrors()) {
             List<ObjectError> allErrors = result.getAllErrors();
             ObjectError firstError = allErrors.get(0);

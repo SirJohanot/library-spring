@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.book;
 
+import com.patiun.libraryspring.exception.ElementNotFoundException;
 import com.patiun.libraryspring.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,10 +81,10 @@ public class BookService {
         return new Book(id, title, authors, genre, publisher, publishmentYear, amount, false);
     }
 
-    private Book getExistingBookById(Integer id) throws ServiceException {
+    private Book getExistingBookById(Integer id) {
         Optional<Book> bookOptional = bookRepository.findById(id);
         if (bookOptional.isEmpty()) {
-            throw new ServiceException("Could not find a book by id = " + id);
+            throw new ElementNotFoundException("Could not find a book by id = " + id);
         }
         return bookOptional.get();
     }

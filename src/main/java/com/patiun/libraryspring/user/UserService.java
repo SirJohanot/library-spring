@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.user;
 
+import com.patiun.libraryspring.exception.ElementNotFoundException;
 import com.patiun.libraryspring.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,7 +48,7 @@ public class UserService implements UserDetailsService {
                 .toList();
     }
 
-    public User getUserById(Integer id) throws ServiceException {
+    public User getUserById(Integer id) {
         return getExistingUserById(id);
     }
 
@@ -78,10 +79,10 @@ public class UserService implements UserDetailsService {
         userRepository.save(foundUser);
     }
 
-    private User getExistingUserById(Integer id) throws ServiceException {
+    private User getExistingUserById(Integer id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isEmpty()) {
-            throw new ServiceException("Could not find a user by id = " + id);
+            throw new ElementNotFoundException("Could not find a user by id = " + id);
         }
         return userOptional.get();
     }

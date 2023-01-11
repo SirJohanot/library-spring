@@ -113,7 +113,7 @@ public class BookOrderController {
         return "redirect:/order/" + id;
     }
 
-    private boolean orderDoesNotBelongToTheAuthenticatedUser(final Integer orderId, final Authentication authentication) throws ServiceException {
+    private boolean orderDoesNotBelongToTheAuthenticatedUser(final Integer orderId, final Authentication authentication) {
         User currentUser = (User) authentication.getPrincipal();
         Integer currentUserId = currentUser.getId();
 

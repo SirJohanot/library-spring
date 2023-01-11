@@ -84,7 +84,7 @@ public class UserController {
     }
 
     @GetMapping("/edit-user/{id}")
-    public String editUserPage(@PathVariable Integer id, final Model model) throws ServiceException {
+    public String editUserPage(@PathVariable Integer id, final Model model) {
         getUserByIdAndAddToModel(id, model);
 
         return "editUser";
@@ -111,13 +111,13 @@ public class UserController {
         return "redirect:/user/" + getLoginOfUserById(id);
     }
 
-    private void getUserByIdAndAddToModel(Integer id, final Model model) throws ServiceException {
+    private void getUserByIdAndAddToModel(Integer id, final Model model) {
         User user = userService.getUserById(id);
 
         model.addAttribute("user", user);
     }
 
-    private String getLoginOfUserById(Integer id) throws ServiceException {
+    private String getLoginOfUserById(Integer id) {
         User user = userService.getUserById(id);
 
         return user.getLogin();

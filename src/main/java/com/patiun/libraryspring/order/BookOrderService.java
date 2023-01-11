@@ -2,6 +2,7 @@ package com.patiun.libraryspring.order;
 
 import com.patiun.libraryspring.book.Book;
 import com.patiun.libraryspring.book.BookRepository;
+import com.patiun.libraryspring.exception.ElementNotFoundException;
 import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class BookOrderService {
                 .toList();
     }
 
-    public BookOrder getOrderById(Integer id) throws ServiceException {
+    public BookOrder getOrderById(Integer id) {
         return getExistingOrderById(id);
     }
 
@@ -122,10 +123,10 @@ public class BookOrderService {
         orderRepository.save(targetOrder);
     }
 
-    private BookOrder getExistingOrderById(Integer id) throws ServiceException {
+    private BookOrder getExistingOrderById(Integer id) {
         Optional<BookOrder> orderOptional = orderRepository.findById(id);
         if (orderOptional.isEmpty()) {
-            throw new ServiceException("Could not find an order by id = " + id);
+            throw new ElementNotFoundException("Could not find an order by id = " + id);
         }
         return orderOptional.get();
     }

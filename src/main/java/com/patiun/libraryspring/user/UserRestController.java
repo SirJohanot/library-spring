@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("users")
+@RestController
+@RequestMapping("/users")
 @ConditionalOnProperty(prefix = "mvc.controller",
         name = "enabled",
-        havingValue = "false")
+        havingValue = "false",
+        matchIfMissing = true)
 public class UserRestController {
 
     private final UserService userService;
@@ -34,16 +36,16 @@ public class UserRestController {
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<User> readAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{login}")
-    public User getUser(@PathVariable String login) {
+    @GetMapping("{login}")
+    public User readUser(@PathVariable String login) {
         return userService.getUserByLogin(login);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public void updateUser(@PathVariable Integer id, @RequestBody @Valid UserEditDto editDto) throws ServiceException {
         String newFirstName = editDto.getFirstName();
         String newLastName = editDto.getLastName();
@@ -51,7 +53,7 @@ public class UserRestController {
         userService.updateUserById(id, newFirstName, newLastName, newRole);
     }
 
-    @PutMapping("/{id}/switch-blocked")
+    @PutMapping("{id}/switch-blocked")
     public void switchUserBlocked(@PathVariable Integer id) throws ServiceException {
         userService.switchUserBlockedById(id);
     }

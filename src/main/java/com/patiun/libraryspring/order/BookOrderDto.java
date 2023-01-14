@@ -3,15 +3,11 @@ package com.patiun.libraryspring.order;
 import com.patiun.libraryspring.validation.AcceptableOrderDaysByType;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Map;
 import java.util.Objects;
 
 @AcceptableOrderDaysByType(type = RentalType.OUT_OF_LIBRARY, value = {7, 14, 21}, message = "Days number must be 7, 14 or 21")
 @AcceptableOrderDaysByType(type = RentalType.TO_READING_HALL, value = {0}, message = "Days number must be 0")
 public class BookOrderDto {
-
-    private static final Map<RentalType, Integer[]> ACCEPTABLE_DAYS_BY_TYPE = Map.of(RentalType.TO_READING_HALL, new Integer[]{0},
-            RentalType.OUT_OF_LIBRARY, new Integer[]{7, 14, 21});
 
     @NotNull(message = "Rental type must not be null")
     private RentalType rentalType;

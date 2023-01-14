@@ -1,16 +1,21 @@
 package com.patiun.libraryspring.configuration;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+@ConditionalOnProperty(prefix = "mvc.controller",
+        name = "enabled",
+        havingValue = "true")
+public class MvcSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -19,9 +24,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((requests) -> requests
+        return http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/books/**", "/", "/book/**").authenticated()
-                        .requestMatchers("/add-book", "/edit-book/**", "/edit-book", "/users/**", "/user/**", "/edit-user/**", "/edit-user", "/switch-user-blocked").hasAuthority("ADMIN")
+                        .requestMatchers("/add-book", "/edit-book/**", "/users/**", "/user/**", "/edit-user/**", "/switch-user-blocked").hasAuthority("ADMIN")
                         .requestMatchers("/place-order", "/collect-order", "/return-order").hasAuthority("READER")
                         .requestMatchers("/approve-order", "/decline-order").hasAuthority("LIBRARIAN")
                         .requestMatchers("/orders/**", "/order/**").hasAnyAuthority("READER", "LIBRARIAN")
@@ -39,9 +45,8 @@ public class SecurityConfig {
                         .logoutUrl("/sign-out")
                         .logoutSuccessUrl("/sign-in")
                         .invalidateHttpSession(true)
-                );
-        http.csrf().disable();
-        return http.build();
+                )
+                .build();
     }
 
 }

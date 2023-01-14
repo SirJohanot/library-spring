@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.configuration;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -12,6 +13,9 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.util.Locale;
 
 @Configuration
+@ConditionalOnProperty(prefix = "mvc.controller",
+        name = "enabled",
+        havingValue = "true")
 public class MvcConfig implements WebMvcConfigurer {
 
     @Override

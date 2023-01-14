@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/books")
+@RestController
+@RequestMapping("/books")
 @ConditionalOnProperty(prefix = "mvc.controller",
         name = "enabled",
-        havingValue = "false")
+        havingValue = "false",
+        matchIfMissing = true)
 public class BookRestController {
 
     private final BookService bookService;
@@ -22,7 +24,7 @@ public class BookRestController {
     }
 
     @PostMapping
-    public void addBook(@RequestBody @Valid BookEditDto editDto) {
+    public void createBook(@RequestBody @Valid BookEditDto editDto) {
         String title = editDto.getTitle();
         String authors = editDto.getAuthors();
         String genre = editDto.getGenre();
@@ -34,21 +36,16 @@ public class BookRestController {
     }
 
     @GetMapping
-    public List<Book> getAllBooks() {
+    public List<Book> readAllBooks() {
         return bookService.getAllBooks();
     }
 
-    @GetMapping("/{id}")
-    public Book getBook(@PathVariable Integer id) {
+    @GetMapping("{id}")
+    public Book readBook(@PathVariable Integer id) {
         return bookService.getBookById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable Integer id) {
-        bookService.deleteBookById(id);
-    }
-
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public void updateBook(@PathVariable Integer id, @RequestBody @Valid BookEditDto editDto) throws ServiceException {
         String title = editDto.getTitle();
         String authors = editDto.getAuthors();
@@ -58,6 +55,11 @@ public class BookRestController {
         Integer amount = editDto.getAmount();
 
         bookService.updateBookById(id, title, authors, genre, publisher, publishmentYear, amount);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteBook(@PathVariable Integer id) {
+        bookService.deleteBookById(id);
     }
 
 }

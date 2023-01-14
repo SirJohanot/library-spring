@@ -23,7 +23,7 @@ public class Book {
 
     @NotEmpty(message = "Author list must not be empty")
     @Valid
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "book_author",
             joinColumns = {@JoinColumn(name = "book_id")},
@@ -33,13 +33,13 @@ public class Book {
 
     @NotNull(message = "Genre must not be null")
     @Valid
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
     @NotNull(message = "Publisher must not be null")
     @Valid
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 

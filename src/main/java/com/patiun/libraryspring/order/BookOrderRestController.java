@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 
-@RestController("/orders")
+@RestController
+@RequestMapping("/orders")
 @ConditionalOnProperty(prefix = "mvc.controller",
         name = "enabled",
-        havingValue = "false")
+        havingValue = "false",
+        matchIfMissing = true)
 public class BookOrderRestController {
 
     private final BookOrderService orderService;
@@ -25,8 +27,8 @@ public class BookOrderRestController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/{bookId}")
-    public void placeOrder(@PathVariable Integer bookId, @RequestBody @Valid BookOrderDto orderDto, final Authentication authentication) throws ServiceException {
+    @PostMapping("{bookId}")
+    public void createOrder(@PathVariable Integer bookId, @RequestBody @Valid BookOrderDto orderDto, final Authentication authentication) throws ServiceException {
         User currentUser = (User) authentication.getPrincipal();
         Integer currentUserId = currentUser.getId();
 
@@ -36,7 +38,7 @@ public class BookOrderRestController {
     }
 
     @GetMapping
-    public List<BookOrder> getAllOrders(final Authentication authentication) {
+    public List<BookOrder> readAllOrders(final Authentication authentication) {
         List<BookOrder> orders;
         User currentUser = (User) authentication.getPrincipal();
         switch (currentUser.getRole()) {
@@ -50,36 +52,8 @@ public class BookOrderRestController {
         return orders;
     }
 
-    @PutMapping("/{id}/approve")
-    public void approveOrder(@PathVariable Integer id) throws ServiceException {
-        orderService.approveOrderById(id);
-    }
-
-    @PutMapping("/{id}/decline")
-    public void declineOrder(@PathVariable Integer id) throws ServiceException {
-        orderService.declineOrderById(id);
-    }
-
-    @PutMapping("/{id}/collect")
-    public void collectOrder(@PathVariable Integer id, final Authentication authentication) throws ServiceException {
-        if (orderDoesNotBelongToTheAuthenticatedUser(id, authentication)) {
-            throw new UnsupportedOperationException("You cannot collect an order which is not yours");
-        }
-
-        orderService.collectOrderById(id);
-    }
-
-    @PutMapping("/{id}/return")
-    public void returnOrder(@PathVariable Integer id, final Authentication authentication) throws ServiceException {
-        if (orderDoesNotBelongToTheAuthenticatedUser(id, authentication)) {
-            throw new UnsupportedOperationException("You cannot return an order which is not yours");
-        }
-
-        orderService.returnOrderById(id);
-    }
-
-    @GetMapping("/{id}")
-    public BookOrder getOrder(@PathVariable Integer id, final Authentication authentication) {
+    @GetMapping("{id}")
+    public BookOrder readOrder(@PathVariable Integer id, final Authentication authentication) {
         BookOrder targetOrder = orderService.getOrderById(id);
         User targetOrderUser = targetOrder.getUser();
         Integer targetOrderUserId = targetOrderUser.getId();
@@ -91,6 +65,34 @@ public class BookOrderRestController {
             throw new UnsupportedOperationException("You do not have sufficient privileges to view this order");
         }
         return targetOrder;
+    }
+
+    @PutMapping("{id}/approve")
+    public void approveOrder(@PathVariable Integer id) throws ServiceException {
+        orderService.approveOrderById(id);
+    }
+
+    @PutMapping("{id}/decline")
+    public void declineOrder(@PathVariable Integer id) throws ServiceException {
+        orderService.declineOrderById(id);
+    }
+
+    @PutMapping("{id}/collect")
+    public void collectOrder(@PathVariable Integer id, final Authentication authentication) throws ServiceException {
+        if (orderDoesNotBelongToTheAuthenticatedUser(id, authentication)) {
+            throw new UnsupportedOperationException("You cannot collect an order which is not yours");
+        }
+
+        orderService.collectOrderById(id);
+    }
+
+    @PutMapping("{id}/return")
+    public void returnOrder(@PathVariable Integer id, final Authentication authentication) throws ServiceException {
+        if (orderDoesNotBelongToTheAuthenticatedUser(id, authentication)) {
+            throw new UnsupportedOperationException("You cannot return an order which is not yours");
+        }
+
+        orderService.returnOrderById(id);
     }
 
     private boolean orderDoesNotBelongToTheAuthenticatedUser(final Integer orderId, final Authentication authentication) {

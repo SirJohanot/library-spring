@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -27,16 +26,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User foundUser = userRepository.findByLogin(username);
-        if (foundUser == null) {
-            throw new UsernameNotFoundException("Could not find a user by username '" + username + "'");
-        }
-        return foundUser;
+        return userRepository.findByLogin(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Could not find a user by username '" + username + "'"));
     }
 
     @Override
     public void signUp(String login, String password, String firstName, String lastName) throws ServiceException {
-        if (userRepository.findByLogin(login) != null) {
+        if (userRepository.findByLogin(login).isPresent()) {
             throw new ServiceException("A user with such login already exists");
         }
         String encodedPassword = passwordEncoder.encode(password);
@@ -57,11 +53,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User getUserByLogin(String login) {
-        return userRepository.findByLogin(login);
+        return userRepository.findByLogin(login)
+                .orElseThrow(() -> new ElementNotFoundException("Could not find a user by login = " + login));
     }
 
     @Override
-    public void updateUserById(Integer id, String firstName, String lastName, UserRole role) throws ServiceException {
+    public void updateUserById(Integer id, String firstName, String lastName, UserRole role) {
         User targetUser = getExistingUserById(id);
 
         targetUser.setFirstName(firstName);
@@ -72,12 +69,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void switchUserBlockedById(Integer id) throws ServiceException {
-        Optional<User> foundUserOptional = userRepository.findById(id);
-        if (foundUserOptional.isEmpty()) {
-            throw new ServiceException("Could not find user by id = " + id);
-        }
-        User foundUser = foundUserOptional.get();
+    public void switchUserBlockedById(Integer id) {
+        User foundUser = getExistingUserById(id);
 
         Boolean currentUserBlocked = foundUser.getBlocked();
         foundUser.setBlocked(!currentUserBlocked);
@@ -86,11 +79,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private User getExistingUserById(Integer id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isEmpty()) {
-            throw new ElementNotFoundException("Could not find a user by id = " + id);
-        }
-        return userOptional.get();
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException("Could not find a user by id = " + id));
     }
 
 }

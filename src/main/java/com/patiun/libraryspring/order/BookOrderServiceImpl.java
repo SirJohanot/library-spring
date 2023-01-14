@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -30,11 +29,8 @@ public class BookOrderServiceImpl implements BookOrderService {
         User orderingUser = new User();
         orderingUser.setId(userId);
 
-        Optional<Book> orderedBookOptional = bookRepository.findById(bookId);
-        if (orderedBookOptional.isEmpty()) {
-            throw new ServiceException("Could not find a book by id = " + bookId);
-        }
-        Book orderedBook = orderedBookOptional.get();
+        Book orderedBook = bookRepository.findById(bookId)
+                .orElseThrow(() -> new ServiceException("Could not find a book by id = " + bookId));
         if (orderedBook.isDeleted() || orderedBook.getAmount() <= 0) {
             throw new ServiceException("Could not place an order on book by id = " + bookId + ": the book's either deleted or not in stock");
         }
@@ -126,11 +122,8 @@ public class BookOrderServiceImpl implements BookOrderService {
     }
 
     private BookOrder getExistingOrderById(Integer id) {
-        Optional<BookOrder> orderOptional = orderRepository.findById(id);
-        if (orderOptional.isEmpty()) {
-            throw new ElementNotFoundException("Could not find an order by id = " + id);
-        }
-        return orderOptional.get();
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException("Could not find an order by id = " + id));
     }
 
 }

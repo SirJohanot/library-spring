@@ -77,21 +77,18 @@ public class BookServiceImpl implements BookService {
                 })
                 .toList();
 
-        Optional<Genre> existingGenreOptional = genreRepository.findOptionalByName(genreName);
-        Genre genre = existingGenreOptional.orElse(new Genre(null, genreName));
+        Genre genre = genreRepository.findOptionalByName(genreName)
+                .orElse(new Genre(null, genreName));
 
-        Optional<Publisher> existingPublisherOptional = publisherRepository.findOptionalByName(publisherName);
-        Publisher publisher = existingPublisherOptional.orElse(new Publisher(null, publisherName));
+        Publisher publisher = publisherRepository.findOptionalByName(publisherName)
+                .orElse(new Publisher(null, publisherName));
 
         return new Book(id, title, authors, genre, publisher, publishmentYear, amount, false);
     }
 
     private Book getExistingBookById(Integer id) {
-        Optional<Book> bookOptional = bookRepository.findById(id);
-        if (bookOptional.isEmpty()) {
-            throw new ElementNotFoundException("Could not find a book by id = " + id);
-        }
-        return bookOptional.get();
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new ElementNotFoundException("Could not find a book by id = " + id));
     }
 
 }

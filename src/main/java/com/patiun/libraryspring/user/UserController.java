@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@ConditionalOnProperty(prefix = "mvc.controller",
+        name = "enabled",
+        havingValue = "true")
 public class UserController {
 
     private static final Integer USERS_PER_PAGE = 5;

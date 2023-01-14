@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController("/books")
 @ConditionalOnProperty(prefix = "mvc.controller",
         name = "enabled",
         havingValue = "false")
@@ -21,7 +21,7 @@ public class BookRestController {
         this.bookService = bookService;
     }
 
-    @PostMapping("/books")
+    @PostMapping
     public void addBook(@RequestBody @Valid BookEditDto editDto) {
         String title = editDto.getTitle();
         String authors = editDto.getAuthors();
@@ -33,22 +33,22 @@ public class BookRestController {
         bookService.createBook(title, authors, genre, publisher, publishmentYear, amount);
     }
 
-    @GetMapping("/books")
+    @GetMapping
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
 
-    @GetMapping("/books/{id}")
+    @GetMapping("/{id}")
     public Book getBook(@PathVariable Integer id) {
         return bookService.getBookById(id);
     }
 
-    @DeleteMapping("/books/{id}")
+    @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable Integer id) {
         bookService.deleteBookById(id);
     }
 
-    @PutMapping("/books/{id}")
+    @PutMapping("/{id}")
     public void updateBook(@PathVariable Integer id, @RequestBody @Valid BookEditDto editDto) throws ServiceException {
         String title = editDto.getTitle();
         String authors = editDto.getAuthors();

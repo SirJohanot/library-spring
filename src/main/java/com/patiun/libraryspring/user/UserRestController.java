@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController("users")
 @ConditionalOnProperty(prefix = "mvc.controller",
         name = "enabled",
         havingValue = "false")
@@ -23,7 +23,7 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @PostMapping("/users")
+    @PostMapping
     public void signUpUser(@RequestBody @Valid UserRegistrationDto registrationDto, final HttpServletRequest request) throws ServletException, ServiceException {
         String login = registrationDto.getLogin();
         String password = registrationDto.getPassword();
@@ -33,17 +33,17 @@ public class UserRestController {
         request.login(login, password);
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/users/{login}")
+    @GetMapping("/{login}")
     public User getUser(@PathVariable String login) {
         return userService.getUserByLogin(login);
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/{id}")
     public void updateUser(@PathVariable Integer id, @RequestBody @Valid UserEditDto editDto) throws ServiceException {
         String newFirstName = editDto.getFirstName();
         String newLastName = editDto.getLastName();
@@ -51,7 +51,7 @@ public class UserRestController {
         userService.updateUserById(id, newFirstName, newLastName, newRole);
     }
 
-    @PostMapping("/users/{id}/switch-blocked")
+    @PutMapping("/{id}/switch-blocked")
     public void switchUserBlocked(@PathVariable Integer id) throws ServiceException {
         userService.switchUserBlockedById(id);
     }

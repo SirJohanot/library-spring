@@ -1,8 +1,6 @@
 package com.patiun.libraryspring.user;
 
 import com.patiun.libraryspring.exception.ServiceException;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -26,13 +24,12 @@ public class UserRestController {
     }
 
     @PostMapping
-    public void signUpUser(@RequestBody @Valid UserRegistrationDto registrationDto, final HttpServletRequest request) throws ServletException, ServiceException {
+    public void signUpUser(@RequestBody @Valid UserRegistrationDto registrationDto) throws ServiceException {
         String login = registrationDto.getLogin();
         String password = registrationDto.getPassword();
         String firstName = registrationDto.getFirstName();
         String lastName = registrationDto.getLastName();
         userService.signUp(login, password, firstName, lastName);
-        request.login(login, password);
     }
 
     @GetMapping

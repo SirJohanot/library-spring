@@ -21,6 +21,8 @@ import org.springframework.security.web.SecurityFilterChain;
         matchIfMissing = true)
 public class RestSecurityConfig {
 
+    public static final String FRONT_END_URL = "*";
+
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
     @Autowired
@@ -49,6 +51,7 @@ public class RestSecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .httpBasic((httpSecurityHttpBasicConfigurer) -> httpSecurityHttpBasicConfigurer.authenticationEntryPoint(authenticationEntryPoint))
+                .cors().and()
                 .build();
     }
 

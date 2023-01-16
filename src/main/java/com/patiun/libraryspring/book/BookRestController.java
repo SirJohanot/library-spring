@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.book;
 
+import com.patiun.libraryspring.configuration.RestSecurityConfig;
 import com.patiun.libraryspring.exception.ServiceException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = RestSecurityConfig.FRONT_END_URL)
 @RequestMapping("/books")
 @ConditionalOnProperty(prefix = "mvc.controller",
         name = "enabled",

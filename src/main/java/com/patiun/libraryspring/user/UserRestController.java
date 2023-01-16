@@ -1,16 +1,18 @@
 package com.patiun.libraryspring.user;
 
+import com.patiun.libraryspring.configuration.RestSecurityConfig;
 import com.patiun.libraryspring.exception.ServiceException;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = RestSecurityConfig.FRONT_END_URL)
 @RequestMapping("/users")
 @ConditionalOnProperty(prefix = "mvc.controller",
         name = "enabled",
@@ -26,13 +28,20 @@ public class UserRestController {
     }
 
     @PostMapping
-    public void signUpUser(@RequestBody @Valid UserRegistrationDto registrationDto, final HttpServletRequest request) throws ServletException, ServiceException {
+    public void signUpUser(@RequestBody @Valid UserRegistrationDto registrationDto) throws ServiceException {
         String login = registrationDto.getLogin();
         String password = registrationDto.getPassword();
         String firstName = registrationDto.getFirstName();
         String lastName = registrationDto.getLastName();
         userService.signUp(login, password, firstName, lastName);
-        request.login(login, password);
+    }
+
+    @PostMapping("/auth")
+    public Map<String, UserRole[]> authenticate(final Authentication authentication) {
+        String login = authentication.getName();
+        User authenticatingUser = userService.getUserByLogin(login);
+        UserRole authenticatingUserRole = authenticatingUser.getRole();
+        return Map.of("roles", new UserRole[]{authenticatingUserRole});
     }
 
     @GetMapping

@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.order;
 
+import com.patiun.libraryspring.configuration.RestSecurityConfig;
 import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.user.User;
 import com.patiun.libraryspring.user.UserRole;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
+@CrossOrigin(origins = RestSecurityConfig.FRONT_END_URL)
 @RequestMapping("/orders")
 @ConditionalOnProperty(prefix = "mvc.controller",
         name = "enabled",

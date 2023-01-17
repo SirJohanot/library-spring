@@ -42,6 +42,7 @@ public class RestSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/books/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/orders/**").hasAuthority("READER")
                         .requestMatchers(HttpMethod.GET, "/books/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/users/auth").authenticated()
                         .requestMatchers(HttpMethod.GET, "/users/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/orders/**").hasAnyAuthority("READER", "LIBRARIAN")
                         .requestMatchers(HttpMethod.PUT, "/books/**", "/users/**").hasAuthority("ADMIN")

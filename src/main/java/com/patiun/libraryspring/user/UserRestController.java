@@ -36,7 +36,7 @@ public class UserRestController {
         userService.signUp(login, password, firstName, lastName);
     }
 
-    @PostMapping("/auth")
+    @GetMapping("/auth")
     public Map<String, UserRole[]> authenticate(final Authentication authentication) {
         String login = authentication.getName();
         User authenticatingUser = userService.getUserByLogin(login);

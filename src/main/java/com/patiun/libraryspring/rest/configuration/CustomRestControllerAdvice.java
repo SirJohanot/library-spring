@@ -1,4 +1,4 @@
-package com.patiun.libraryspring.configuration;
+package com.patiun.libraryspring.rest.configuration;
 
 import com.patiun.libraryspring.exception.ServiceException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

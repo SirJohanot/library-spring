@@ -1,7 +1,8 @@
-package com.patiun.libraryspring.user;
+package com.patiun.libraryspring.rest.controller;
 
-import com.patiun.libraryspring.configuration.RestSecurityConfig;
 import com.patiun.libraryspring.exception.ServiceException;
+import com.patiun.libraryspring.rest.configuration.RestSecurityConfig;
+import com.patiun.libraryspring.user.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

@@ -1,4 +1,4 @@
-package com.patiun.libraryspring.configuration;
+package com.patiun.libraryspring.mvc.configuration;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.patiun.libraryspring.configuration;
+package com.patiun.libraryspring.rest.configuration;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

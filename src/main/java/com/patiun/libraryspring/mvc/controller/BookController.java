@@ -1,5 +1,8 @@
-package com.patiun.libraryspring.book;
+package com.patiun.libraryspring.mvc.controller;
 
+import com.patiun.libraryspring.book.Book;
+import com.patiun.libraryspring.book.BookEditDto;
+import com.patiun.libraryspring.book.BookService;
 import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.order.BookOrderDto;
 import com.patiun.libraryspring.utility.Paginator;
@@ -87,13 +90,13 @@ public class BookController {
     }
 
     @PostMapping("/delete-book")
-    public String deleteBook(@RequestParam Integer id) throws ServiceException {
+    public String deleteBook(@RequestParam Integer id) {
         bookService.deleteBookById(id);
         return "redirect:/books/";
     }
 
     @GetMapping("/edit-book/{id}")
-    public String editBookPage(@PathVariable Integer id, final Model model) throws ServiceException {
+    public String editBookPage(@PathVariable Integer id, final Model model) {
         Book book = bookService.getBookById(id);
 
         BookEditDto editDto = new BookEditDto(book);

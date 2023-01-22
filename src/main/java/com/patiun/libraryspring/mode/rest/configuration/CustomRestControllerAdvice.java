@@ -1,7 +1,6 @@
-package com.patiun.libraryspring.rest.configuration;
+package com.patiun.libraryspring.mode.rest.configuration;
 
 import com.patiun.libraryspring.exception.ServiceException;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -14,10 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestControllerAdvice
-@ConditionalOnProperty(prefix = "mvc.controller",
-        name = "enabled",
-        havingValue = "false",
-        matchIfMissing = true)
 public class CustomRestControllerAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

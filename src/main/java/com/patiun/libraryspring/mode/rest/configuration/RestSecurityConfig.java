@@ -1,7 +1,6 @@
-package com.patiun.libraryspring.rest.configuration;
+package com.patiun.libraryspring.mode.rest.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,10 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@ConditionalOnProperty(prefix = "mvc.controller",
-        name = "enabled",
-        havingValue = "false",
-        matchIfMissing = true)
 public class RestSecurityConfig {
 
     public static final String FRONT_END_URL = "*";

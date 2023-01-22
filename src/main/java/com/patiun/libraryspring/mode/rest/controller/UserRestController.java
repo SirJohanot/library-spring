@@ -1,7 +1,6 @@
 package com.patiun.libraryspring.mode.rest.controller;
 
 import com.patiun.libraryspring.exception.ServiceException;
-import com.patiun.libraryspring.mode.rest.configuration.RestSecurityConfig;
 import com.patiun.libraryspring.user.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = RestSecurityConfig.FRONT_END_URL)
 @RequestMapping("/users")
 public class UserRestController {
 

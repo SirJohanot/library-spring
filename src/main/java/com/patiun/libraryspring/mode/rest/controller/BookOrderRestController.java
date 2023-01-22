@@ -1,7 +1,6 @@
 package com.patiun.libraryspring.mode.rest.controller;
 
 import com.patiun.libraryspring.exception.ServiceException;
-import com.patiun.libraryspring.mode.rest.configuration.RestSecurityConfig;
 import com.patiun.libraryspring.order.BookOrder;
 import com.patiun.libraryspring.order.BookOrderDto;
 import com.patiun.libraryspring.order.BookOrderService;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@CrossOrigin(origins = RestSecurityConfig.FRONT_END_URL)
 @RequestMapping("/orders")
 public class BookOrderRestController {
 

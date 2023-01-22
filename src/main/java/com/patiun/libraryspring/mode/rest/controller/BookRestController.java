@@ -4,7 +4,6 @@ import com.patiun.libraryspring.book.Book;
 import com.patiun.libraryspring.book.BookEditDto;
 import com.patiun.libraryspring.book.BookService;
 import com.patiun.libraryspring.exception.ServiceException;
-import com.patiun.libraryspring.mode.rest.configuration.RestSecurityConfig;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = RestSecurityConfig.FRONT_END_URL)
 @RequestMapping("/books")
 public class BookRestController {
 

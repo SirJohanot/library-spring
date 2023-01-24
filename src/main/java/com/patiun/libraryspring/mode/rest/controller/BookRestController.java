@@ -1,24 +1,17 @@
-package com.patiun.libraryspring.rest.controller;
+package com.patiun.libraryspring.mode.rest.controller;
 
 import com.patiun.libraryspring.book.Book;
 import com.patiun.libraryspring.book.BookEditDto;
 import com.patiun.libraryspring.book.BookService;
 import com.patiun.libraryspring.exception.ServiceException;
-import com.patiun.libraryspring.rest.configuration.RestSecurityConfig;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = RestSecurityConfig.FRONT_END_URL)
 @RequestMapping("/books")
-@ConditionalOnProperty(prefix = "mvc.controller",
-        name = "enabled",
-        havingValue = "false",
-        matchIfMissing = true)
 public class BookRestController {
 
     private final BookService bookService;

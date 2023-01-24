@@ -1,16 +1,14 @@
-package com.patiun.libraryspring.rest.controller;
+package com.patiun.libraryspring.mode.rest.controller;
 
 import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.order.BookOrder;
 import com.patiun.libraryspring.order.BookOrderDto;
 import com.patiun.libraryspring.order.BookOrderService;
 import com.patiun.libraryspring.order.RentalType;
-import com.patiun.libraryspring.rest.configuration.RestSecurityConfig;
 import com.patiun.libraryspring.user.User;
 import com.patiun.libraryspring.user.UserRole;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@CrossOrigin(origins = RestSecurityConfig.FRONT_END_URL)
 @RequestMapping("/orders")
-@ConditionalOnProperty(prefix = "mvc.controller",
-        name = "enabled",
-        havingValue = "false",
-        matchIfMissing = true)
 public class BookOrderRestController {
 
     private final BookOrderService orderService;

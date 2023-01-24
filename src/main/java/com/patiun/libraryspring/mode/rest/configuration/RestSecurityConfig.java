@@ -1,10 +1,10 @@
-package com.patiun.libraryspring.rest.configuration;
+package com.patiun.libraryspring.mode.rest.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.lang.Nullable;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -12,16 +12,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-@ConditionalOnProperty(prefix = "mvc.controller",
-        name = "enabled",
-        havingValue = "false",
-        matchIfMissing = true)
 public class RestSecurityConfig {
 
-    public static final String FRONT_END_URL = "*";
+    public static final String REACT_FRONT_END_URL = "http://localhost:3000";
+    public static final String ANGULAR_FRONT_END_URL = "http://localhost:4200";
 
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
@@ -56,4 +55,18 @@ public class RestSecurityConfig {
                 .build();
     }
 
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(@Nullable CorsRegistry registry) {
+                if (registry == null) {
+                    return;
+                }
+                registry.addMapping("/**")
+                        .allowedOrigins(REACT_FRONT_END_URL, ANGULAR_FRONT_END_URL)
+                        .allowedMethods("GET", "POST", "PUT", "DELETE");
+            }
+        };
+    }
 }

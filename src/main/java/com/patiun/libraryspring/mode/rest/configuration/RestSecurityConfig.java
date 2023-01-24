@@ -19,7 +19,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 public class RestSecurityConfig {
 
-    public static final String FRONT_END_URL = "http://localhost:3000";
+    public static final String REACT_FRONT_END_URL = "http://localhost:3000";
+    public static final String ANGULAR_FRONT_END_URL = "http://localhost:4200";
 
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
@@ -63,7 +64,7 @@ public class RestSecurityConfig {
                     return;
                 }
                 registry.addMapping("/**")
-                        .allowedOrigins(FRONT_END_URL)
+                        .allowedOrigins(REACT_FRONT_END_URL, ANGULAR_FRONT_END_URL)
                         .allowedMethods("GET", "POST", "PUT", "DELETE");
             }
         };

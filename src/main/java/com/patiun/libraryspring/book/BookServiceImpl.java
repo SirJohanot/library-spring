@@ -1,7 +1,6 @@
 package com.patiun.libraryspring.book;
 
 import com.patiun.libraryspring.exception.ElementNotFoundException;
-import com.patiun.libraryspring.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +37,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getAllBooks() {
         return StreamSupport.stream(bookRepository.findAll().spliterator(), false)
+                .filter(book -> !book.isDeleted())
                 .toList();
     }
 
@@ -54,7 +54,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBookById(Integer id, String title, String authors, String genreName, String publisherName, Integer publishmentYear, Integer amount) throws ServiceException {
+    public void updateBookById(Integer id, String title, String authors, String genreName, String publisherName, Integer publishmentYear, Integer amount) {
         getExistingBookById(id);
         List<Author> authorList = authorsStringToList(authors);
         Book updatedBook = setupBookToPersist(id, title, authorList, genreName, publisherName, publishmentYear, amount);
@@ -87,8 +87,11 @@ public class BookServiceImpl implements BookService {
     }
 
     private Book getExistingBookById(Integer id) {
-        return bookRepository.findById(id)
-                .orElseThrow(() -> new ElementNotFoundException("Could not find a book by id = " + id));
+        Optional<Book> bookOptional = bookRepository.findById(id);
+        if (bookOptional.isEmpty() || bookOptional.get().isDeleted()) {
+            throw new ElementNotFoundException("Could not find a book by id = " + id);
+        }
+        return bookOptional.get();
     }
 
 }

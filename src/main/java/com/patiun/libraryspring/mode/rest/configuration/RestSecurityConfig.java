@@ -65,7 +65,7 @@ public class RestSecurityConfig {
                 }
                 registry.addMapping("/**")
                         .allowedOrigins(REACT_FRONT_END_URL, ANGULAR_FRONT_END_URL)
-                        .allowedMethods("GET", "POST", "PUT", "DELETE");
+                        .allowedMethods("GET", "POST", "PATCH", "PUT", "DELETE");
             }
         };
     }

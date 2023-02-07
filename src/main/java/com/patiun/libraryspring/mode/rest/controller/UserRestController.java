@@ -56,7 +56,7 @@ public class UserRestController {
         userService.updateUserById(id, newFirstName, newLastName, newRole);
     }
 
-    @PutMapping("{id}/switch-blocked")
+    @PatchMapping("{id}/switch-blocked")
     public void switchUserBlocked(@PathVariable Integer id) throws ServiceException {
         userService.switchUserBlockedById(id);
     }

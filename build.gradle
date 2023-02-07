@@ -6,7 +6,10 @@ plugins {
 
 group = 'com.patiun'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+
+javadoc {
+    source = sourceSets.main.allJava
+}
 
 repositories {
     maven {

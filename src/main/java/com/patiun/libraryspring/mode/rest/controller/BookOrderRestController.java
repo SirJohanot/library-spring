@@ -66,17 +66,17 @@ public class BookOrderRestController {
         return targetOrder;
     }
 
-    @PutMapping("{id}/approve")
+    @PatchMapping("{id}/approve")
     public void approveOrder(@PathVariable Integer id) throws ServiceException {
         orderService.approveOrderById(id);
     }
 
-    @PutMapping("{id}/decline")
+    @PatchMapping("{id}/decline")
     public void declineOrder(@PathVariable Integer id) throws ServiceException {
         orderService.declineOrderById(id);
     }
 
-    @PutMapping("{id}/collect")
+    @PatchMapping("{id}/collect")
     public void collectOrder(@PathVariable Integer id, final Authentication authentication) throws ServiceException {
         if (orderDoesNotBelongToTheAuthenticatedUser(id, authentication)) {
             throw new UnsupportedOperationException("You cannot collect an order which is not yours");
@@ -85,7 +85,7 @@ public class BookOrderRestController {
         orderService.collectOrderById(id);
     }
 
-    @PutMapping("{id}/return")
+    @PatchMapping("{id}/return")
     public void returnOrder(@PathVariable Integer id, final Authentication authentication) throws ServiceException {
         if (orderDoesNotBelongToTheAuthenticatedUser(id, authentication)) {
             throw new UnsupportedOperationException("You cannot return an order which is not yours");

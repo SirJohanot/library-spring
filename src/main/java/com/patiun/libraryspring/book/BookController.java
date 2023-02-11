@@ -1,8 +1,5 @@
-package com.patiun.libraryspring.mode.mvc.controller;
+package com.patiun.libraryspring.book;
 
-import com.patiun.libraryspring.book.Book;
-import com.patiun.libraryspring.book.BookEditDto;
-import com.patiun.libraryspring.book.BookService;
 import com.patiun.libraryspring.exception.ServiceException;
 import com.patiun.libraryspring.order.BookOrderDto;
 import com.patiun.libraryspring.utility.Paginator;

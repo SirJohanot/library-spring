@@ -1,4 +1,4 @@
-package com.patiun.libraryspring.mode.mvc.configuration;
+package com.patiun.libraryspring.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

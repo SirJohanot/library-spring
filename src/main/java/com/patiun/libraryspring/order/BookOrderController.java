@@ -1,10 +1,6 @@
-package com.patiun.libraryspring.mode.mvc.controller;
+package com.patiun.libraryspring.order;
 
 import com.patiun.libraryspring.exception.ServiceException;
-import com.patiun.libraryspring.order.BookOrder;
-import com.patiun.libraryspring.order.BookOrderDto;
-import com.patiun.libraryspring.order.BookOrderService;
-import com.patiun.libraryspring.order.RentalType;
 import com.patiun.libraryspring.user.User;
 import com.patiun.libraryspring.user.UserRole;
 import com.patiun.libraryspring.utility.Paginator;

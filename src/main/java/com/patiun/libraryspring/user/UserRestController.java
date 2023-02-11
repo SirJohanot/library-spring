@@ -1,7 +1,6 @@
-package com.patiun.libraryspring.mode.rest.controller;
+package com.patiun.libraryspring.user;
 
 import com.patiun.libraryspring.exception.ServiceException;
-import com.patiun.libraryspring.user.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

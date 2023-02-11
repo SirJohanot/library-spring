@@ -1,4 +1,4 @@
-package com.patiun.libraryspring.mode.rest.configuration;
+package com.patiun.libraryspring.configuration;
 
 import com.patiun.libraryspring.exception.ServiceException;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.patiun.libraryspring.mode.rest.configuration;
+package com.patiun.libraryspring.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -15,6 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import static com.patiun.libraryspring.user.Authority.*;
+
 @Configuration
 @EnableWebSecurity
 public class RestSecurityConfig {
@@ -38,16 +40,17 @@ public class RestSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(HttpMethod.POST, "/books/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/orders/**").hasAuthority("READER")
-                        .requestMatchers(HttpMethod.GET, "/books/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/books/**").hasAuthority(ADD_BOOKS.name())
+                        .requestMatchers(HttpMethod.POST, "/orders/**").hasAuthority(PLACE_ORDERS.name())
+                        .requestMatchers(HttpMethod.GET, "/books/**").hasAuthority(READ_BOOKS.name())
                         .requestMatchers(HttpMethod.GET, "/users/auth").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/users/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/orders/**").hasAnyAuthority("READER", "LIBRARIAN")
-                        .requestMatchers(HttpMethod.PUT, "/books/**", "/users/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/orders/*/collect", "/orders/*/return").hasAuthority("READER")
-                        .requestMatchers(HttpMethod.PUT, "/orders/*/approve", "/orders/*/decline").hasAuthority("LIBRARIAN")
-                        .requestMatchers(HttpMethod.DELETE, "/books/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/users/**").hasAuthority(READ_USERS.name())
+                        .requestMatchers(HttpMethod.GET, "/orders/**").hasAuthority(READ_ORDERS.name())
+                        .requestMatchers(HttpMethod.PUT, "/books/**").hasAuthority(EDIT_BOOKS.name())
+                        .requestMatchers(HttpMethod.DELETE, "/books/**").hasAuthority(EDIT_BOOKS.name())
+                        .requestMatchers(HttpMethod.PUT, "/users/**").hasAuthority(EDIT_USERS.name())
+                        .requestMatchers(HttpMethod.PUT, "/orders/*/collect", "/orders/*/return").hasAuthority(COLLECT_ORDERS.name())
+                        .requestMatchers(HttpMethod.PUT, "/orders/*/approve", "/orders/*/decline").hasAuthority(JUDGE_ORDERS.name())
                         .anyRequest().permitAll()
                 )
                 .httpBasic((httpSecurityHttpBasicConfigurer) -> httpSecurityHttpBasicConfigurer.authenticationEntryPoint(authenticationEntryPoint))

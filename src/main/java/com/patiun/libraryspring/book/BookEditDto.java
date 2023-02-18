@@ -4,12 +4,11 @@ import com.patiun.libraryspring.validation.Regexp;
 import jakarta.validation.constraints.*;
 
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class BookEditDto {
 
     @NotBlank(message = "Book title must not be blank")
-    @Pattern(regexp = Regexp.HUMAN_NAME, message = "Book title must start with an alphabetical character or a number")
+    @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number")
     private String title;
 
     @NotBlank(message = "Authors must not be blank")
@@ -43,18 +42,6 @@ public class BookEditDto {
         this.publisher = publisher;
         this.publishmentYear = publishmentYear;
         this.amount = amount;
-    }
-
-    public BookEditDto(Book book) {
-        this.title = book.getTitle();
-        this.authors = book.getAuthors()
-                .stream()
-                .map(Author::getName)
-                .collect(Collectors.joining(", "));
-        this.genre = book.getGenre().getName();
-        this.publisher = book.getPublisher().getName();
-        this.publishmentYear = book.getPublishmentYear();
-        this.amount = book.getAmount();
     }
 
     public String getTitle() {

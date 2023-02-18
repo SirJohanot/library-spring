@@ -17,7 +17,7 @@ public class Book {
     private Integer id;
 
     @NotBlank(message = "Book title must not be blank")
-    @Pattern(regexp = Regexp.HUMAN_NAME, message = "Book title must start with an alphabetical character or a number")
+    @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number")
     @Column(name = "title", length = 64)
     private String title;
 

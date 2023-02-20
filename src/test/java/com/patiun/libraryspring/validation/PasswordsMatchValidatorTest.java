@@ -16,22 +16,24 @@ public class PasswordsMatchValidatorTest {
     }
 
     @Test
-    public void isValidShouldReturnTrueWhenPasswordsMatch() {
+    public void testIsValidShouldReturnTrueWhenPasswordsMatch() {
         //given
         UserRegistrationDto user = new UserRegistrationDto("login", "password", "password", "firstName", "lastName");
         //when
         boolean isValid = validator.isValid(user, null);
         //then
-        assertThat(isValid).isTrue();
+        assertThat(isValid)
+                .isTrue();
     }
 
     @Test
-    public void isValidaShouldReturnFalseWhenPasswordsDoNotMatch() {
+    public void testIsValidShouldReturnFalseWhenPasswordsDoNotMatch() {
         //given
         UserRegistrationDto user = new UserRegistrationDto("login", "password", "differentPassword", "firstName", "lastName");
         //when
         boolean isValid = validator.isValid(user, null);
         //then
-        assertThat(isValid).isFalse();
+        assertThat(isValid)
+                .isFalse();
     }
 }

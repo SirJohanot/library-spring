@@ -32,7 +32,7 @@ public class UserServiceImplTest {
     private UserServiceImpl userService;
 
     @Test
-    public void testLoadUserByUsernameShouldReturnUserFoundByRepositoryWhenUserIsPresent() {
+    public void loadUserByUsernameShouldReturnUserFoundByRepositoryWhenUserIsPresent() {
         //given
         String username = "user";
         User expectedUser = new User(1, username, "123", "john", "smith", false, UserRole.READER);
@@ -46,7 +46,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testLoadUserByUsernameShouldThrowUsernameNotFoundExceptionWhenRepositoryCouldNotFindTheUser() {
+    public void loadUserByUsernameShouldThrowUsernameNotFoundExceptionWhenRepositoryCouldNotFindTheUser() {
         //given
         String username = "user";
         when(userRepository.findByLogin(username))
@@ -57,7 +57,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testSignUpShouldSaveUserWithRepositoryWhenUserHasUniqueLogin() throws ServiceException {
+    public void signUpShouldSaveUserWithRepositoryWhenUserHasUniqueLogin() throws ServiceException {
         //given
         String login = "user";
         String password = "12345678";
@@ -80,7 +80,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testSignUpShouldThrowServiceExceptionWhenUserHasExistingLogin() {
+    public void signUpShouldThrowServiceExceptionWhenUserHasExistingLogin() {
         //given
         String login = "user";
         String password = "12345678";
@@ -100,7 +100,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testGetAllUsersShouldReturnUsersFoundByRepository() {
+    public void getAllUsersShouldReturnUsersFoundByRepository() {
         //given
         List<User> usersReturnedByRepository = Arrays.asList(
                 new User(1, "coolGuy", "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN),
@@ -116,7 +116,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testGetUserByIdShouldReturnUserFoundByRepositoryWhenUserExists() {
+    public void getUserByIdShouldReturnUserFoundByRepositoryWhenUserExists() {
         //given
         Integer targetUserId = 2;
         User userReturnedByRepository = new User(targetUserId, "ookla", "h46jh53h6", "john", "doe", true, UserRole.READER);
@@ -130,7 +130,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testGetUserByIdShouldThrowElementNotFoundExceptionWhenUserDoesNotExist() {
+    public void getUserByIdShouldThrowElementNotFoundExceptionWhenUserDoesNotExist() {
         //given
         Integer targetUserId = 2;
         when(userRepository.findById(targetUserId))
@@ -141,7 +141,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testGetUserByLoginShouldReturnUserFoundByRepositoryWhenUserExists() {
+    public void getUserByLoginShouldReturnUserFoundByRepositoryWhenUserExists() {
         //given
         String targetUserLogin = "johnDoe";
         User userReturnedByRepository = new User(2, targetUserLogin, "h46jh53h6", "john", "doe", true, UserRole.READER);
@@ -155,7 +155,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testGetUserByLoginShouldThrowElementNotFoundExceptionWhenUserDoesNotExist() {
+    public void getUserByLoginShouldThrowElementNotFoundExceptionWhenUserDoesNotExist() {
         //given
         String targetUserLogin = "johnDoe";
         when(userRepository.findByLogin(targetUserLogin))
@@ -166,7 +166,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testUpdateUserByIdShouldSaveUserWithRepositoryWhenUserExists() {
+    public void updateUserByIdShouldSaveUserWithRepositoryWhenUserExists() {
         //given
         Integer targetUserId = 436;
         String newFirstName = "jack";
@@ -193,7 +193,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testUpdateUserByIdShouldThrowElementNotFoundExceptionWhenUserDoesNotExist() {
+    public void updateUserByIdShouldThrowElementNotFoundExceptionWhenUserDoesNotExist() {
         //given
         Integer targetUserId = 436;
         String newFirstName = "jack";
@@ -210,7 +210,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testSwitchUserBlockedShouldSaveBlockedUserWhenUserIsUnblocked() {
+    public void switchUserBlockedShouldSaveBlockedUserWhenUserIsUnblocked() {
         //given
         Integer targetUserId = 436;
 
@@ -233,7 +233,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testSwitchUserBlockedShouldSaveUnblockedUserWhenUserIsBlocked() {
+    public void switchUserBlockedShouldSaveUnblockedUserWhenUserIsBlocked() {
         //given
         Integer targetUserId = 436;
 
@@ -256,7 +256,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testSwitchUserBlockedShouldThrowElementNotFoundExceptionWhenUserDoesNotExist() {
+    public void switchUserBlockedShouldThrowElementNotFoundExceptionWhenUserDoesNotExist() {
         //given
         Integer targetUserId = 436;
 

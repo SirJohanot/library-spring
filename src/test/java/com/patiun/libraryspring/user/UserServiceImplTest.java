@@ -17,6 +17,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,8 +38,8 @@ public class UserServiceImplTest {
         //given
         String username = "user";
         User expectedUser = new User(1, username, "123", "john", "smith", false, UserRole.READER);
-        when(userRepository.findByLogin(username))
-                .thenReturn(Optional.of(expectedUser));
+        given(userRepository.findByLogin(username))
+                .willReturn(Optional.of(expectedUser));
         //when
         UserDetails actualUser = userService.loadUserByUsername(username);
         //then
@@ -49,8 +51,8 @@ public class UserServiceImplTest {
     public void loadUserByUsernameShouldThrowUsernameNotFoundExceptionWhenRepositoryCouldNotFindTheUser() {
         //given
         String username = "user";
-        when(userRepository.findByLogin(username))
-                .thenReturn(Optional.empty());
+        given(userRepository.findByLogin(username))
+                .willReturn(Optional.empty());
         //then
         assertThatThrownBy(() -> userService.loadUserByUsername(username))
                 .isInstanceOf(UsernameNotFoundException.class);
@@ -64,18 +66,19 @@ public class UserServiceImplTest {
         String firstName = "john";
         String lastName = "doe";
 
-        when(userRepository.findByLogin(login))
-                .thenReturn(Optional.empty());
+        given(userRepository.findByLogin(login))
+                .willReturn(Optional.empty());
 
         String encodedPassword = "hk2k5h4g655436";
-        when(passwordEncoder.encode(password))
-                .thenReturn(encodedPassword);
+        given(passwordEncoder.encode(password))
+                .willReturn(encodedPassword);
 
         User expectedUserToBeSaved = new User(null, login, encodedPassword, firstName, lastName, false, UserRole.READER);
         //when
         userService.signUp(login, password, firstName, lastName);
         //then
-        verify(userRepository, times(1))
+        then(userRepository)
+                .should(times(1))
                 .save(expectedUserToBeSaved);
     }
 
@@ -89,13 +92,14 @@ public class UserServiceImplTest {
         String lastName = "doe";
 
         User expectedUserToBeFound = new User(null, login, encodedPassword, firstName, lastName, false, UserRole.READER);
-        when(userRepository.findByLogin(login))
-                .thenReturn(Optional.of(expectedUserToBeFound));
+        given(userRepository.findByLogin(login))
+                .willReturn(Optional.of(expectedUserToBeFound));
 
         //then
         assertThatThrownBy(() -> userService.signUp(login, password, firstName, lastName))
                 .isInstanceOf(ServiceException.class);
-        verify(userRepository, never())
+        then(userRepository)
+                .should(never())
                 .save(any());
     }
 
@@ -106,8 +110,8 @@ public class UserServiceImplTest {
                 new User(1, "coolGuy", "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN),
                 new User(2, "ookla", "h46jh53h6", "john", "doe", true, UserRole.READER)
         );
-        when(userRepository.findAll())
-                .thenReturn(usersReturnedByRepository);
+        given(userRepository.findAll())
+                .willReturn(usersReturnedByRepository);
         //when
         List<User> actualUsersReturnedByService = userService.getAllUsers();
         //then
@@ -120,8 +124,8 @@ public class UserServiceImplTest {
         //given
         Integer targetUserId = 2;
         User userReturnedByRepository = new User(targetUserId, "ookla", "h46jh53h6", "john", "doe", true, UserRole.READER);
-        when(userRepository.findById(targetUserId))
-                .thenReturn(Optional.of(userReturnedByRepository));
+        given(userRepository.findById(targetUserId))
+                .willReturn(Optional.of(userReturnedByRepository));
         //when
         User actualUserReturnedByService = userService.getUserById(targetUserId);
         //then
@@ -133,8 +137,8 @@ public class UserServiceImplTest {
     public void getUserByIdShouldThrowElementNotFoundExceptionWhenUserDoesNotExist() {
         //given
         Integer targetUserId = 2;
-        when(userRepository.findById(targetUserId))
-                .thenReturn(Optional.empty());
+        given(userRepository.findById(targetUserId))
+                .willReturn(Optional.empty());
         //then
         assertThatThrownBy(() -> userService.getUserById(targetUserId))
                 .isInstanceOf(ElementNotFoundException.class);
@@ -145,8 +149,8 @@ public class UserServiceImplTest {
         //given
         String targetUserLogin = "johnDoe";
         User userReturnedByRepository = new User(2, targetUserLogin, "h46jh53h6", "john", "doe", true, UserRole.READER);
-        when(userRepository.findByLogin(targetUserLogin))
-                .thenReturn(Optional.of(userReturnedByRepository));
+        given(userRepository.findByLogin(targetUserLogin))
+                .willReturn(Optional.of(userReturnedByRepository));
         //when
         User actualUserReturnedByService = userService.getUserByLogin(targetUserLogin);
         //then
@@ -158,8 +162,8 @@ public class UserServiceImplTest {
     public void getUserByLoginShouldThrowElementNotFoundExceptionWhenUserDoesNotExist() {
         //given
         String targetUserLogin = "johnDoe";
-        when(userRepository.findByLogin(targetUserLogin))
-                .thenReturn(Optional.empty());
+        given(userRepository.findByLogin(targetUserLogin))
+                .willReturn(Optional.empty());
         //then
         assertThatThrownBy(() -> userService.getUserByLogin(targetUserLogin))
                 .isInstanceOf(ElementNotFoundException.class);
@@ -181,14 +185,15 @@ public class UserServiceImplTest {
         UserRole oldRole = UserRole.READER;
 
         User userReturnedByRepository = new User(targetUserId, oldLogin, oldPassword, oldFirstName, oldLastName, oldBlocked, oldRole);
-        when(userRepository.findById(targetUserId))
-                .thenReturn(Optional.of(userReturnedByRepository));
+        given(userRepository.findById(targetUserId))
+                .willReturn(Optional.of(userReturnedByRepository));
 
         User expectedUserToBeSaved = new User(targetUserId, oldLogin, oldPassword, newFirstName, newLastName, oldBlocked, newRole);
         //when
         userService.updateUserById(targetUserId, newFirstName, newLastName, newRole);
         //then
-        verify(userRepository, times(1))
+        then(userRepository)
+                .should(times(1))
                 .save(expectedUserToBeSaved);
     }
 
@@ -200,12 +205,13 @@ public class UserServiceImplTest {
         String newLastName = "stevens";
         UserRole newRole = UserRole.LIBRARIAN;
 
-        when(userRepository.findById(targetUserId))
-                .thenReturn(Optional.empty());
+        given(userRepository.findById(targetUserId))
+                .willReturn(Optional.empty());
         //then
         assertThatThrownBy(() -> userService.updateUserById(targetUserId, newFirstName, newLastName, newRole))
                 .isInstanceOf(ElementNotFoundException.class);
-        verify(userRepository, never())
+        then(userRepository)
+                .should(never())
                 .save(any());
     }
 
@@ -221,14 +227,15 @@ public class UserServiceImplTest {
         UserRole oldRole = UserRole.READER;
 
         User userReturnedByRepository = new User(targetUserId, oldLogin, oldPassword, oldFirstName, oldLastName, false, oldRole);
-        when(userRepository.findById(targetUserId))
-                .thenReturn(Optional.of(userReturnedByRepository));
+        given(userRepository.findById(targetUserId))
+                .willReturn(Optional.of(userReturnedByRepository));
 
         User expectedUserToBeSaved = new User(targetUserId, oldLogin, oldPassword, oldFirstName, oldLastName, true, oldRole);
         //when
         userService.switchUserBlockedById(targetUserId);
         //then
-        verify(userRepository, times(1))
+        then(userRepository)
+                .should(times(1))
                 .save(expectedUserToBeSaved);
     }
 
@@ -244,14 +251,15 @@ public class UserServiceImplTest {
         UserRole oldRole = UserRole.READER;
 
         User userReturnedByRepository = new User(targetUserId, oldLogin, oldPassword, oldFirstName, oldLastName, true, oldRole);
-        when(userRepository.findById(targetUserId))
-                .thenReturn(Optional.of(userReturnedByRepository));
+        given(userRepository.findById(targetUserId))
+                .willReturn(Optional.of(userReturnedByRepository));
 
         User expectedUserToBeSaved = new User(targetUserId, oldLogin, oldPassword, oldFirstName, oldLastName, false, oldRole);
         //when
         userService.switchUserBlockedById(targetUserId);
         //then
-        verify(userRepository, times(1))
+        then(userRepository)
+                .should(times(1))
                 .save(expectedUserToBeSaved);
     }
 
@@ -260,12 +268,13 @@ public class UserServiceImplTest {
         //given
         Integer targetUserId = 436;
 
-        when(userRepository.findById(targetUserId))
-                .thenReturn(Optional.empty());
+        given(userRepository.findById(targetUserId))
+                .willReturn(Optional.empty());
         //then
         assertThatThrownBy(() -> userService.switchUserBlockedById(targetUserId))
                 .isInstanceOf(ElementNotFoundException.class);
-        verify(userRepository, never())
+        then(userRepository)
+                .should(never())
                 .save(any());
     }
 }

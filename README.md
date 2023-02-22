@@ -26,6 +26,10 @@ administrator). This project runs as a REST API.
    to the default parameters
 4. Run `library-spring-x.x.x.jar` (requires Java Runtime Environment 17 or newer)
 
+## Requirements
+
+   JRE ([Java Runtime Environment](https://www.java.com/en/download/manual.jsp)) is needed to use the application.
+    
 ## Developers
 
 - [Johanot](https://github.com/SirJohanot)

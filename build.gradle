@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.patiun'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 
 javadoc {
     source = sourceSets.main.allJava

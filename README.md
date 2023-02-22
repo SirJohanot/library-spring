@@ -2,7 +2,7 @@
 
 <p align="center">
     <img alt="License" src="https://img.shields.io/github/license/SirJohanot/library-spring">
-    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/SirJohanot/library-spring?display_name=version">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/SirJohanot/library-spring?display_name=tag">
 </p>
 
 ## About

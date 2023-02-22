@@ -12,24 +12,26 @@ administrator). This project runs as a REST API.
 
 ### Technology stack used for this project:
 
-- Spring Boot;
-- Spring Security;
-- Hibernate ORM;
-- PostgreSQL.
+- Spring Boot
+- Spring Security
+- Hibernate ORM
+- PostgreSQL
 
 ## Installation
 
 1. Download the `library-spring-x.x.x.jar`
 2. Create an `application.properties` file in the same directory as the `.jar` file
-3. In `application.properties`, specify the database url, database username, database password, driver class name and
-   hibernate dialect per Spring Boot `application.properties` specifications. Otherwise, the application will fall back
+3. In `application.properties`, specify the url, username and password for the datasource per Spring
+   Boot `application.properties` [specifications](https://docs.spring.io/spring-boot/docs/current/reference/html/data.html#data.sql.datasource.configuration).
+   Otherwise, the application will fall back
    to the default parameters
-4. Run `library-spring-x.x.x.jar` (requires Java Runtime Environment 17 or newer)
+4. Run `library-spring-x.x.x.jar` using `java -jar library-spring-x.x.x.jar`
 
 ## Requirements
 
-   JRE ([Java Runtime Environment](https://www.java.com/en/download/manual.jsp)) is needed to use the application.
-    
+- [Java Runtime Environment](https://www.java.com/en/download/manual.jsp)
+- [PostgreSQL](https://www.postgresql.org/download/) database
+
 ## Developers
 
 - [Johanot](https://github.com/SirJohanot)

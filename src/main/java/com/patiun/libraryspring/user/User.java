@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.patiun.libraryspring.validation.Regexp;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -25,6 +26,7 @@ public class User implements UserDetails {
 
     @NotBlank(message = "Password must not be blank")
     @Column(name = "password", length = 64)
+    @JsonIgnore
     private String password;
 
     @NotBlank(message = "First name must not be blank")
@@ -117,31 +119,37 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
         return login;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return !isBlocked;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }

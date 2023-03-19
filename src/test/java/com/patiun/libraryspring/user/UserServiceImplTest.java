@@ -37,7 +37,9 @@ public class UserServiceImplTest {
     public void loadUserByUsernameShouldReturnUserFoundByRepositoryWhenUserIsPresent() {
         //given
         String username = "user";
+
         User expectedUser = new User(1, username, "123", "john", "smith", false, UserRole.READER);
+
         given(userRepository.findByLogin(username))
                 .willReturn(Optional.of(expectedUser));
         //when
@@ -51,6 +53,7 @@ public class UserServiceImplTest {
     public void loadUserByUsernameShouldThrowUsernameNotFoundExceptionWhenRepositoryCouldNotFindTheUser() {
         //given
         String username = "user";
+
         given(userRepository.findByLogin(username))
                 .willReturn(Optional.empty());
         //then
@@ -94,7 +97,6 @@ public class UserServiceImplTest {
         User expectedUserToBeFound = new User(null, login, encodedPassword, firstName, lastName, false, UserRole.READER);
         given(userRepository.findByLogin(login))
                 .willReturn(Optional.of(expectedUserToBeFound));
-
         //then
         assertThatThrownBy(() -> userService.signUp(login, password, firstName, lastName))
                 .isInstanceOf(ServiceException.class);
@@ -123,6 +125,7 @@ public class UserServiceImplTest {
     public void getUserByIdShouldReturnUserFoundByRepositoryWhenUserExists() {
         //given
         Integer targetUserId = 2;
+
         User userReturnedByRepository = new User(targetUserId, "ookla", "h46jh53h6", "john", "doe", true, UserRole.READER);
         given(userRepository.findById(targetUserId))
                 .willReturn(Optional.of(userReturnedByRepository));
@@ -148,6 +151,7 @@ public class UserServiceImplTest {
     public void getUserByLoginShouldReturnUserFoundByRepositoryWhenUserExists() {
         //given
         String targetUserLogin = "johnDoe";
+
         User userReturnedByRepository = new User(2, targetUserLogin, "h46jh53h6", "john", "doe", true, UserRole.READER);
         given(userRepository.findByLogin(targetUserLogin))
                 .willReturn(Optional.of(userReturnedByRepository));

@@ -18,8 +18,10 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
@@ -198,6 +200,306 @@ public class BookOrderServiceImplTest {
         then(orderRepository)
                 .should(times(1))
                 .save(expectedOrderToBeSaved);
+    }
+
+    @Test
+    public void approveOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
+        //given
+        Integer orderId = 1;
+
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.empty());
+        //then
+        assertThatThrownBy(() -> bookOrderService.approveOrderById(orderId))
+                .isInstanceOf(ElementNotFoundException.class);
+    }
+
+    @Test
+    public void approveOrderByIdShouldThrowServiceExceptionWhenThereAreNoBooksInStock() {
+        //given
+        Integer orderId = 1;
+
+        Integer targetBookId = 2;
+        String title = "War and Peace";
+        List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
+        Genre genre = new Genre(1, "Historical Novel");
+        Publisher publisher = new Publisher(2, "Hardcover");
+        Integer publishmentYear = 2014;
+        int amount = 0;
+        Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
+
+        User orderUser = new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER);
+
+        RentalType type = RentalType.OUT_OF_LIBRARY;
+        LocalDate startDate = LocalDate.of(2023, 3, 22);
+        LocalDate endDate = LocalDate.of(2023, 3, 29);
+
+        BookOrder targetOrder = new BookOrder(orderId, orderBook, orderUser, type, startDate, endDate, null, OrderState.PLACED);
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.of(targetOrder));
+        //then
+        assertThatThrownBy(() -> bookOrderService.approveOrderById(orderId))
+                .isInstanceOf(ServiceException.class);
+    }
+
+    @Test
+    public void approveOrderByIdShouldThrowServiceExceptionWhenTheOrderIsAlreadyDeclined() {
+        //given
+        Integer orderId = 1;
+
+        Integer targetBookId = 2;
+        String title = "War and Peace";
+        List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
+        Genre genre = new Genre(1, "Historical Novel");
+        Publisher publisher = new Publisher(2, "Hardcover");
+        Integer publishmentYear = 2014;
+        int amount = 5;
+        Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
+
+        User orderUser = new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER);
+
+        RentalType type = RentalType.OUT_OF_LIBRARY;
+        LocalDate startDate = LocalDate.of(2023, 3, 22);
+        LocalDate endDate = LocalDate.of(2023, 3, 29);
+
+        BookOrder targetOrder = new BookOrder(orderId, orderBook, orderUser, type, startDate, endDate, null, OrderState.DECLINED);
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.of(targetOrder));
+        //then
+        assertThatThrownBy(() -> bookOrderService.approveOrderById(orderId))
+                .isInstanceOf(ServiceException.class);
+    }
+
+    @Test
+    public void declineOrderByIdShouldAdvanceStateWhenOrderCanBeDeclined() throws ServiceException {
+        //given
+        Integer orderId = 1;
+
+        Integer targetBookId = 2;
+        String title = "War and Peace";
+        List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
+        Genre genre = new Genre(1, "Historical Novel");
+        Publisher publisher = new Publisher(2, "Hardcover");
+        Integer publishmentYear = 2014;
+        int amount = 16;
+        Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
+
+        User orderUser = new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER);
+
+        RentalType type = RentalType.OUT_OF_LIBRARY;
+        LocalDate startDate = LocalDate.of(2023, 3, 22);
+        LocalDate endDate = LocalDate.of(2023, 3, 29);
+
+        BookOrder targetOrder = new BookOrder(orderId, orderBook, orderUser, type, startDate, endDate, null, OrderState.PLACED);
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.of(targetOrder));
+
+        BookOrder expectedOrderToBeSaved = new BookOrder(orderId, orderBook, orderUser, type, startDate, endDate, null, OrderState.DECLINED);
+        //when
+        bookOrderService.declineOrderById(1);
+        //then
+        then(bookRepository)
+                .should(never())
+                .save(any());
+
+        then(orderRepository)
+                .should(times(1))
+                .save(expectedOrderToBeSaved);
+    }
+
+    @Test
+    public void declineOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
+        //given
+        Integer orderId = 1;
+
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.empty());
+        //then
+        assertThatThrownBy(() -> bookOrderService.declineOrderById(orderId))
+                .isInstanceOf(ElementNotFoundException.class);
+    }
+
+    @Test
+    public void declineOrderByIdShouldThrowServiceExceptionWhenTheOrderIsAlreadyApproved() {
+        //given
+        Integer orderId = 1;
+
+        Integer targetBookId = 2;
+        String title = "War and Peace";
+        List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
+        Genre genre = new Genre(1, "Historical Novel");
+        Publisher publisher = new Publisher(2, "Hardcover");
+        Integer publishmentYear = 2014;
+        int amount = 4;
+        Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
+
+        User orderUser = new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER);
+
+        RentalType type = RentalType.OUT_OF_LIBRARY;
+        LocalDate startDate = LocalDate.of(2023, 3, 22);
+        LocalDate endDate = LocalDate.of(2023, 3, 29);
+
+        BookOrder targetOrder = new BookOrder(orderId, orderBook, orderUser, type, startDate, endDate, null, OrderState.APPROVED);
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.of(targetOrder));
+        //then
+        assertThatThrownBy(() -> bookOrderService.declineOrderById(orderId))
+                .isInstanceOf(ServiceException.class);
+    }
+
+    @Test
+    public void collectOrderByIdShouldAdvanceStateWhenOrderCanBeCollected() throws ServiceException {
+        //given
+        Integer orderId = 1;
+
+        Integer targetBookId = 2;
+        String title = "War and Peace";
+        List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
+        Genre genre = new Genre(1, "Historical Novel");
+        Publisher publisher = new Publisher(2, "Hardcover");
+        Integer publishmentYear = 2014;
+        int amount = 16;
+        Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
+
+        User orderUser = new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER);
+
+        RentalType type = RentalType.OUT_OF_LIBRARY;
+        LocalDate startDate = LocalDate.of(2023, 3, 22);
+        LocalDate endDate = LocalDate.of(2023, 3, 29);
+
+        BookOrder targetOrder = new BookOrder(orderId, orderBook, orderUser, type, startDate, endDate, null, OrderState.PLACED);
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.of(targetOrder));
+
+        BookOrder expectedOrderToBeSaved = new BookOrder(orderId, orderBook, orderUser, type, startDate, endDate, null, OrderState.BOOK_TAKEN);
+        //when
+        bookOrderService.collectOrderById(1);
+        //then
+        then(bookRepository)
+                .should(never())
+                .save(any());
+
+        then(orderRepository)
+                .should(times(1))
+                .save(expectedOrderToBeSaved);
+    }
+
+    @Test
+    public void collectOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
+        //given
+        Integer orderId = 1;
+
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.empty());
+        //then
+        assertThatThrownBy(() -> bookOrderService.collectOrderById(orderId))
+                .isInstanceOf(ElementNotFoundException.class);
+    }
+
+    @Test
+    public void collectOrderByIdShouldThrowServiceExceptionWhenTheOrderIsDeclined() {
+        //given
+        Integer orderId = 1;
+
+        Integer targetBookId = 2;
+        String title = "War and Peace";
+        List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
+        Genre genre = new Genre(1, "Historical Novel");
+        Publisher publisher = new Publisher(2, "Hardcover");
+        Integer publishmentYear = 2014;
+        int amount = 3;
+        Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
+
+        User orderUser = new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER);
+
+        RentalType type = RentalType.OUT_OF_LIBRARY;
+        LocalDate startDate = LocalDate.of(2023, 3, 22);
+        LocalDate endDate = LocalDate.of(2023, 3, 29);
+
+        BookOrder targetOrder = new BookOrder(orderId, orderBook, orderUser, type, startDate, endDate, null, OrderState.DECLINED);
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.of(targetOrder));
+        //then
+        assertThatThrownBy(() -> bookOrderService.collectOrderById(orderId))
+                .isInstanceOf(ServiceException.class);
+    }
+
+    @Test
+    public void returnOrderByIdShouldIncrementBookAmountSetReturnDateAndAdvanceStateWhenOrderCanBeReturned() throws ServiceException {
+        //given
+        Integer orderId = 1;
+
+        Integer targetBookId = 2;
+        String title = "War and Peace";
+        List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
+        Genre genre = new Genre(1, "Historical Novel");
+        Publisher publisher = new Publisher(2, "Hardcover");
+        Integer publishmentYear = 2014;
+        int amount = 16;
+        Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
+        Book expectedBookToBeSaved = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount + 1, false);
+
+        User orderUser = new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER);
+
+        RentalType type = RentalType.OUT_OF_LIBRARY;
+        LocalDate startDate = LocalDate.of(2023, 3, 22);
+        LocalDate endDate = LocalDate.of(2023, 3, 29);
+
+        BookOrder targetOrder = new BookOrder(orderId, orderBook, orderUser, type, startDate, endDate, null, OrderState.BOOK_TAKEN);
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.of(targetOrder));
+
+        BookOrder expectedOrderToBeSaved = new BookOrder(orderId, orderBook, orderUser, type, startDate, endDate, LocalDate.now(), OrderState.BOOK_RETURNED);
+        //when
+        bookOrderService.returnOrderById(1);
+        //then
+        then(bookRepository)
+                .should(times(1))
+                .save(expectedBookToBeSaved);
+
+        then(orderRepository)
+                .should(times(1))
+                .save(expectedOrderToBeSaved);
+    }
+
+    @Test
+    public void returnOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
+        //given
+        Integer orderId = 1;
+
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.empty());
+        //then
+        assertThatThrownBy(() -> bookOrderService.returnOrderById(orderId))
+                .isInstanceOf(ElementNotFoundException.class);
+    }
+
+    @Test
+    public void returnOrderByIdShouldThrowServiceExceptionWhenTheOrderIsNotYetCollected() {
+        //given
+        Integer orderId = 1;
+
+        Integer targetBookId = 2;
+        String title = "War and Peace";
+        List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
+        Genre genre = new Genre(1, "Historical Novel");
+        Publisher publisher = new Publisher(2, "Hardcover");
+        Integer publishmentYear = 2014;
+        int amount = 10;
+        Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
+
+        User orderUser = new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER);
+
+        RentalType type = RentalType.OUT_OF_LIBRARY;
+        LocalDate startDate = LocalDate.of(2023, 3, 22);
+        LocalDate endDate = LocalDate.of(2023, 3, 29);
+
+        BookOrder targetOrder = new BookOrder(orderId, orderBook, orderUser, type, startDate, endDate, null, OrderState.APPROVED);
+        given(orderRepository.findById(orderId))
+                .willReturn(Optional.of(targetOrder));
+        //then
+        assertThatThrownBy(() -> bookOrderService.returnOrderById(orderId))
+                .isInstanceOf(ServiceException.class);
     }
 
 }

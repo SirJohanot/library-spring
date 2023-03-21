@@ -76,11 +76,6 @@ public class BookOrderServiceImpl implements BookOrderService {
 
     @Override
     public void returnOrderById(Integer id) throws ServiceException {
-        BookOrder targetOrder = getExistingOrderById(id);
-        LocalDate currentDate = LocalDate.now();
-        targetOrder.setReturnDate(currentDate);
-        orderRepository.save(targetOrder);
-
         advanceOrderStateById(id, OrderState.BOOK_RETURNED);
     }
 
@@ -108,6 +103,8 @@ public class BookOrderServiceImpl implements BookOrderService {
 
         switch (newState) {
             case BOOK_RETURNED -> {
+                LocalDate currentDate = LocalDate.now();
+                targetOrder.setReturnDate(currentDate);
                 targetOrderBook.setAmount(targetOrderBookAmount + 1);
                 bookRepository.save(targetOrderBook);
             }

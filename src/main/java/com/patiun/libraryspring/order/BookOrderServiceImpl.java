@@ -101,17 +101,14 @@ public class BookOrderServiceImpl implements BookOrderService {
             throw new ServiceException("Cannot approve the order by id = " + id + ": The book is not in stock");
         }
 
-        switch (newState) {
-            case BOOK_RETURNED -> {
-                LocalDate currentDate = LocalDate.now();
-                targetOrder.setReturnDate(currentDate);
-                targetOrderBook.setAmount(targetOrderBookAmount + 1);
-                bookRepository.save(targetOrderBook);
-            }
-            case APPROVED -> {
-                targetOrderBook.setAmount(targetOrderBookAmount - 1);
-                bookRepository.save(targetOrderBook);
-            }
+        if (newState == OrderState.BOOK_RETURNED) {
+            LocalDate currentDate = LocalDate.now();
+            targetOrder.setReturnDate(currentDate);
+            targetOrderBook.setAmount(targetOrderBookAmount + 1);
+            bookRepository.save(targetOrderBook);
+        } else if (newState == OrderState.APPROVED) {
+            targetOrderBook.setAmount(targetOrderBookAmount - 1);
+            bookRepository.save(targetOrderBook);
         }
 
         targetOrder.setState(newState);

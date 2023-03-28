@@ -15,6 +15,8 @@ import java.util.Map;
 @RestControllerAdvice
 public class CustomRestControllerAdvice {
 
+    private static final String ERROR_MESSAGE_PROPERTY = "error";
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleMethodArgumentNotValid(MethodArgumentNotValidException cause) {
@@ -24,16 +26,16 @@ public class CustomRestControllerAdvice {
             ObjectError firstError = allErrors.get(0);
             String firstErrorMessage = firstError.getDefaultMessage();
 
-            return Map.of("error", firstErrorMessage != null ? firstErrorMessage : "Bad request");
+            return Map.of(ERROR_MESSAGE_PROPERTY, firstErrorMessage != null ? firstErrorMessage : "Bad request");
         }
-        return Map.of("error", "Bad request");
+        return Map.of(ERROR_MESSAGE_PROPERTY, "Bad request");
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ServiceException.class)
     public Map<String, String> handleServiceException(ServiceException cause) {
         String message = cause.getMessage();
-        return Map.of("error", message);
+        return Map.of(ERROR_MESSAGE_PROPERTY, message);
     }
 
 }

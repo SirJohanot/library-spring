@@ -21,8 +21,10 @@ import static com.patiun.libraryspring.user.Authority.*;
 @EnableWebSecurity
 public class RestSecurityConfig {
 
-    public static final String REACT_FRONT_END_URL = "http://localhost:3000";
-    public static final String ANGULAR_FRONT_END_URL = "http://localhost:4200";
+    private static final String BOOKS_URL_PATTERN = "/books/**";
+
+    private static final String REACT_FRONT_END_URL = "http://localhost:3000";
+    private static final String ANGULAR_FRONT_END_URL = "http://localhost:4200";
 
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
@@ -40,14 +42,14 @@ public class RestSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(HttpMethod.POST, "/books/**").hasAuthority(ADD_BOOKS.name())
+                        .requestMatchers(HttpMethod.POST, BOOKS_URL_PATTERN).hasAuthority(ADD_BOOKS.name())
                         .requestMatchers(HttpMethod.POST, "/orders/**").hasAuthority(PLACE_ORDERS.name())
-                        .requestMatchers(HttpMethod.GET, "/books/**").hasAuthority(READ_BOOKS.name())
+                        .requestMatchers(HttpMethod.GET, BOOKS_URL_PATTERN).hasAuthority(READ_BOOKS.name())
                         .requestMatchers(HttpMethod.GET, "/users/auth").authenticated()
                         .requestMatchers(HttpMethod.GET, "/users/**").hasAuthority(READ_USERS.name())
                         .requestMatchers(HttpMethod.GET, "/orders/**").hasAuthority(READ_ORDERS.name())
-                        .requestMatchers(HttpMethod.PUT, "/books/**").hasAuthority(EDIT_BOOKS.name())
-                        .requestMatchers(HttpMethod.DELETE, "/books/**").hasAuthority(EDIT_BOOKS.name())
+                        .requestMatchers(HttpMethod.PUT, BOOKS_URL_PATTERN).hasAuthority(EDIT_BOOKS.name())
+                        .requestMatchers(HttpMethod.DELETE, BOOKS_URL_PATTERN).hasAuthority(EDIT_BOOKS.name())
                         .requestMatchers(HttpMethod.PUT, "/users/**").hasAuthority(EDIT_USERS.name())
                         .requestMatchers(HttpMethod.PUT, "/orders/*/collect", "/orders/*/return").hasAuthority(COLLECT_ORDERS.name())
                         .requestMatchers(HttpMethod.PUT, "/orders/*/approve", "/orders/*/decline").hasAuthority(JUDGE_ORDERS.name())

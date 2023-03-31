@@ -1,12 +1,13 @@
-version: '2'
+version: "2"
 
 services:
-  image:
+  library-spring:
+    container_name: library-spring
+    image: library-spring
     build:
       context: .
-    container_name: library-spring
     ports:
-      - '8080:8080'
+      - "8080:8080"
     depends_on:
       - postgres
     environment:
@@ -16,8 +17,8 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
   postgres:
-    image: 'postgres'
     container_name: postgres
+    image: postgres
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root

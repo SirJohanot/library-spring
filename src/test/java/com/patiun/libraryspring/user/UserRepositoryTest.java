@@ -7,6 +7,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,7 +28,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findByLoginShouldReturnOptionalOfTheUserWithTheLoginWhenUserExists(){
+    public void findByLoginShouldReturnOptionalOfTheUserWithTheLoginWhenUserExists() {
         //given
         User user1 = new User(null, "userLoginOne", "hkjhgkjhgkhfj", "john", "smith", false, UserRole.READER);
         entityManager.persist(user1);
@@ -49,7 +51,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findByLoginShouldReturnEmptyOptionalWhenUserDoesNotExist(){
+    public void findByLoginShouldReturnEmptyOptionalWhenUserDoesNotExist() {
         //given
         User user1 = new User(null, "userLoginOne", "hkjhgkjhgkhfj", "john", "smith", false, UserRole.READER);
         entityManager.persist(user1);
@@ -66,5 +68,47 @@ public class UserRepositoryTest {
         //then
         assertThat(actualResult)
                 .isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void findByRoleIsShouldReturnListOfTheUsersWithRolesWithTheLoginWhenUsersExist() {
+        //given
+        User user1 = new User(null, "userLoginOne", "hkjhgkjhgkhfj", "john", "smith", false, UserRole.READER);
+        entityManager.persist(user1);
+
+        User user2 = new User(null, "userLoginTwo", "12jgkhjgkjhgk3", "john", "smith", false, UserRole.ADMIN);
+        entityManager.persist(user2);
+
+        User user3 = new User(null, "targetLogin", "12gjkjhkgjhk3", "john", "smith", false, UserRole.READER);
+        entityManager.persist(user3);
+
+        entityManager.flush();
+
+        List<User> expectedResult = Arrays.asList(user1, user3);
+        //when
+        List<User> actualResult = userRepository.findByRoleIs(UserRole.READER);
+        //then
+        assertThat(actualResult)
+                .isEqualTo(expectedResult);
+    }
+
+    @Test
+    public void findByRoleIsShouldReturnEmptyListWhenUsersDoNotExist() {
+        //given
+        User user1 = new User(null, "userLoginOne", "hkjhgkjhgkhfj", "john", "smith", false, UserRole.READER);
+        entityManager.persist(user1);
+
+        User user2 = new User(null, "userLoginTwo", "12jgkhjgkjhgk3", "john", "smith", false, UserRole.READER);
+        entityManager.persist(user2);
+
+        User user3 = new User(null, "someOtherLogin", "12gjkjhkgjhk3", "john", "smith", false, UserRole.READER);
+        entityManager.persist(user3);
+
+        entityManager.flush();
+        //When
+        List<User> actualResult = userRepository.findByRoleIs(UserRole.LIBRARIAN);
+        //then
+        assertThat(actualResult.size())
+                .isEqualTo(0);
     }
 }

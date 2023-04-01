@@ -16,16 +16,16 @@ import java.util.List;
 public class PlaceholderAdminGenerator {
 
     @Value("${placeholder-admin.login:admin}")
-    private String PLACEHOLDER_ADMIN_LOGIN;
+    private String placeholderAdminLogin;
 
     @Value("${placeholder-admin.password:admin}")
-    private String PLACEHOLDER_ADMIN_PASSWORD;
+    private String placeholderAdminPassword;
 
     @Value("${placeholder-admin.first-name:placeholder}")
-    private String PLACEHOLDER_ADMIN_FIRST_NAME;
+    private String placeholderAdminFirstName;
 
     @Value("${placeholder-admin.last-name:admin}")
-    private String PLACEHOLDER_ADMIN_LAST_NAME;
+    private String placeholderAdminLastName;
 
     private final UserService userService;
 
@@ -38,9 +38,9 @@ public class PlaceholderAdminGenerator {
     public void generatePlaceholderAdmin() throws ServiceException {
         List<User> existingAdmins = userService.getAllAdmins();
         if (existingAdmins.isEmpty()) {
-            User savedAdmin = userService.signUp(PLACEHOLDER_ADMIN_LOGIN, PLACEHOLDER_ADMIN_PASSWORD, PLACEHOLDER_ADMIN_FIRST_NAME, PLACEHOLDER_ADMIN_LAST_NAME);
+            User savedAdmin = userService.signUp(placeholderAdminLogin, placeholderAdminPassword, placeholderAdminFirstName, placeholderAdminLastName);
             Integer savedAdminId = savedAdmin.getId();
-            userService.updateUserById(savedAdminId, PLACEHOLDER_ADMIN_FIRST_NAME, PLACEHOLDER_ADMIN_LAST_NAME, UserRole.ADMIN);
+            userService.updateUserById(savedAdminId, placeholderAdminFirstName, placeholderAdminLastName, UserRole.ADMIN);
         }
     }
 }

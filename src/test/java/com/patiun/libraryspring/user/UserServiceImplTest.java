@@ -122,6 +122,23 @@ public class UserServiceImplTest {
     }
 
     @Test
+    public void getAllAdminsShouldReturnAdminsFoundByRepository() {
+        //given
+        List<User> adminsReturnedByRepository = Arrays.asList(
+                new User(1, "coolGuy", "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN),
+                new User(2, "ookla", "h46jh53h6", "john", "doe", true, UserRole.ADMIN),
+                new User(3, "gfjghj", "ghj", "john", "s", false, UserRole.ADMIN)
+        );
+        given(userRepository.findByRoleIs(UserRole.ADMIN))
+                .willReturn(adminsReturnedByRepository);
+        //when
+        List<User> actualAdminsReturnedByService = userService.getAllAdmins();
+        //then
+        assertThat(actualAdminsReturnedByService)
+                .isEqualTo(adminsReturnedByRepository);
+    }
+
+    @Test
     public void getUserByIdShouldReturnUserFoundByRepositoryWhenUserExists() {
         //given
         Integer targetUserId = 2;

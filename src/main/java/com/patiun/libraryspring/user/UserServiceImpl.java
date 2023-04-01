@@ -31,19 +31,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void signUp(String login, String password, String firstName, String lastName) throws ServiceException {
+    public User signUp(String login, String password, String firstName, String lastName) throws ServiceException {
         if (userRepository.findByLogin(login).isPresent()) {
             throw new ServiceException("A user with such login already exists");
         }
         String encodedPassword = passwordEncoder.encode(password);
 
-        userRepository.save(new User(null, login, encodedPassword, firstName, lastName, false, UserRole.READER));
+        return userRepository.save(new User(null, login, encodedPassword, firstName, lastName, false, UserRole.READER));
     }
 
     @Override
     public List<User> getAllUsers() {
         return StreamSupport.stream(userRepository.findAll().spliterator(), false)
                 .toList();
+    }
+
+    @Override
+    public List<User> getAllAdmins() {
+        return userRepository.findByRoleIs(UserRole.ADMIN);
     }
 
     @Override

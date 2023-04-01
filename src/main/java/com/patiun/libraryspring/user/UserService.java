@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface UserService {
 
-    void signUp(String login, String password, String firstName, String lastName) throws ServiceException;
+    User signUp(String login, String password, String firstName, String lastName) throws ServiceException;
 
     List<User> getAllUsers();
+
+    List<User> getAllAdmins();
 
     User getUserById(Integer id);
 

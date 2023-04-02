@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -42,8 +41,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<User> getAllUsers() {
-        return StreamSupport.stream(userRepository.findAll().spliterator(), false)
-                .toList();
+        return userRepository.findAll();
     }
 
     @Override

@@ -51,7 +51,7 @@ public class BookServiceImplTest {
                 .willReturn(Optional.empty());
         given(genreRepository.findOptionalByName(genreName))
                 .willReturn(Optional.empty());
-        given(publisherRepository.findOptionalByName(publisherName))
+        given(publisherRepository.findByName(publisherName))
                 .willReturn(Optional.empty());
         //when
         bookService.createBook(title, authors, genreName, publisherName, publishmentYear, amount);
@@ -79,7 +79,7 @@ public class BookServiceImplTest {
                 .willReturn(Optional.of(existingAuthor));
         given(genreRepository.findOptionalByName(genreName))
                 .willReturn(Optional.of(existingGenre));
-        given(publisherRepository.findOptionalByName(publisherName))
+        given(publisherRepository.findByName(publisherName))
                 .willReturn(Optional.of(existingPublisher));
         //when
         bookService.createBook(title, authors, genreName, publisherName, publishmentYear, amount);
@@ -257,7 +257,7 @@ public class BookServiceImplTest {
                 .willReturn(Optional.empty());
         given(genreRepository.findOptionalByName(newGenre))
                 .willReturn(Optional.of(existingGenre));
-        given(publisherRepository.findOptionalByName(newPublisher))
+        given(publisherRepository.findByName(newPublisher))
                 .willReturn(Optional.empty());
 
         Book expectedBookToBeSaved = new Book(targetBookId, newTitle, List.of(new Author(newAuthors)), existingGenre, new Publisher(null, newPublisher), newPublishmentYear, newAmount, false);

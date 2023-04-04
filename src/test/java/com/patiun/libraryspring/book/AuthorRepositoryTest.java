@@ -40,7 +40,7 @@ public class AuthorRepositoryTest {
 
         Optional<Author> expectedResult = Optional.of(secondAuthor);
         //when
-        Optional<Author> actualResult = authorRepository.findOptionalByName(secondAuthorName);
+        Optional<Author> actualResult = authorRepository.findByName(secondAuthorName);
         //then
         assertThat(actualResult)
                 .isEqualTo(expectedResult);
@@ -57,7 +57,7 @@ public class AuthorRepositoryTest {
 
         entityManager.flush();
         //when
-        Optional<Author> actualResult = authorRepository.findOptionalByName("Maksim Tank");
+        Optional<Author> actualResult = authorRepository.findByName("Maksim Tank");
         //then
         assertThat(actualResult)
                 .isEqualTo(Optional.empty());

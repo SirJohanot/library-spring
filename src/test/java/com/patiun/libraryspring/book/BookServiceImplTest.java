@@ -47,7 +47,7 @@ public class BookServiceImplTest {
         Integer publishmentYear = 2014;
         Integer amount = 16;
 
-        given(authorRepository.findOptionalByName(authors))
+        given(authorRepository.findByName(authors))
                 .willReturn(Optional.empty());
         given(genreRepository.findOptionalByName(genreName))
                 .willReturn(Optional.empty());
@@ -75,7 +75,7 @@ public class BookServiceImplTest {
         Genre existingGenre = new Genre(145, genreName);
         Publisher existingPublisher = new Publisher(35, publisherName);
 
-        given(authorRepository.findOptionalByName(authors))
+        given(authorRepository.findByName(authors))
                 .willReturn(Optional.of(existingAuthor));
         given(genreRepository.findOptionalByName(genreName))
                 .willReturn(Optional.of(existingGenre));
@@ -253,7 +253,7 @@ public class BookServiceImplTest {
         Integer newPublishmentYear = 2020;
         Integer newAmount = 100;
 
-        given(authorRepository.findOptionalByName(newAuthors))
+        given(authorRepository.findByName(newAuthors))
                 .willReturn(Optional.empty());
         given(genreRepository.findOptionalByName(newGenre))
                 .willReturn(Optional.of(existingGenre));

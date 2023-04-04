@@ -72,7 +72,7 @@ public class BookServiceImpl implements BookService {
         authors = authors.stream()
                 .map(author -> {
                     String authorName = author.getName();
-                    Optional<Author> existingAuthorOptional = authorRepository.findOptionalByName(authorName);
+                    Optional<Author> existingAuthorOptional = authorRepository.findByName(authorName);
                     return existingAuthorOptional.orElse(author);
                 })
                 .toList();

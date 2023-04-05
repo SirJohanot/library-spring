@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface GenreRepository extends CrudRepository<Genre, Integer> {
 
-    Optional<Genre> findOptionalByName(String name);
+    Optional<Genre> findByName(String name);
 }

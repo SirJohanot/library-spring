@@ -40,7 +40,7 @@ public class GenreRepositoryTest {
 
         Optional<Genre> expectedResult = Optional.of(firstGenre);
         //when
-        Optional<Genre> actualResult = genreRepository.findOptionalByName(firstGenreName);
+        Optional<Genre> actualResult = genreRepository.findByName(firstGenreName);
         //then
         assertThat(actualResult)
                 .isEqualTo(expectedResult);
@@ -57,7 +57,7 @@ public class GenreRepositoryTest {
 
         entityManager.flush();
         //when
-        Optional<Genre> actualResult = genreRepository.findOptionalByName("Historical novel");
+        Optional<Genre> actualResult = genreRepository.findByName("Historical novel");
         //then
         assertThat(actualResult)
                 .isEqualTo(Optional.empty());

@@ -49,7 +49,7 @@ public class BookServiceImplTest {
 
         given(authorRepository.findByName(authors))
                 .willReturn(Optional.empty());
-        given(genreRepository.findOptionalByName(genreName))
+        given(genreRepository.findByName(genreName))
                 .willReturn(Optional.empty());
         given(publisherRepository.findByName(publisherName))
                 .willReturn(Optional.empty());
@@ -77,7 +77,7 @@ public class BookServiceImplTest {
 
         given(authorRepository.findByName(authors))
                 .willReturn(Optional.of(existingAuthor));
-        given(genreRepository.findOptionalByName(genreName))
+        given(genreRepository.findByName(genreName))
                 .willReturn(Optional.of(existingGenre));
         given(publisherRepository.findByName(publisherName))
                 .willReturn(Optional.of(existingPublisher));
@@ -255,7 +255,7 @@ public class BookServiceImplTest {
 
         given(authorRepository.findByName(newAuthors))
                 .willReturn(Optional.empty());
-        given(genreRepository.findOptionalByName(newGenre))
+        given(genreRepository.findByName(newGenre))
                 .willReturn(Optional.of(existingGenre));
         given(publisherRepository.findByName(newPublisher))
                 .willReturn(Optional.empty());

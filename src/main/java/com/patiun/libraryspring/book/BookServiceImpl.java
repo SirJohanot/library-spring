@@ -77,7 +77,7 @@ public class BookServiceImpl implements BookService {
                 })
                 .toList();
 
-        Genre genre = genreRepository.findOptionalByName(genreName)
+        Genre genre = genreRepository.findByName(genreName)
                 .orElse(new Genre(null, genreName));
 
         Publisher publisher = publisherRepository.findByName(publisherName)

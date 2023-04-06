@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -36,9 +35,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getAllBooks() {
-        return StreamSupport.stream(bookRepository.findAll().spliterator(), false)
-                .filter(book -> !book.isDeleted())
-                .toList();
+        return bookRepository.findAllByIsDeletedFalse();
     }
 
     @Override

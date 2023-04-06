@@ -68,4 +68,25 @@ public class BookRepositoryTest {
         assertThat(actualResult)
                 .isEqualTo(Optional.empty());
     }
+
+    @Test
+    public void findAllByDeletedFalseShouldReturnAllNonDeletedBooksWhenSuchBooksExist() {
+        //given
+        Book firstBook = new Book(null, "book1", List.of(new Author("author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false);
+        entityManager.persist(firstBook);
+
+        entityManager.persist(new Book(null, "book2", List.of(new Author("author2")), new Genre(null, "genre2"), new Publisher(null, "publisher2"), 1998, 7, true));
+
+        Book thirdBook = new Book(null, "book3", Arrays.asList(new Author("author3"), new Author("author4")), new Genre(null, "genre3"), new Publisher(null, "publisher3"), 2014, 130, false);
+        entityManager.persist(thirdBook);
+
+        entityManager.flush();
+
+        List<Book> expectedResult = Arrays.asList(firstBook, thirdBook);
+        //when
+        List<Book> actualResult = bookRepository.findAllByIsDeletedFalse();
+        //then
+        assertThat(actualResult)
+                .isEqualTo(expectedResult);
+    }
 }

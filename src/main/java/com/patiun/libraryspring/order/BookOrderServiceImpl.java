@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 @Service
 public class BookOrderServiceImpl implements BookOrderService {
@@ -45,8 +44,7 @@ public class BookOrderServiceImpl implements BookOrderService {
 
     @Override
     public List<BookOrder> getAllOrders() {
-        return StreamSupport.stream(orderRepository.findAll().spliterator(), false)
-                .toList();
+        return orderRepository.findAll();
     }
 
     @Override

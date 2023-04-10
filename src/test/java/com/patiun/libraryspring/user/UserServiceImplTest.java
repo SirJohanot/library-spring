@@ -38,15 +38,15 @@ public class UserServiceImplTest {
         //given
         String username = "user";
 
-        User expectedUser = new User(1, username, "123", "john", "smith", false, UserRole.READER);
+        User userFoundByRepository = new User(1, username, "123", "john", "smith", false, UserRole.READER);
 
         given(userRepository.findByLogin(username))
-                .willReturn(Optional.of(expectedUser));
+                .willReturn(Optional.of(userFoundByRepository));
         //when
         UserDetails actualUser = userService.loadUserByUsername(username);
         //then
         assertThat(actualUser)
-                .isEqualTo(expectedUser);
+                .isEqualTo(userFoundByRepository);
     }
 
     @Test
@@ -108,34 +108,34 @@ public class UserServiceImplTest {
     @Test
     public void getAllUsersShouldReturnUsersFoundByRepository() {
         //given
-        List<User> usersReturnedByRepository = Arrays.asList(
+        List<User> usersFoundByRepository = Arrays.asList(
                 new User(1, "coolGuy", "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN),
                 new User(2, "ookla", "h46jh53h6", "john", "doe", true, UserRole.READER)
         );
         given(userRepository.findAll())
-                .willReturn(usersReturnedByRepository);
+                .willReturn(usersFoundByRepository);
         //when
         List<User> actualUsersReturnedByService = userService.getAllUsers();
         //then
         assertThat(actualUsersReturnedByService)
-                .isEqualTo(usersReturnedByRepository);
+                .isEqualTo(usersFoundByRepository);
     }
 
     @Test
     public void getAllAdminsShouldReturnAdminsFoundByRepository() {
         //given
-        List<User> adminsReturnedByRepository = Arrays.asList(
+        List<User> adminsFoundByRepository = Arrays.asList(
                 new User(1, "coolGuy", "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN),
                 new User(2, "ookla", "h46jh53h6", "john", "doe", true, UserRole.ADMIN),
                 new User(3, "gfjghj", "ghj", "john", "s", false, UserRole.ADMIN)
         );
         given(userRepository.findByRoleIs(UserRole.ADMIN))
-                .willReturn(adminsReturnedByRepository);
+                .willReturn(adminsFoundByRepository);
         //when
         List<User> actualAdminsReturnedByService = userService.getAllAdmins();
         //then
         assertThat(actualAdminsReturnedByService)
-                .isEqualTo(adminsReturnedByRepository);
+                .isEqualTo(adminsFoundByRepository);
     }
 
     @Test
@@ -143,14 +143,14 @@ public class UserServiceImplTest {
         //given
         Integer targetUserId = 2;
 
-        User userReturnedByRepository = new User(targetUserId, "ookla", "h46jh53h6", "john", "doe", true, UserRole.READER);
+        User userFoundByRepository = new User(targetUserId, "ookla", "h46jh53h6", "john", "doe", true, UserRole.READER);
         given(userRepository.findById(targetUserId))
-                .willReturn(Optional.of(userReturnedByRepository));
+                .willReturn(Optional.of(userFoundByRepository));
         //when
         User actualUserReturnedByService = userService.getUserById(targetUserId);
         //then
         assertThat(actualUserReturnedByService)
-                .isEqualTo(userReturnedByRepository);
+                .isEqualTo(userFoundByRepository);
     }
 
     @Test
@@ -169,14 +169,14 @@ public class UserServiceImplTest {
         //given
         String targetUserLogin = "johnDoe";
 
-        User userReturnedByRepository = new User(2, targetUserLogin, "h46jh53h6", "john", "doe", true, UserRole.READER);
+        User userFoundByRepository = new User(2, targetUserLogin, "h46jh53h6", "john", "doe", true, UserRole.READER);
         given(userRepository.findByLogin(targetUserLogin))
-                .willReturn(Optional.of(userReturnedByRepository));
+                .willReturn(Optional.of(userFoundByRepository));
         //when
         User actualUserReturnedByService = userService.getUserByLogin(targetUserLogin);
         //then
         assertThat(actualUserReturnedByService)
-                .isEqualTo(userReturnedByRepository);
+                .isEqualTo(userFoundByRepository);
     }
 
     @Test

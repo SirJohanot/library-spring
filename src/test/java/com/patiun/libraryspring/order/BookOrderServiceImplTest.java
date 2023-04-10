@@ -107,50 +107,50 @@ public class BookOrderServiceImplTest {
     @Test
     public void getAllOrdersShouldReturnAllOrdersFoundByRepository() {
         //given
-        List<BookOrder> expectedOrders = Arrays.asList(
+        List<BookOrder> ordersFoundByRepository = Arrays.asList(
                 new BookOrder(1, new Book(2, "book2", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false), new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER), RentalType.OUT_OF_LIBRARY, LocalDate.of(2023, 3, 22), LocalDate.of(2023, 3, 29), null, OrderState.PLACED),
                 new BookOrder(2, new Book(3, "book3", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false), new User(2, "login2", "ihiuehgiwreg2", "fi2rstName", "lastN2ame", false, UserRole.READER), RentalType.TO_READING_HALL, LocalDate.now(), LocalDate.now(), LocalDate.now(), OrderState.BOOK_RETURNED),
                 new BookOrder(4, new Book(3, "book3", List.of(new Author(1, "author1")), new Genre(4, "nice genre"), new Publisher(3, "publisher3"), 2000, 65, false), new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER), RentalType.OUT_OF_LIBRARY, LocalDate.of(2023, 4, 1), LocalDate.of(2023, 4, 8), null, OrderState.BOOK_TAKEN)
         );
         given(orderRepository.findAll())
-                .willReturn(expectedOrders);
+                .willReturn(ordersFoundByRepository);
         //when
         List<BookOrder> actualOrders = bookOrderService.getAllOrders();
         //then
         assertThat(actualOrders)
-                .isEqualTo(expectedOrders);
+                .isEqualTo(ordersFoundByRepository);
     }
 
     @Test
     public void getOrdersOfUserShouldReturnAllOrdersFoundByRepository() {
         //given
         Integer targetUserId = 1;
-        List<BookOrder> expectedOrders = Arrays.asList(
+        List<BookOrder> ordersFoundByRepository = Arrays.asList(
                 new BookOrder(1, new Book(2, "book2", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false), new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER), RentalType.OUT_OF_LIBRARY, LocalDate.of(2023, 3, 22), LocalDate.of(2023, 3, 29), null, OrderState.PLACED),
                 new BookOrder(2, new Book(3, "book3", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false), new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER), RentalType.TO_READING_HALL, LocalDate.now(), LocalDate.now(), LocalDate.now(), OrderState.BOOK_RETURNED),
                 new BookOrder(4, new Book(3, "book3", List.of(new Author(1, "author1")), new Genre(4, "nice genre"), new Publisher(3, "publisher3"), 2000, 65, false), new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER), RentalType.OUT_OF_LIBRARY, LocalDate.of(2023, 4, 1), LocalDate.of(2023, 4, 8), null, OrderState.BOOK_TAKEN)
         );
         given(orderRepository.findByUserId(targetUserId))
-                .willReturn(expectedOrders);
+                .willReturn(ordersFoundByRepository);
         //when
         List<BookOrder> actualOrders = bookOrderService.getOrdersOfUser(targetUserId);
         //then
         assertThat(actualOrders)
-                .isEqualTo(expectedOrders);
+                .isEqualTo(ordersFoundByRepository);
     }
 
     @Test
     public void getOrderByIdShouldReturnOrderFoundByRepositoryWhenOrderExists() {
         //given
         Integer orderId = 1;
-        BookOrder expectedOrder = new BookOrder(orderId, new Book(2, "book2", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false), new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER), RentalType.OUT_OF_LIBRARY, LocalDate.of(2023, 3, 22), LocalDate.of(2023, 3, 29), null, OrderState.PLACED);
+        BookOrder orderFoundByRepository = new BookOrder(orderId, new Book(2, "book2", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false), new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER), RentalType.OUT_OF_LIBRARY, LocalDate.of(2023, 3, 22), LocalDate.of(2023, 3, 29), null, OrderState.PLACED);
         given(orderRepository.findById(orderId))
-                .willReturn(Optional.of(expectedOrder));
+                .willReturn(Optional.of(orderFoundByRepository));
         //when
         BookOrder actualOrder = bookOrderService.getOrderById(orderId);
         //then
         assertThat(actualOrder)
-                .isEqualTo(expectedOrder);
+                .isEqualTo(orderFoundByRepository);
     }
 
     @Test

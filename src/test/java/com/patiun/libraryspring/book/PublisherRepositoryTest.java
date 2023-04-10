@@ -37,13 +37,11 @@ public class PublisherRepositoryTest {
         entityManager.persist(thirdPublisher);
 
         entityManager.flush();
-
-        Optional<Publisher> expectedResult = Optional.of(thirdPublisher);
         //when
         Optional<Publisher> actualResult = publisherRepository.findByName(thirdPublisherName);
         //then
         assertThat(actualResult)
-                .isEqualTo(expectedResult);
+                .hasValue(thirdPublisher);
     }
 
     @Test
@@ -60,6 +58,6 @@ public class PublisherRepositoryTest {
         Optional<Publisher> actualResult = publisherRepository.findByName("Blah blah blah");
         //then
         assertThat(actualResult)
-                .isEqualTo(Optional.empty());
+                .isEmpty();
     }
 }

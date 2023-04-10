@@ -37,13 +37,11 @@ public class GenreRepositoryTest {
         entityManager.persist(new Genre(null, "Detective"));
 
         entityManager.flush();
-
-        Optional<Genre> expectedResult = Optional.of(firstGenre);
         //when
         Optional<Genre> actualResult = genreRepository.findByName(firstGenreName);
         //then
         assertThat(actualResult)
-                .isEqualTo(expectedResult);
+                .hasValue(firstGenre);
     }
 
     @Test
@@ -60,6 +58,6 @@ public class GenreRepositoryTest {
         Optional<Genre> actualResult = genreRepository.findByName("Historical novel");
         //then
         assertThat(actualResult)
-                .isEqualTo(Optional.empty());
+                .isEmpty();
     }
 }

@@ -38,13 +38,11 @@ public class BookRepositoryTest {
         Integer targetBookId = entityManager.persistAndGetId(thirdBook, Integer.class);
 
         entityManager.flush();
-
-        Optional<Book> expectedResult = Optional.of(thirdBook);
         //when
         Optional<Book> actualResult = bookRepository.findById(targetBookId);
         //then
         assertThat(actualResult)
-                .isEqualTo(expectedResult);
+                .hasValue(thirdBook);
     }
 
     @Test
@@ -66,7 +64,7 @@ public class BookRepositoryTest {
         Optional<Book> actualResult = bookRepository.findById(targetId);
         //then
         assertThat(actualResult)
-                .isEqualTo(Optional.empty());
+                .isEmpty();
     }
 
     @Test
@@ -81,12 +79,11 @@ public class BookRepositoryTest {
         entityManager.persist(thirdBook);
 
         entityManager.flush();
-
-        List<Book> expectedResult = Arrays.asList(firstBook, thirdBook);
         //when
         List<Book> actualResult = bookRepository.findAllByIsDeletedFalse();
         //then
         assertThat(actualResult)
-                .isEqualTo(expectedResult);
+                .hasSize(2)
+                .contains(firstBook, thirdBook);
     }
 }

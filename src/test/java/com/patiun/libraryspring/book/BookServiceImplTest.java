@@ -96,30 +96,30 @@ public class BookServiceImplTest {
         Book secondBook = new Book(2, "book2", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false);
         Book thirdBook = new Book(3, "book3", Arrays.asList(new Author(1, "author1"), new Author(2, "author2")), new Genre(1, "genre1"), new Publisher(3, "publisher3"), 2014, 130, false);
 
-        List<Book> expectedBooks = Arrays.asList(firstBook, secondBook, thirdBook);
+        List<Book> booksFoundByRepository = Arrays.asList(firstBook, secondBook, thirdBook);
 
         given(bookRepository.findAllByIsDeletedFalse())
-                .willReturn(expectedBooks);
+                .willReturn(booksFoundByRepository);
         //when
         List<Book> actualBooks = bookService.getAllBooks();
         //then
         assertThat(actualBooks)
-                .isEqualTo(expectedBooks);
+                .isEqualTo(booksFoundByRepository);
     }
-    
+
     @Test
     public void getBookByIdShouldReturnBookFoundByRepositoryWhenBookExists() {
         //given
         Integer targetBookId = 2;
 
-        Book expectedBook = new Book(2, "book2", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false);
+        Book bookFoundByRepository = new Book(2, "book2", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false);
         given(bookRepository.findById(targetBookId))
-                .willReturn(Optional.of(expectedBook));
+                .willReturn(Optional.of(bookFoundByRepository));
         //when
         Book actualBook = bookService.getBookById(targetBookId);
         //then
         assertThat(actualBook)
-                .isEqualTo(expectedBook);
+                .isEqualTo(bookFoundByRepository);
     }
 
     @Test

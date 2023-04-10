@@ -37,13 +37,11 @@ public class AuthorRepositoryTest {
         entityManager.persist(new Author("Mikhail Lermontov"));
 
         entityManager.flush();
-
-        Optional<Author> expectedResult = Optional.of(secondAuthor);
         //when
         Optional<Author> actualResult = authorRepository.findByName(secondAuthorName);
         //then
         assertThat(actualResult)
-                .isEqualTo(expectedResult);
+                .hasValue(secondAuthor);
     }
 
     @Test
@@ -60,6 +58,6 @@ public class AuthorRepositoryTest {
         Optional<Author> actualResult = authorRepository.findByName("Maksim Tank");
         //then
         assertThat(actualResult)
-                .isEqualTo(Optional.empty());
+                .isEmpty();
     }
 }

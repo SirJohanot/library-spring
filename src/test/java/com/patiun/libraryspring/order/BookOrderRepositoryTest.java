@@ -7,18 +7,15 @@ import com.patiun.libraryspring.book.Publisher;
 import com.patiun.libraryspring.user.User;
 import com.patiun.libraryspring.user.UserRole;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
 @DataJpaTest
 public class BookOrderRepositoryTest {
 
@@ -86,7 +83,7 @@ public class BookOrderRepositoryTest {
         entityManager.persist(new BookOrder(null, firstBook, firstUser, RentalType.OUT_OF_LIBRARY, LocalDate.of(2023, 3, 22), LocalDate.of(2023, 3, 29), null, OrderState.PLACED));
 
         entityManager.persist(new BookOrder(null, secondBook, secondaryUser, RentalType.TO_READING_HALL, LocalDate.now(), LocalDate.now(), LocalDate.now(), OrderState.BOOK_RETURNED));
-        
+
         entityManager.persist(new BookOrder(null, secondBook, firstUser, RentalType.OUT_OF_LIBRARY, LocalDate.of(2023, 4, 1), LocalDate.of(2023, 4, 8), null, OrderState.BOOK_TAKEN));
 
         entityManager.flush();

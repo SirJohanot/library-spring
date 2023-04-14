@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.contains;
 import static org.mockito.BDDMockito.given;
@@ -71,6 +76,36 @@ public class UserRestControllerTest {
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.roles", contains(role.toString())));
+    }
+
+    @Test
+    @WithMockUser
+    public void testReadAllUsersShouldReturnTheTheUserListFoundByService() throws Exception {
+        //given
+        List<User> usersFoundByService = Arrays.asList(
+                new User(1, "coolGuy", "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN),
+                new User(2, "ookla", "h46jh53h6", "john", "doe", true, UserRole.READER)
+        );
+
+        given(service.getAllUsers())
+                .willReturn(usersFoundByService);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String expectedJson = usersFoundByService.stream()
+                .map(u -> {
+                    try {
+                        return mapper.writeValueAsString(u);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.joining(","));
+        expectedJson = "[" + expectedJson + "]";
+        //then
+        mvc.perform(get(BASE_URL)
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedJson));
     }
 
 }

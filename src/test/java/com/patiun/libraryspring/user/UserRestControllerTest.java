@@ -8,8 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.contains;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -71,7 +70,7 @@ public class UserRestControllerTest {
         mvc.perform(get(BASE_URL + "/auth")
                         .with(csrf()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.roles", hasSize(1)))
-                .andExpect(jsonPath("$.roles", hasItem(role.toString())));
+                .andExpect(jsonPath("$.roles", contains(role.toString())));
     }
+
 }

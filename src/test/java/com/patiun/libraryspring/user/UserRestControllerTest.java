@@ -13,8 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -108,6 +107,29 @@ public class UserRestControllerTest {
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedJson));
+    }
+
+    @Test
+    @WithMockUser
+    public void testReadUserShouldReturnTheUserFoundByService() throws Exception {
+        //given
+        String expectedUserLogin = "coolGuy";
+        User expectedUser = new User(1, expectedUserLogin, "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN);
+
+        given(service.getUserByLogin(expectedUserLogin))
+                .willReturn(expectedUser);
+        //then
+        mvc.perform(get(BASE_URL + "/" + expectedUserLogin)
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(6)))
+                .andExpect(jsonPath("$.id", is(expectedUser.getId())))
+                .andExpect(jsonPath("$.login", is(expectedUser.getLogin())))
+                .andExpect(jsonPath("$.firstName", is(expectedUser.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(expectedUser.getLastName())))
+                .andExpect(jsonPath("$.blocked", is(expectedUser.getBlocked())))
+                .andExpect(jsonPath("$.role", is(expectedUser.getRole().toString())));
+
     }
 
 }

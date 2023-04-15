@@ -80,7 +80,7 @@ public class UserRestControllerTest {
 
     @Test
     @WithMockUser
-    public void testReadAllUsersShouldReturnTheTheUserListFoundByService() throws Exception {
+    public void testReadAllUsersShouldReturnTheUserListFoundByService() throws Exception {
         //given
         List<User> usersFoundByService = Arrays.asList(
                 new User(1, "coolGuy", "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN),

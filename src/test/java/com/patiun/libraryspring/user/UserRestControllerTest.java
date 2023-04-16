@@ -19,8 +19,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserRestController.class)
@@ -129,7 +128,34 @@ public class UserRestControllerTest {
                 .andExpect(jsonPath("$.lastName", is(expectedUser.getLastName())))
                 .andExpect(jsonPath("$.blocked", is(expectedUser.getBlocked())))
                 .andExpect(jsonPath("$.role", is(expectedUser.getRole().toString())));
+    }
 
+    @Test
+    @WithMockUser
+    public void testUpdateUserShouldInvokeTheUpdateMethodOfService() throws Exception {
+        //given
+        Integer targetUserId = 14;
+        String newFirstName = "john";
+        String newLastName = "smith";
+        UserRole newRole = UserRole.LIBRARIAN;
+
+        UserEditDto editDto = new UserEditDto();
+        editDto.setFirstName(newFirstName);
+        editDto.setLastName(newLastName);
+        editDto.setRole(newRole);
+
+        String updateDtoJson = new ObjectMapper().writeValueAsString(editDto);
+        //then
+        mvc.perform(put(BASE_URL + "/" + targetUserId)
+                        .contentType(APPLICATION_JSON)
+                        .content(updateDtoJson)
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
+
+        then(service)
+                .should(times(1))
+                .updateUserById(targetUserId, newFirstName, newLastName, newRole);
     }
 
 }

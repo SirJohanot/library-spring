@@ -158,4 +158,20 @@ public class UserRestControllerTest {
                 .updateUserById(targetUserId, newFirstName, newLastName, newRole);
     }
 
+    @Test
+    @WithMockUser
+    public void testSwitchUserBlockedShouldInvokeTheMethodOfService() throws Exception {
+        //given
+        Integer targetUserId = 14;
+        //then
+        mvc.perform(patch(BASE_URL + "/" + targetUserId + "/switch-blocked")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
+
+        then(service)
+                .should(times(1))
+                .switchUserBlockedById(targetUserId);
+    }
+
 }

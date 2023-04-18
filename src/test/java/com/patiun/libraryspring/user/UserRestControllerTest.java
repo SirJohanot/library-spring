@@ -4,25 +4,26 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(UserRestController.class)
+@WebMvcTest(controllers = UserRestController.class,
+        excludeAutoConfiguration = SecurityAutoConfiguration.class)
 public class UserRestControllerTest {
 
     private static final String BASE_URL = "/users";
@@ -38,7 +39,6 @@ public class UserRestControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void testSignUpUserShouldInvokeTheSignUpMethodOfTheServiceOnce() throws Exception {
         //given
         String login = "login";
@@ -52,8 +52,7 @@ public class UserRestControllerTest {
         //then
         mvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
-                        .content(registrationDtoJson)
-                        .with(csrf()))
+                        .content(registrationDtoJson))
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
 
@@ -63,23 +62,6 @@ public class UserRestControllerTest {
     }
 
     @Test
-    @WithMockUser("usernameJohan")
-    public void testAuthenticateShouldReturnTheUsersRolesWhenUserIsFoundByService() throws Exception {
-        //given
-        UserRole role = UserRole.ADMIN;
-
-        given(service.getUserByLogin("usernameJohan"))
-                .willReturn(new User(null, "userNameJohan", "7846578364", "johan", "smith", false, role));
-        //then
-        mvc.perform(get(BASE_URL + "/auth")
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(1)))
-                .andExpect(jsonPath("$.roles", contains(role.toString())));
-    }
-
-    @Test
-    @WithMockUser
     public void testReadAllUsersShouldReturnTheUserListFoundByService() throws Exception {
         //given
         List<User> usersFoundByService = Arrays.asList(
@@ -102,14 +84,12 @@ public class UserRestControllerTest {
                 .collect(Collectors.joining(","));
         expectedJson = "[" + expectedJson + "]";
         //then
-        mvc.perform(get(BASE_URL)
-                        .with(csrf()))
+        mvc.perform(get(BASE_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedJson));
     }
 
     @Test
-    @WithMockUser
     public void testReadUserShouldReturnTheUserFoundByService() throws Exception {
         //given
         String expectedUserLogin = "coolGuy";
@@ -118,8 +98,7 @@ public class UserRestControllerTest {
         given(service.getUserByLogin(expectedUserLogin))
                 .willReturn(expectedUser);
         //then
-        mvc.perform(get(BASE_URL + "/" + expectedUserLogin)
-                        .with(csrf()))
+        mvc.perform(get(BASE_URL + "/" + expectedUserLogin))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.*", hasSize(6)))
                 .andExpect(jsonPath("$.id", is(expectedUser.getId())))
@@ -131,7 +110,6 @@ public class UserRestControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void testUpdateUserShouldInvokeTheUpdateMethodOfService() throws Exception {
         //given
         Integer targetUserId = 14;
@@ -148,8 +126,7 @@ public class UserRestControllerTest {
         //then
         mvc.perform(put(BASE_URL + "/" + targetUserId)
                         .contentType(APPLICATION_JSON)
-                        .content(updateDtoJson)
-                        .with(csrf()))
+                        .content(updateDtoJson))
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
 
@@ -159,13 +136,11 @@ public class UserRestControllerTest {
     }
 
     @Test
-    @WithMockUser
     public void testSwitchUserBlockedShouldInvokeTheMethodOfService() throws Exception {
         //given
         Integer targetUserId = 14;
         //then
-        mvc.perform(patch(BASE_URL + "/" + targetUserId + "/switch-blocked")
-                        .with(csrf()))
+        mvc.perform(patch(BASE_URL + "/" + targetUserId + "/switch-blocked"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
 

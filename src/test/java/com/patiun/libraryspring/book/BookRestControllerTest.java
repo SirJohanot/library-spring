@@ -13,14 +13,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = BookRestController.class,
         excludeAutoConfiguration = SecurityAutoConfiguration.class)
@@ -92,4 +93,26 @@ public class BookRestControllerTest {
                 .andExpect(content().json(expectedJson));
     }
 
+    @Test
+    public void testReadBookShouldReturnTheBookFoundByService() throws Exception {
+        //given
+        Integer expectedBookId = 3;
+        Book expectedBook = new Book(expectedBookId, "book1", List.of(new Author(1, "author1")), new Genre(1, "genre1"), new Publisher(1, "publisher1"), 2003, 12, false);
+
+        given(service.getBookById(expectedBookId))
+                .willReturn(expectedBook);
+        //then
+        mvc.perform(get(BASE_URL + "/" + expectedBookId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(8)))
+                .andExpect(jsonPath("$.id", is(expectedBook.getId())))
+                .andExpect(jsonPath("$.title", is(expectedBook.getTitle())))
+                .andExpect(jsonPath("$.authors", hasSize(1)))
+                .andExpect(jsonPath("$.authors[0].name", is(expectedBook.getAuthors().get(0).getName())))
+                .andExpect(jsonPath("$.genre.name", is(expectedBook.getGenre().getName())))
+                .andExpect(jsonPath("$.publisher.name", is(expectedBook.getPublisher().getName())))
+                .andExpect(jsonPath("$.publishmentYear", is(expectedBook.getPublishmentYear())))
+                .andExpect(jsonPath("$.deleted", is(false)));
+    }
+    
 }

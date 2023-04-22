@@ -19,8 +19,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = BookRestController.class,
@@ -113,6 +112,32 @@ public class BookRestControllerTest {
                 .andExpect(jsonPath("$.publisher.name", is(expectedBook.getPublisher().getName())))
                 .andExpect(jsonPath("$.publishmentYear", is(expectedBook.getPublishmentYear())))
                 .andExpect(jsonPath("$.deleted", is(false)));
+    }
+
+    @Test
+    public void testUpdateBookShouldInvokeTheUpdateMethodOfService() throws Exception {
+        //given
+        Integer targetBookId = 14;
+        String newTitle = "Peace and War";
+        String newAuthors = "Tolstoy Leo";
+        String newGenre = "Inverted Novel";
+        String newPublisher = "Some dude";
+        Integer newPublishmentYear = 2020;
+        Integer newAmount = 100;
+
+        BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
+
+        String updateDtoJson = new ObjectMapper().writeValueAsString(editDto);
+        //then
+        mvc.perform(put(BASE_URL + "/" + targetBookId)
+                        .contentType(APPLICATION_JSON)
+                        .content(updateDtoJson))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
+
+        then(service)
+                .should(times(1))
+                .updateBookById(targetBookId, newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
     }
     
 }

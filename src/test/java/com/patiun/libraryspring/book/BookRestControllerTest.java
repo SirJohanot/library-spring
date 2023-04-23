@@ -139,5 +139,19 @@ public class BookRestControllerTest {
                 .should(times(1))
                 .updateBookById(targetBookId, newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
     }
-    
+
+    @Test
+    public void testDeleteBookShouldInvokeTheMethodOfService() throws Exception {
+        //given
+        Integer targetBookId = 14;
+        //then
+        mvc.perform(delete(BASE_URL + "/" + targetBookId))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
+
+        then(service)
+                .should(times(1))
+                .deleteBookById(targetBookId);
+    }
+
 }

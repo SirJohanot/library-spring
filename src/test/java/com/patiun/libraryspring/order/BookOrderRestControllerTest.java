@@ -43,4 +43,18 @@ public class BookOrderRestControllerTest {
                 .approveOrderById(orderId);
     }
 
+    @Test
+    public void testDeclineOrderShouldInvokeTheDeclineOrderMethodOfTheServiceOnce() throws Exception {
+        //given
+        Integer orderId = 57;
+        //then
+        mvc.perform(patch(BASE_URL + "/" + orderId + "/decline"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
+
+        then(service)
+                .should(times(1))
+                .declineOrderById(orderId);
+    }
+
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -156,7 +157,7 @@ public class Book {
         if (!Objects.equals(title, book.title)) {
             return false;
         }
-        if (!Objects.equals(authors, book.authors)) {
+        if (!Arrays.equals(authors.toArray(), book.authors.toArray())) {
             return false;
         }
         if (!Objects.equals(genre, book.genre)) {

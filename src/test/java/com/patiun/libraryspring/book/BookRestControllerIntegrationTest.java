@@ -8,8 +8,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -50,15 +50,6 @@ public class BookRestControllerIntegrationTest {
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
         String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
-
-        List<Author> expectedAuthors = Arrays.asList(
-                new Author(1, "Some Human"),
-                new Author(2, "Some Non-human")
-        );
-        Genre expectedGenre = new Genre(1, genre);
-        Publisher expectedPublisher = new Publisher(1, publisher);
-
-        Book expectedBookToBeSaved = new Book(1, title, expectedAuthors, expectedGenre, expectedPublisher, publishmentYear, amount, false);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -67,12 +58,17 @@ public class BookRestControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
 
-//        assertThat(bookRepository.findAll())
-//                .hasSize(1)
-//                .contains(expectedBookToBeSaved);
-
-        assertThat(bookRepository.findAllByIsDeletedFalse().get(0))
-                .isEqualTo(expectedBookToBeSaved);
+        assertThat(bookRepository.findAll())
+                .hasSize(1)
+                .allMatch(b -> Objects.equals(b.getTitle(), title) &&
+                        Objects.equals(b.getAuthors().stream()
+                                .map(Author::getName)
+                                .collect(Collectors.joining(", ")), authors) &&
+                        Objects.equals(b.getGenre().getName(), genre) &&
+                        Objects.equals(b.getPublisher().getName(), publisher) &&
+                        Objects.equals(b.getPublishmentYear(), publishmentYear) &&
+                        Objects.equals(b.getAmount(), amount)
+                );
     }
 
 }

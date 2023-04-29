@@ -18,12 +18,13 @@ import java.util.stream.Collectors;
 
 import static java.util.function.Predicate.not;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -148,6 +149,27 @@ public class BookRestControllerIntegrationTest {
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedJson));
+    }
+
+    @Test
+    public void testReadBookShouldReturnTheTargetBookWhenTheBookExists() throws Exception {
+        //given
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Integer existingBookId = existingBook.getId();
+
+        //then
+        mvc.perform(get(BASE_URL + "/" + existingBookId)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(8)))
+                .andExpect(jsonPath("$.id", is(existingBook.getId())))
+                .andExpect(jsonPath("$.title", is(existingBook.getTitle())))
+                .andExpect(jsonPath("$.authors", hasSize(1)))
+                .andExpect(jsonPath("$.authors[0].name", is(existingBook.getAuthors().get(0).getName())))
+                .andExpect(jsonPath("$.genre.name", is(existingBook.getGenre().getName())))
+                .andExpect(jsonPath("$.publisher.name", is(existingBook.getPublisher().getName())))
+                .andExpect(jsonPath("$.publishmentYear", is(existingBook.getPublishmentYear())))
+                .andExpect(jsonPath("$.deleted", is(existingBook.isDeleted())));
     }
 
 }

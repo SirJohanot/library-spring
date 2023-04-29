@@ -111,7 +111,7 @@ public class BookRestControllerTest {
                 .andExpect(jsonPath("$.genre.name", is(expectedBook.getGenre().getName())))
                 .andExpect(jsonPath("$.publisher.name", is(expectedBook.getPublisher().getName())))
                 .andExpect(jsonPath("$.publishmentYear", is(expectedBook.getPublishmentYear())))
-                .andExpect(jsonPath("$.deleted", is(false)));
+                .andExpect(jsonPath("$.deleted", is(expectedBook.isDeleted())));
     }
 
     @Test

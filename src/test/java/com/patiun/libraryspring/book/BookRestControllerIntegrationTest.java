@@ -172,4 +172,13 @@ public class BookRestControllerIntegrationTest {
                 .andExpect(jsonPath("$.deleted", is(existingBook.isDeleted())));
     }
 
+    @Test
+    public void testReadBookShouldReturnNotFoundAndEmptyBodyWhenTheBookDoesNotExist() throws Exception {
+        //then
+        mvc.perform(get(BASE_URL + "/" + 5464)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
+    }
+
 }

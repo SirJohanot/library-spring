@@ -152,6 +152,25 @@ public class BookRestControllerIntegrationTest {
     }
 
     @Test
+    public void testReadAllBooksShouldReturnAnEmptyArrayWhenAllExistingBooksAreDeleted() throws Exception {
+        //given
+        List<Book> existingBooksOnTheDatabase = Arrays.asList(
+                new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, true),
+                new Book(null, "book2", List.of(new Author(null, "author2")), new Genre(null, "genre2"), new Publisher(null, "publisher2"), 1998, 7, true),
+                new Book(null, "book3", Arrays.asList(new Author(null, "author3"), new Author(null, "author4")), new Genre(null, "genre3"), new Publisher(null, "publisher3"), 2014, 130, true),
+                new Book(null, "book4", List.of(new Author(null, "author5")), new Genre(null, "genre4"), new Publisher(null, "publisher4"), 1995, 201, true),
+                new Book(null, "book5", List.of(new Author(null, "author6")), new Genre(null, "genre5"), new Publisher(null, "publisher5"), 2012, 12, true)
+        );
+
+        existingBooksOnTheDatabase.forEach(testEntityManager::persist);
+        //then
+        mvc.perform(get(BASE_URL)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("[]"));
+    }
+
+    @Test
     public void testReadBookShouldReturnTheTargetBookWhenTheBookExists() throws Exception {
         //given
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));

@@ -171,7 +171,7 @@ public class BookRestControllerIntegrationTest {
     }
 
     @Test
-    public void testReadBookShouldReturnTheTargetBookWhenTheBookExists() throws Exception {
+    public void testReadBookShouldReturnTheTargetBookWhenTheBookExistsAndIsNotDeleted() throws Exception {
         //given
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
@@ -195,6 +195,18 @@ public class BookRestControllerIntegrationTest {
     public void testReadBookShouldReturnNotFoundAndEmptyBodyWhenTheBookDoesNotExist() throws Exception {
         //then
         mvc.perform(get(BASE_URL + "/" + 5464)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
+    }
+
+    @Test
+    public void testReadBookShouldReturnNotFoundAndEmptyBodyWhenTheTargetBookIsDeleted() throws Exception {
+        //given
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, true));
+        Integer existingBookId = existingBook.getId();
+        //then
+        mvc.perform(get(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(""));

@@ -152,6 +152,15 @@ public class BookRestControllerIntegrationTest {
     }
 
     @Test
+    public void testReadAllBooksShouldReturnAnEmptyArrayWhenNoBooksExist() throws Exception {
+        //then
+        mvc.perform(get(BASE_URL)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("[]"));
+    }
+
+    @Test
     public void testReadAllBooksShouldReturnAnEmptyArrayWhenAllExistingBooksAreDeleted() throws Exception {
         //given
         List<Book> existingBooksOnTheDatabase = Arrays.asList(

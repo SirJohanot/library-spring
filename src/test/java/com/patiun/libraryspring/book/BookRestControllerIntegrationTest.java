@@ -22,8 +22,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -217,6 +216,28 @@ public class BookRestControllerIntegrationTest {
         //then
         mvc.perform(get(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
+    }
+    
+    @Test
+    public void testUpdateBookShouldReturnNotFoundWhenTheTargetBookDoesNotExist() throws Exception {
+        //given
+        String newTitle = "Some Book";
+        String newAuthors = "Some Human, Some Non-human";
+        String newGenre = "Interesting";
+        String newPublisher = "Smith";
+        Integer newPublishmentYear = 2014;
+        Integer newAmount = 10;
+
+        BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
+
+        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
+        //then
+        mvc.perform(put(BASE_URL + "/" + 8)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
+                        .contentType(APPLICATION_JSON)
+                        .content(editDtoJson))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(""));
     }

@@ -219,7 +219,7 @@ public class BookRestControllerIntegrationTest {
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(""));
     }
-    
+
     @Test
     public void testUpdateBookShouldReturnNotFoundWhenTheTargetBookDoesNotExist() throws Exception {
         //given
@@ -238,6 +238,15 @@ public class BookRestControllerIntegrationTest {
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
                         .contentType(APPLICATION_JSON)
                         .content(editDtoJson))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
+    }
+
+    @Test
+    public void testDeleteBookShouldReturnNotFoundWhenTheTargetBookDoesNotExist() throws Exception {
+        //then
+        mvc.perform(delete(BASE_URL + "/" + 8)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(""));
     }

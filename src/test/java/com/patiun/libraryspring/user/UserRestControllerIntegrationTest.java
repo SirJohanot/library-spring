@@ -10,11 +10,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -37,6 +39,24 @@ public class UserRestControllerIntegrationTest {
         this.mvc = mvc;
         this.userRepository = userRepository;
         this.testEntityManager = testEntityManager;
+    }
+
+    @Test
+    public void testReadUserShouldReturnTheTargetUserWhenTheUserExists() throws Exception {
+        //given
+        String existingUserLogin = "coolGuy";
+        User existingUser = testEntityManager.persist(new User(null, existingUserLogin, "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN));
+        //then
+        mvc.perform(get(BASE_URL + "/" + existingUserLogin)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(6)))
+                .andExpect(jsonPath("$.id", is(existingUser.getId())))
+                .andExpect(jsonPath("$.login", is(existingUserLogin)))
+                .andExpect(jsonPath("$.firstName", is(existingUser.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(existingUser.getLastName())))
+                .andExpect(jsonPath("$.blocked", is(existingUser.getBlocked())))
+                .andExpect(jsonPath("$.role", is(existingUser.getRole().toString())));
     }
 
     @Test

@@ -42,10 +42,28 @@ public class UserRestControllerIntegrationTest {
     }
 
     @Test
-    public void testReadUserShouldReturnTheTargetUserWhenTheUserExists() throws Exception {
+    public void testReadUserShouldReturnTheTargetUserWhenTheUserExistsAndIsNotBlocked() throws Exception {
         //given
         String existingUserLogin = "coolGuy";
         User existingUser = testEntityManager.persist(new User(null, existingUserLogin, "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN));
+        //then
+        mvc.perform(get(BASE_URL + "/" + existingUserLogin)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(6)))
+                .andExpect(jsonPath("$.id", is(existingUser.getId())))
+                .andExpect(jsonPath("$.login", is(existingUserLogin)))
+                .andExpect(jsonPath("$.firstName", is(existingUser.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(existingUser.getLastName())))
+                .andExpect(jsonPath("$.blocked", is(existingUser.getBlocked())))
+                .andExpect(jsonPath("$.role", is(existingUser.getRole().toString())));
+    }
+
+    @Test
+    public void testReadUserShouldReturnTheTargetUserWhenTheUserExistsAndIsBlocked() throws Exception {
+        //given
+        String existingUserLogin = "loginHeh";
+        User existingUser = testEntityManager.persist(new User(null, existingUserLogin, "fhgkdhfkgjhdf", "crab", "horseshoe", true, UserRole.ADMIN));
         //then
         mvc.perform(get(BASE_URL + "/" + existingUserLogin)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))

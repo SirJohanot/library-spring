@@ -78,6 +78,15 @@ public class UserRestControllerIntegrationTest {
     }
 
     @Test
+    public void testReadUserShouldReturnNotFoundAndEmptyBodyWhenTheUserDoesNotExist() throws Exception {
+        //then
+        mvc.perform(get(BASE_URL + "/" + 54756)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
+    }
+
+    @Test
     public void testUpdateUserShouldReturnNotFoundWhenTheTargetUserDoesNotExist() throws Exception {
         //given
         String newFirstName = "jack";

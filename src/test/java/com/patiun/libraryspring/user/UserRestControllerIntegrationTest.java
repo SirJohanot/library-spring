@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.user;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -74,6 +78,29 @@ public class UserRestControllerIntegrationTest {
                 .andExpect(jsonPath("$.lastName", is(existingUser.getLastName())))
                 .andExpect(jsonPath("$.blocked", is(existingUser.getBlocked())))
                 .andExpect(jsonPath("$.role", is(existingUser.getRole().toString())));
+    }
+
+    @Test
+    public void testReadAllUsersShouldReturnTheListOfExistingUsersWhenOnlyDummyUsersExist() throws Exception {
+        //given
+        List<User> existingUsers = userRepository.findAll();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String expectedJson = existingUsers.stream()
+                .map(u -> {
+                    try {
+                        return mapper.writeValueAsString(u);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.joining(","));
+        expectedJson = "[" + expectedJson + "]";
+        //then
+        mvc.perform(get(BASE_URL)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedJson));
     }
 
     @Test

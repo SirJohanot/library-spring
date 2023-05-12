@@ -104,6 +104,31 @@ public class UserRestControllerIntegrationTest {
     }
 
     @Test
+    public void testReadAllUsersShouldReturnTheListOfExistingUsersWhenBothDummyAndAdditionalUsersExist() throws Exception {
+        //given
+        testEntityManager.persist(new User(null, "coolGuy", "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN));
+        testEntityManager.persist(new User(null, "ookla", "h46jh53h6", "john", "doe", true, UserRole.READER));
+        List<User> existingUsers = userRepository.findAll();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String expectedJson = existingUsers.stream()
+                .map(u -> {
+                    try {
+                        return mapper.writeValueAsString(u);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.joining(","));
+        expectedJson = "[" + expectedJson + "]";
+        //then
+        mvc.perform(get(BASE_URL)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+                .andExpect(status().isOk())
+                .andExpect(content().json(expectedJson));
+    }
+
+    @Test
     public void testReadUserShouldReturnNotFoundAndEmptyBodyWhenTheUserDoesNotExist() throws Exception {
         //then
         mvc.perform(get(BASE_URL + "/" + 54756)

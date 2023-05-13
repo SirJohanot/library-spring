@@ -2,6 +2,7 @@ package com.patiun.libraryspring.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.patiun.libraryspring.exception.ElementNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -107,6 +108,19 @@ public class UserRestControllerTest {
                 .andExpect(jsonPath("$.lastName", is(expectedUser.getLastName())))
                 .andExpect(jsonPath("$.blocked", is(expectedUser.getBlocked())))
                 .andExpect(jsonPath("$.role", is(expectedUser.getRole().toString())));
+    }
+
+    @Test
+    public void testReadUserShouldReturnNotFoundWhenTheServiceThrowsElementNotFoundException() throws Exception {
+        //given
+        String targetUserLogin = "coolGuy";
+
+        given(service.getUserByLogin(targetUserLogin))
+                .willThrow(ElementNotFoundException.class);
+        //then
+        mvc.perform(get(BASE_URL + "/" + targetUserLogin))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
     }
 
     @Test

@@ -136,17 +136,14 @@ public class UserRestControllerTest {
     }
 
     @Test
-    public void testUpdateUserShouldInvokeTheUpdateMethodOfService() throws Exception {
+    public void testUpdateUserShouldInvokeTheUpdateMethodOfServiceWhenUserExists() throws Exception {
         //given
         Integer targetUserId = 14;
         String newFirstName = "john";
         String newLastName = "smith";
         UserRole newRole = UserRole.LIBRARIAN;
 
-        UserEditDto editDto = new UserEditDto();
-        editDto.setFirstName(newFirstName);
-        editDto.setLastName(newLastName);
-        editDto.setRole(newRole);
+        UserEditDto editDto = new UserEditDto(newFirstName, newLastName, newRole);
 
         String updateDtoJson = new ObjectMapper().writeValueAsString(editDto);
         //then

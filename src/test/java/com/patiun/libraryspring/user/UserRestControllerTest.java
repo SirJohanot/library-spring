@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,7 +64,7 @@ public class UserRestControllerTest {
     }
 
     @Test
-    public void testReadAllUsersShouldReturnTheUserListFoundByService() throws Exception {
+    public void testReadAllUsersShouldReturnTheUserListFoundByServiceWhenServiceReturnsANonEmptyArray() throws Exception {
         //given
         List<User> usersFoundByService = Arrays.asList(
                 new User(1, "coolGuy", "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN),
@@ -88,6 +89,17 @@ public class UserRestControllerTest {
         mvc.perform(get(BASE_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedJson));
+    }
+
+    @Test
+    public void testReadAllUsersShouldReturnAnEmptyArrayWhenServiceReturnsAnEmptyArray() throws Exception {
+        //given
+        given(service.getAllUsers())
+                .willReturn(new ArrayList<>());
+        //then
+        mvc.perform(get(BASE_URL))
+                .andExpect(status().isOk())
+                .andExpect(content().json("[]"));
     }
 
     @Test

@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -156,6 +157,28 @@ public class UserRestControllerTest {
         then(service)
                 .should(times(1))
                 .updateUserById(targetUserId, newFirstName, newLastName, newRole);
+    }
+
+    @Test
+    public void testUpdateUserShouldReturnNotFoundWhenTheServiceThrowsAnElementNotFoundException() throws Exception {
+        //given
+        Integer targetUserId = 14;
+        String newFirstName = "john";
+        String newLastName = "smith";
+        UserRole newRole = UserRole.LIBRARIAN;
+
+        UserEditDto editDto = new UserEditDto(newFirstName, newLastName, newRole);
+
+        String updateDtoJson = new ObjectMapper().writeValueAsString(editDto);
+
+        doThrow(ElementNotFoundException.class)
+                .when(service).updateUserById(targetUserId, newFirstName, newLastName, newRole);
+        //then
+        mvc.perform(put(BASE_URL + "/" + targetUserId)
+                        .contentType(APPLICATION_JSON)
+                        .content(updateDtoJson))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
     }
 
     @Test

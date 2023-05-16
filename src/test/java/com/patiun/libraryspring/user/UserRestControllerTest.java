@@ -182,7 +182,7 @@ public class UserRestControllerTest {
     }
 
     @Test
-    public void testSwitchUserBlockedShouldInvokeTheMethodOfService() throws Exception {
+    public void testSwitchUserBlockedShouldInvokeTheMethodOfServiceWhenTheUserExists() throws Exception {
         //given
         Integer targetUserId = 14;
         //then
@@ -193,6 +193,19 @@ public class UserRestControllerTest {
         then(service)
                 .should(times(1))
                 .switchUserBlockedById(targetUserId);
+    }
+
+    @Test
+    public void testSwitchUserBlockedShouldReturnNotFoundWhenTheServiceThrowsAnElementNotFoundException() throws Exception {
+        //given
+        Integer targetUserId = 14;
+
+        doThrow(ElementNotFoundException.class)
+                .when(service).switchUserBlockedById(targetUserId);
+        //then
+        mvc.perform(patch(BASE_URL + "/" + targetUserId + "/switch-blocked"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
     }
 
 }

@@ -2,6 +2,7 @@ package com.patiun.libraryspring.book;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.patiun.libraryspring.exception.ElementNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -93,7 +94,7 @@ public class BookRestControllerTest {
     }
 
     @Test
-    public void testReadBookShouldReturnTheBookFoundByService() throws Exception {
+    public void testReadBookShouldReturnTheBookFoundByServiceWhenTheBookExists() throws Exception {
         //given
         Integer expectedBookId = 3;
         Book expectedBook = new Book(expectedBookId, "book1", List.of(new Author(1, "author1")), new Genre(1, "genre1"), new Publisher(1, "publisher1"), 2003, 12, false);
@@ -112,6 +113,19 @@ public class BookRestControllerTest {
                 .andExpect(jsonPath("$.publisher.name", is(expectedBook.getPublisher().getName())))
                 .andExpect(jsonPath("$.publishmentYear", is(expectedBook.getPublishmentYear())))
                 .andExpect(jsonPath("$.deleted", is(expectedBook.isDeleted())));
+    }
+
+    @Test
+    public void testReadBookShouldReturnNotFoundWhenServiceThrowsAnElementNotFoundException() throws Exception {
+        //given
+        Integer targetBookId = 3;
+
+        given(service.getBookById(targetBookId))
+                .willThrow(ElementNotFoundException.class);
+        //then
+        mvc.perform(get(BASE_URL + "/" + targetBookId))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
     }
 
     @Test

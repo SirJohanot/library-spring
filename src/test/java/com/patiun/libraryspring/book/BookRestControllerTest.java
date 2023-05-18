@@ -18,6 +18,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -129,7 +130,7 @@ public class BookRestControllerTest {
     }
 
     @Test
-    public void testUpdateBookShouldInvokeTheUpdateMethodOfService() throws Exception {
+    public void testUpdateBookShouldInvokeTheUpdateMethodOfServiceWhenTheBookExists() throws Exception {
         //given
         Integer targetBookId = 14;
         String newTitle = "Peace and War";
@@ -152,6 +153,32 @@ public class BookRestControllerTest {
         then(service)
                 .should(times(1))
                 .updateBookById(targetBookId, newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
+    }
+
+    @Test
+    public void testUpdateBookShouldReturnNotFoundWhenServiceThrowsAnElementNotFoundException() throws Exception {
+        //given
+        Integer targetBookId = 14;
+        String newTitle = "Peace and War";
+        String newAuthors = "Tolstoy Leo";
+        String newGenre = "Inverted Novel";
+        String newPublisher = "Some dude";
+        Integer newPublishmentYear = 2020;
+        Integer newAmount = 100;
+
+        BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
+
+        String updateDtoJson = new ObjectMapper().writeValueAsString(editDto);
+
+        doThrow(ElementNotFoundException.class)
+                .when(service)
+                .updateBookById(targetBookId, newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
+        //then
+        mvc.perform(put(BASE_URL + "/" + targetBookId)
+                        .contentType(APPLICATION_JSON)
+                        .content(updateDtoJson))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
     }
 
     @Test

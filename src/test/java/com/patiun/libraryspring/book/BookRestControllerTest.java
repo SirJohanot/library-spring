@@ -195,4 +195,18 @@ public class BookRestControllerTest {
                 .deleteBookById(targetBookId);
     }
 
+    @Test
+    public void testDeleteBookShouldReturnNotFoundWhenServiceThrowsAnElementNotFoundException() throws Exception {
+        //given
+        Integer targetBookId = 14;
+
+        doThrow(ElementNotFoundException.class)
+                .when(service)
+                .deleteBookById(targetBookId);
+        //then
+        mvc.perform(delete(BASE_URL + "/" + targetBookId))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
+    }
+
 }

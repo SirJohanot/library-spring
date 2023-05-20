@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -66,7 +67,7 @@ public class BookRestControllerTest {
     }
 
     @Test
-    public void testReadAllBooksShouldReturnTheBookListFoundByService() throws Exception {
+    public void testReadAllBooksShouldReturnTheBookListFoundByServiceWhenTheServiceReturnsSomeBooks() throws Exception {
         //given
         List<Book> booksFoundByService = Arrays.asList(
                 new Book(1, "book1", List.of(new Author(1, "author1")), new Genre(1, "genre1"), new Publisher(1, "publisher1"), 2003, 12, false),
@@ -92,6 +93,17 @@ public class BookRestControllerTest {
         mvc.perform(get(BASE_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedJson));
+    }
+
+    @Test
+    public void testReadAllBooksShouldReturnAnEmptyArrayWhenTheServiceReturnsNoBooks() throws Exception {
+        //given
+        given(service.getAllBooks())
+                .willReturn(new ArrayList<>());
+        //then
+        mvc.perform(get(BASE_URL))
+                .andExpect(status().isOk())
+                .andExpect(content().json("[]"));
     }
 
     @Test
@@ -182,7 +194,7 @@ public class BookRestControllerTest {
     }
 
     @Test
-    public void testDeleteBookShouldInvokeTheMethodOfService() throws Exception {
+    public void testDeleteBookShouldInvokeTheMethodOfServiceWhenTheBookExists() throws Exception {
         //given
         Integer targetBookId = 14;
         //then

@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.order;
 
+import com.patiun.libraryspring.exception.ElementNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -30,7 +32,7 @@ public class BookOrderRestControllerTest {
     }
 
     @Test
-    public void testApproveOrderShouldInvokeTheApproveOrderMethodOfTheServiceOnce() throws Exception {
+    public void testApproveOrderShouldInvokeTheApproveOrderMethodOfTheServiceOnceWhenTheOrderExists() throws Exception {
         //given
         Integer orderId = 57;
         //then
@@ -41,6 +43,20 @@ public class BookOrderRestControllerTest {
         then(service)
                 .should(times(1))
                 .approveOrderById(orderId);
+    }
+
+    @Test
+    public void testApproveOrderShouldReturnNotFoundWhenTheServiceThrowsAnElementNotFoundException() throws Exception {
+        //given
+        Integer orderId = 57;
+
+        doThrow(ElementNotFoundException.class)
+                .when(service)
+                .approveOrderById(orderId);
+        //then
+        mvc.perform(patch(BASE_URL + "/" + orderId + "/approve"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
     }
 
     @Test

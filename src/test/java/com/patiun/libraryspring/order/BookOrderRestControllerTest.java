@@ -60,7 +60,7 @@ public class BookOrderRestControllerTest {
     }
 
     @Test
-    public void testDeclineOrderShouldInvokeTheDeclineOrderMethodOfTheServiceOnce() throws Exception {
+    public void testDeclineOrderShouldInvokeTheDeclineOrderMethodOfTheServiceOnceWhenTheOrderExists() throws Exception {
         //given
         Integer orderId = 57;
         //then
@@ -71,6 +71,20 @@ public class BookOrderRestControllerTest {
         then(service)
                 .should(times(1))
                 .declineOrderById(orderId);
+    }
+
+    @Test
+    public void testDeclineOrderShouldReturnNotFoundWhenTheServiceThrowsAnElementNotFoundException() throws Exception {
+        //given
+        Integer orderId = 57;
+
+        doThrow(ElementNotFoundException.class)
+                .when(service)
+                .declineOrderById(orderId);
+        //then
+        mvc.perform(patch(BASE_URL + "/" + orderId + "/decline"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(""));
     }
 
 }

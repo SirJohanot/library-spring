@@ -23,7 +23,7 @@ public class PublisherRepositoryTest {
     }
 
     @Test
-    public void findByNameShouldReturnOptionalOfThePublisherWithTheNameWhenPublisherExists() {
+    public void testFindByNameShouldReturnOptionalOfThePublisherWithTheNameWhenPublisherExists() {
         //given
         entityManager.persist(new Publisher(null, "Hardcover"));
 
@@ -42,7 +42,7 @@ public class PublisherRepositoryTest {
     }
 
     @Test
-    public void findByNameShouldReturnEmptyOptionalWhenPublisherDoesNotExist() {
+    public void testFindByNameShouldReturnEmptyOptionalWhenPublisherDoesNotExist() {
         //given
         entityManager.persist(new Publisher(null, "Hardcover"));
 

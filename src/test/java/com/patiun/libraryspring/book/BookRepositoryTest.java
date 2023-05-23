@@ -25,7 +25,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    public void findByIdShouldReturnOptionalOfTheBookWithTheIdWhenBookExists() {
+    public void testFindByIdShouldReturnOptionalOfTheBookWithTheIdWhenBookExists() {
         //given
         entityManager.persist(new Book(null, "book1", List.of(new Author("author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
 
@@ -43,7 +43,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    public void findByIdShouldReturnEmptyOptionalWhenBookDoesNotExist() {
+    public void testFindByIdShouldReturnEmptyOptionalWhenBookDoesNotExist() {
         //given
         Integer firstBookId = entityManager.persistAndGetId(new Book(null, "book1", List.of(new Author("author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false), Integer.class);
 
@@ -65,7 +65,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    public void findAllByDeletedFalseShouldReturnAllNonDeletedBooksWhenSuchBooksExist() {
+    public void testFindAllByDeletedFalseShouldReturnAllNonDeletedBooksWhenSuchBooksExist() {
         //given
         Book firstBook = new Book(null, "book1", List.of(new Author("author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false);
         entityManager.persist(firstBook);

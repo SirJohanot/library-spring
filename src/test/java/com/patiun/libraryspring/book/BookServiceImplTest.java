@@ -38,7 +38,7 @@ public class BookServiceImplTest {
     private BookServiceImpl bookService;
 
     @Test
-    public void createBookShouldSaveNewBookWhenSecondarySubjectsDoNotExist() {
+    public void testCreateBookShouldSaveNewBookWhenSecondarySubjectsDoNotExist() {
         //given
         String title = "War and Peace";
         String authors = "Leo Tolstoy";
@@ -62,7 +62,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void createBookShouldSaveNewBookWithTheExistingSecondarySubjectsWhenSecondarySubjectsExist() {
+    public void testCreateBookShouldSaveNewBookWithTheExistingSecondarySubjectsWhenSecondarySubjectsExist() {
         //given
         String title = "War and Peace";
         String authors = "Leo Tolstoy";
@@ -90,7 +90,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void getAllBooksShouldReturnAllNonDeletedBooksFoundByRepository() {
+    public void testGetAllBooksShouldReturnAllNonDeletedBooksFoundByRepository() {
         //given
         Book firstBook = new Book(1, "book1", List.of(new Author(1, "author1")), new Genre(1, "genre1"), new Publisher(1, "publisher1"), 2003, 12, false);
         Book secondBook = new Book(2, "book2", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false);
@@ -108,7 +108,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void getBookByIdShouldReturnBookFoundByRepositoryWhenBookExists() {
+    public void testGetBookByIdShouldReturnBookFoundByRepositoryWhenBookExists() {
         //given
         Integer targetBookId = 2;
 
@@ -123,7 +123,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void getBookByIdShouldThrowElementNotFoundExceptionWhenBookDoesNotExist() {
+    public void testGetBookByIdShouldThrowElementNotFoundExceptionWhenBookDoesNotExist() {
         //given
         Integer targetBookId = 2;
 
@@ -135,7 +135,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void getBookByIdShouldThrowElementNotFoundExceptionWhenBookIsDeleted() {
+    public void testGetBookByIdShouldThrowElementNotFoundExceptionWhenBookIsDeleted() {
         //given
         Integer targetBookId = 2;
 
@@ -148,7 +148,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void deleteBookByIdShouldSaveDeletedBookFoundByRepositoryWhenBookExists() {
+    public void testDeleteBookByIdShouldSaveDeletedBookFoundByRepositoryWhenBookExists() {
         //given
         Integer targetBookId = 2;
         String title = "War and Peace";
@@ -172,7 +172,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void deleteBookByIdShouldThrowElementNotFoundExceptionWhenBookDoesNotExist() {
+    public void testDeleteBookByIdShouldThrowElementNotFoundExceptionWhenBookDoesNotExist() {
         //given
         Integer targetBookId = 2;
 
@@ -188,7 +188,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void deleteBookByIdShouldThrowElementNotFoundExceptionWhenBookDoesIsAlreadyDeleted() {
+    public void testDeleteBookByIdShouldThrowElementNotFoundExceptionWhenBookDoesIsAlreadyDeleted() {
         //given
         Integer targetBookId = 2;
         String title = "War and Peace";
@@ -211,7 +211,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void updateBookByIdShouldSaveNewBookWhenBookExists() {
+    public void testUpdateBookByIdShouldSaveNewBookWhenBookExists() {
         //given
         Integer targetBookId = 2;
         String title = "War and Peace";
@@ -250,7 +250,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void updateBookByIdShouldThrowElementNotFoundExceptionWhenBookDoesNotExist() {
+    public void testUpdateBookByIdShouldThrowElementNotFoundExceptionWhenBookDoesNotExist() {
         //given
         Integer targetBookId = 2;
 
@@ -273,7 +273,7 @@ public class BookServiceImplTest {
     }
 
     @Test
-    public void updateBookByIdShouldThrowElementNotFoundExceptionWhenBookDoesIsDeleted() {
+    public void testUpdateBookByIdShouldThrowElementNotFoundExceptionWhenBookDoesIsDeleted() {
         //given
         Integer targetBookId = 2;
         String title = "War and Peace";

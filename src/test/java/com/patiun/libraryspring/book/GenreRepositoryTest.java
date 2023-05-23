@@ -23,7 +23,7 @@ public class GenreRepositoryTest {
     }
 
     @Test
-    public void findByNameShouldReturnOptionalOfTheGenreWithTheNameWhenGenreExists() {
+    public void testFindByNameShouldReturnOptionalOfTheGenreWithTheNameWhenGenreExists() {
         //given
         String firstGenreName = "Horror";
         Genre firstGenre = new Genre(null, firstGenreName);
@@ -42,7 +42,7 @@ public class GenreRepositoryTest {
     }
 
     @Test
-    public void findByNameShouldReturnEmptyOptionalWhenGenreDoesNotExist() {
+    public void testFindByNameShouldReturnEmptyOptionalWhenGenreDoesNotExist() {
         //given
         entityManager.persist(new Genre(null, "Horror"));
 

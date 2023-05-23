@@ -23,7 +23,7 @@ public class AuthorRepositoryTest {
     }
 
     @Test
-    public void findByNameShouldReturnOptionalOfTheAuthorWithTheNameWhenAuthorExists() {
+    public void testFindByNameShouldReturnOptionalOfTheAuthorWithTheNameWhenAuthorExists() {
         //given
         entityManager.persist(new Author("George Orwell"));
 
@@ -42,7 +42,7 @@ public class AuthorRepositoryTest {
     }
 
     @Test
-    public void findByNameShouldReturnEmptyOptionalWhenAuthorDoesNotExist() {
+    public void testFindByNameShouldReturnEmptyOptionalWhenAuthorDoesNotExist() {
         //given
         entityManager.persist(new Author("George Orwell"));
 

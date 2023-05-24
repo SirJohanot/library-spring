@@ -37,7 +37,7 @@ public class BookOrderServiceImplTest {
     private BookOrderServiceImpl bookOrderService;
 
     @Test
-    public void createOrderShouldSaveNewOrderWhenTheBookExists() throws ServiceException {
+    public void testCreateOrderShouldSaveNewOrderWhenTheBookExists() throws ServiceException {
         //given
         Integer idOfBookToOrder = 4;
         Book bookFoundByRepository = new Book(idOfBookToOrder, "Nice Book", List.of(new Author(1, "Nice Author")), new Genre(1, "Interesting genre"), new Publisher(1, "Competent publisher"), 2004, 54, false);
@@ -64,7 +64,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void createOrderShouldThrowServiceExceptionWhenBookDoesNotExist() {
+    public void testCreateOrderShouldThrowServiceExceptionWhenBookDoesNotExist() {
         //given
         Integer idOfBookToOrder = 4;
         given(bookRepository.findById(idOfBookToOrder))
@@ -77,7 +77,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void createOrderShouldThrowServiceExceptionWhenBookIsDeleted() {
+    public void testCreateOrderShouldThrowServiceExceptionWhenBookIsDeleted() {
         //given
         Integer idOfBookToOrder = 4;
         Book bookFoundByRepository = new Book(idOfBookToOrder, "Nice Book", List.of(new Author(1, "Nice Author")), new Genre(1, "Interesting genre"), new Publisher(1, "Competent publisher"), 2004, 54, true);
@@ -91,7 +91,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void createOrderShouldThrowServiceExceptionWhenBookIsNotInStock() {
+    public void testCreateOrderShouldThrowServiceExceptionWhenBookIsNotInStock() {
         //given
         Integer idOfBookToOrder = 4;
         Book bookFoundByRepository = new Book(idOfBookToOrder, "Nice Book", List.of(new Author(1, "Nice Author")), new Genre(1, "Interesting genre"), new Publisher(1, "Competent publisher"), 2004, 0, false);
@@ -105,7 +105,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void getAllOrdersShouldReturnAllOrdersFoundByRepository() {
+    public void testGetAllOrdersShouldReturnAllOrdersFoundByRepository() {
         //given
         List<BookOrder> ordersFoundByRepository = Arrays.asList(
                 new BookOrder(1, new Book(2, "book2", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false), new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER), RentalType.OUT_OF_LIBRARY, LocalDate.of(2023, 3, 22), LocalDate.of(2023, 3, 29), null, OrderState.PLACED),
@@ -122,7 +122,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void getOrdersOfUserShouldReturnAllOrdersFoundByRepository() {
+    public void testGetOrdersOfUserShouldReturnAllOrdersFoundByRepository() {
         //given
         Integer targetUserId = 1;
         List<BookOrder> ordersFoundByRepository = Arrays.asList(
@@ -140,7 +140,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void getOrderByIdShouldReturnOrderFoundByRepositoryWhenOrderExists() {
+    public void testGetOrderByIdShouldReturnOrderFoundByRepositoryWhenOrderExists() {
         //given
         Integer orderId = 1;
         BookOrder orderFoundByRepository = new BookOrder(orderId, new Book(2, "book2", List.of(new Author(1, "author1")), new Genre(2, "genre2"), new Publisher(2, "publisher2"), 1998, 7, false), new User(1, "login", "ihiuehgiwreg", "firstName", "lastName", false, UserRole.READER), RentalType.OUT_OF_LIBRARY, LocalDate.of(2023, 3, 22), LocalDate.of(2023, 3, 29), null, OrderState.PLACED);
@@ -154,7 +154,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void getOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
+    public void testGetOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
         //given
         Integer orderId = 1;
         given(orderRepository.findById(orderId))
@@ -165,7 +165,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void approveOrderByIdShouldDecrementBookAmountAndAdvanceStateWhenOrderCanBeApproved() throws ServiceException {
+    public void testApproveOrderByIdShouldDecrementBookAmountAndAdvanceStateWhenOrderCanBeApproved() throws ServiceException {
         //given
         Integer orderId = 1;
 
@@ -203,7 +203,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void approveOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
+    public void testApproveOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
         //given
         Integer orderId = 1;
 
@@ -215,7 +215,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void approveOrderByIdShouldThrowServiceExceptionWhenThereAreNoBooksInStock() {
+    public void testApproveOrderByIdShouldThrowServiceExceptionWhenThereAreNoBooksInStock() {
         //given
         Integer orderId = 1;
 
@@ -243,7 +243,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void approveOrderByIdShouldThrowServiceExceptionWhenTheOrderIsAlreadyDeclined() {
+    public void testApproveOrderByIdShouldThrowServiceExceptionWhenTheOrderIsAlreadyDeclined() {
         //given
         Integer orderId = 1;
 
@@ -271,7 +271,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void declineOrderByIdShouldAdvanceStateWhenOrderCanBeDeclined() throws ServiceException {
+    public void testDeclineOrderByIdShouldAdvanceStateWhenOrderCanBeDeclined() throws ServiceException {
         //given
         Integer orderId = 1;
 
@@ -308,7 +308,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void declineOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
+    public void testDeclineOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
         //given
         Integer orderId = 1;
 
@@ -320,7 +320,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void declineOrderByIdShouldThrowServiceExceptionWhenTheOrderIsAlreadyApproved() {
+    public void testDeclineOrderByIdShouldThrowServiceExceptionWhenTheOrderIsAlreadyApproved() {
         //given
         Integer orderId = 1;
 
@@ -348,7 +348,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void collectOrderByIdShouldAdvanceStateWhenOrderCanBeCollected() throws ServiceException {
+    public void testCollectOrderByIdShouldAdvanceStateWhenOrderCanBeCollected() throws ServiceException {
         //given
         Integer orderId = 1;
 
@@ -385,7 +385,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void collectOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
+    public void testCollectOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
         //given
         Integer orderId = 1;
 
@@ -397,7 +397,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void collectOrderByIdShouldThrowServiceExceptionWhenTheOrderIsDeclined() {
+    public void testCollectOrderByIdShouldThrowServiceExceptionWhenTheOrderIsDeclined() {
         //given
         Integer orderId = 1;
 
@@ -425,7 +425,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void returnOrderByIdShouldIncrementBookAmountSetReturnDateAndAdvanceStateWhenOrderCanBeReturned() throws ServiceException {
+    public void testReturnOrderByIdShouldIncrementBookAmountSetReturnDateAndAdvanceStateWhenOrderCanBeReturned() throws ServiceException {
         //given
         Integer orderId = 1;
 
@@ -463,7 +463,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void returnOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
+    public void testReturnOrderByIdShouldThrowElementNotFoundExceptionWhenOrderDoesNotExist() {
         //given
         Integer orderId = 1;
 
@@ -475,7 +475,7 @@ public class BookOrderServiceImplTest {
     }
 
     @Test
-    public void returnOrderByIdShouldThrowServiceExceptionWhenTheOrderIsNotYetCollected() {
+    public void testReturnOrderByIdShouldThrowServiceExceptionWhenTheOrderIsNotYetCollected() {
         //given
         Integer orderId = 1;
 

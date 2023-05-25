@@ -24,7 +24,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findByLoginShouldReturnOptionalOfTheUserWithTheLoginWhenUserExists() {
+    public void testFindByLoginShouldReturnOptionalOfTheUserWithTheLoginWhenUserExists() {
         //given
         User firstUser = new User(null, "userLoginOne", "hkjhgkjhgkhfj", "john", "smith", false, UserRole.READER);
         entityManager.persist(firstUser);
@@ -45,7 +45,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findByLoginShouldReturnEmptyOptionalWhenUserDoesNotExist() {
+    public void testFindByLoginShouldReturnEmptyOptionalWhenUserDoesNotExist() {
         //given
         User firstUser = new User(null, "userLoginOne", "hkjhgkjhgkhfj", "john", "smith", false, UserRole.READER);
         entityManager.persist(firstUser);
@@ -65,7 +65,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findByRoleIsShouldReturnListOfTheUsersWithRolesWithTheLoginWhenUsersExist() {
+    public void testFindByRoleIsShouldReturnListOfTheUsersWithRolesWithTheLoginWhenUsersExist() {
         //given
         User firstUser = new User(null, "userLoginOne", "hkjhgkjhgkhfj", "john", "smith", false, UserRole.READER);
         entityManager.persist(firstUser);
@@ -86,7 +86,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findByRoleIsShouldReturnEmptyListWhenUsersDoNotExist() {
+    public void testFindByRoleIsShouldReturnEmptyListWhenUsersDoNotExist() {
         //given
         User firstUser = new User(null, "userLoginOne", "hkjhgkjhgkhfj", "john", "smith", false, UserRole.READER);
         entityManager.persist(firstUser);

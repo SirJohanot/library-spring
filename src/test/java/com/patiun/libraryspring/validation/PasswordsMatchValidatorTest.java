@@ -16,7 +16,7 @@ public class PasswordsMatchValidatorTest {
     }
 
     @Test
-    public void isValidShouldReturnTrueWhenPasswordsMatch() {
+    public void testIsValidShouldReturnTrueWhenPasswordsMatch() {
         //given
         UserRegistrationDto user = new UserRegistrationDto("login", "password", "password", "firstName", "lastName");
         //when
@@ -27,7 +27,7 @@ public class PasswordsMatchValidatorTest {
     }
 
     @Test
-    public void isValidShouldReturnFalseWhenPasswordsDoNotMatch() {
+    public void testIsValidShouldReturnFalseWhenPasswordsDoNotMatch() {
         //given
         UserRegistrationDto user = new UserRegistrationDto("login", "password", "differentPassword", "firstName", "lastName");
         //when

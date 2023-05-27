@@ -14,8 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -154,6 +153,25 @@ public class UserRestControllerIntegrationTest {
                         .content(editDtoJson))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(""));
+    }
+
+    @Test
+    public void testUpdateUserShouldReturnBadRequestWhenTheNewFirstNameIsBlank() throws Exception {
+        //given
+        String newFirstName = "";
+        String newLastName = "goldman";
+        UserRole newRole = UserRole.LIBRARIAN;
+
+        UserEditDto editDto = new UserEditDto(newFirstName, newLastName, newRole);
+
+        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
+        //then
+        mvc.perform(put(BASE_URL + "/" + 8)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
+                        .contentType(APPLICATION_JSON)
+                        .content(editDtoJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error", any(String.class)));
     }
 
     @Test

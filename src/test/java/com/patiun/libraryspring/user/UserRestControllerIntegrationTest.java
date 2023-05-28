@@ -175,6 +175,25 @@ public class UserRestControllerIntegrationTest {
     }
 
     @Test
+    public void testUpdateUserShouldReturnBadRequestWhenTheNewLastNameIsBlank() throws Exception {
+        //given
+        String newFirstName = "jack";
+        String newLastName = "";
+        UserRole newRole = UserRole.LIBRARIAN;
+
+        UserEditDto editDto = new UserEditDto(newFirstName, newLastName, newRole);
+
+        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
+        //then
+        mvc.perform(put(BASE_URL + "/" + 8)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
+                        .contentType(APPLICATION_JSON)
+                        .content(editDtoJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error", any(String.class)));
+    }
+
+    @Test
     public void testSwitchUserBlockedShouldReturnNotFoundAndEmptyBodyWhenTheUserDoesNotExist() throws Exception {
         //then
         mvc.perform(patch(BASE_URL + "/" + 486 + "/switch-blocked")

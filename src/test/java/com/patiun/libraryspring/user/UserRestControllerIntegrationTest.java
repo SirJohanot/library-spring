@@ -194,6 +194,21 @@ public class UserRestControllerIntegrationTest {
     }
 
     @Test
+    public void testUpdateUserShouldReturnBadRequestWhenTheRoleIsBlank() throws Exception {
+        //then
+        mvc.perform(put(BASE_URL + "/" + 8)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
+                        .contentType(APPLICATION_JSON)
+                        .content("{" +
+                                "\"firstName\": \"jack\"," +
+                                "\"lastName\": \"goldman\"," +
+                                "\"role\": \"\"" +
+                                "}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(""));
+    }
+
+    @Test
     public void testSwitchUserBlockedShouldReturnNotFoundAndEmptyBodyWhenTheUserDoesNotExist() throws Exception {
         //then
         mvc.perform(patch(BASE_URL + "/" + 486 + "/switch-blocked")

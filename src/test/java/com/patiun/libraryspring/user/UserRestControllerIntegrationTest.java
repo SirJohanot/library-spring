@@ -175,6 +175,25 @@ public class UserRestControllerIntegrationTest {
     }
 
     @Test
+    public void testUpdateUserShouldReturnBadRequestWhenTheNewFirstNameIsNotAHumanName() throws Exception {
+        //given
+        String newFirstName = "123testNotRealName&*%^^&%&%$";
+        String newLastName = "goldman";
+        UserRole newRole = UserRole.LIBRARIAN;
+
+        UserEditDto editDto = new UserEditDto(newFirstName, newLastName, newRole);
+
+        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
+        //then
+        mvc.perform(put(BASE_URL + "/" + 8)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
+                        .contentType(APPLICATION_JSON)
+                        .content(editDtoJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error", any(String.class)));
+    }
+
+    @Test
     public void testUpdateUserShouldReturnBadRequestWhenTheNewLastNameIsBlank() throws Exception {
         //given
         String newFirstName = "jack";

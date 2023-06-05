@@ -101,6 +101,25 @@ public class UserRestControllerIntegrationTest {
     }
 
     @Test
+    public void testSignUpShouldReturnBadRequestWhenTheLastNameIsNotAHumanName() throws Exception {
+        //given
+        String login = "login";
+        String password = "12345678";
+        String firstName = "john";
+        String lastName = "^_^";
+
+        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, password, firstName, lastName);
+
+        String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
+        //then
+        mvc.perform(post(BASE_URL)
+                        .contentType(APPLICATION_JSON)
+                        .content(registrationDtoJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error", any(String.class)));
+    }
+
+    @Test
     public void testReadUserShouldReturnTheTargetUserWhenTheUserExistsAndIsNotBlocked() throws Exception {
         //given
         String existingUserLogin = "coolGuy";

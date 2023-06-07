@@ -62,6 +62,24 @@ public class UserRestControllerIntegrationTest {
                 .andExpect(jsonPath("$.error", any(String.class)));
     }
 
+    @Test
+    public void testSignUpShouldReturnBadRequestWhenThePasswordIsBlank() throws Exception {
+        //given
+        String login = "login";
+        String password = "";
+        String firstName = "john";
+        String lastName = "smith";
+
+        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, password, firstName, lastName);
+
+        String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
+        //then
+        mvc.perform(post(BASE_URL)
+                        .contentType(APPLICATION_JSON)
+                        .content(registrationDtoJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error", any(String.class)));
+    }
 
     @Test
     public void testSignUpShouldReturnBadRequestWhenTheFirstNameIsBlank() throws Exception {

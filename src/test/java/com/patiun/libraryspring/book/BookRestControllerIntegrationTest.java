@@ -18,8 +18,7 @@ import java.util.stream.Collectors;
 
 import static java.util.function.Predicate.not;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -80,6 +79,28 @@ public class BookRestControllerIntegrationTest {
                         Objects.equals(b.getPublishmentYear(), publishmentYear) &&
                         Objects.equals(b.getAmount(), amount)
                 );
+    }
+
+    @Test
+    public void testCreateBookShouldReturnBadRequestWhenTheNewBookTitleIsBlank() throws Exception {
+        //given
+        String title = "";
+        String authors = "Some Human, Some Non-human";
+        String genre = "Interesting";
+        String publisher = "Smith";
+        Integer publishmentYear = 2014;
+        Integer amount = 10;
+
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+
+        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
+        //then
+        mvc.perform(post(BASE_URL)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
+                        .contentType(APPLICATION_JSON)
+                        .content(editDtoJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error", any(String.class)));
     }
 
     @Test
@@ -220,6 +241,54 @@ public class BookRestControllerIntegrationTest {
                 .andExpect(content().string(""));
     }
 
+//    @Test TODO: figure out why the test does not work
+//    public void testUpdateBookShouldChangeTheTargetBookWhenTheBookExists() throws Exception {
+//        //given
+//        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+//        Integer existingBookId = existingBook.getId();
+//        String newTitle = "Some Book";
+//        String newAuthors = "Some Human, Some Non-human";
+//        String newGenre = "Interesting";
+//        String newPublisher = "Smith";
+//        Integer newPublishmentYear = 2014;
+//        Integer newAmount = 10;
+//
+//        BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
+//
+//        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
+//        //then
+//        mvc.perform(put(BASE_URL + "/" + existingBookId)
+//                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
+//                        .contentType(APPLICATION_JSON)
+//                        .content(editDtoJson))
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(""));
+//
+//        Optional<Book> updatedExistingBookOptional = bookRepository.findById(existingBookId);
+//        assertThat(updatedExistingBookOptional)
+//                .isNotEmpty();
+//
+//        Book updatedExistingBook = updatedExistingBookOptional.get();
+//
+//        assertThat(updatedExistingBook.getTitle())
+//                .isEqualTo(newTitle);
+//
+//        assertThat(updatedExistingBook.getAuthors())
+//                .hasSize(2);
+//
+//        assertThat(updatedExistingBook.getGenre().getName())
+//                .isEqualTo(newGenre);
+//
+//        assertThat(updatedExistingBook.getPublisher().getName())
+//                .isEqualTo(newPublisher);
+//
+//        assertThat(updatedExistingBook.getPublishmentYear())
+//                .isEqualTo(newPublishmentYear);
+//
+//        assertThat(updatedExistingBook.getAmount())
+//                .isEqualTo(newAmount);
+//    }
+
     @Test
     public void testUpdateBookShouldReturnNotFoundWhenTheTargetBookDoesNotExist() throws Exception {
         //given
@@ -241,6 +310,27 @@ public class BookRestControllerIntegrationTest {
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(""));
     }
+
+//    @Test TODO: figure out why the test does not work
+//    public void testDeleteBookShouldSetTheTargetBookDeletedToTrueWhenTheBookExists() throws Exception {
+//        //given
+//        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+//        Integer existingBookId = existingBook.getId();
+//        //then
+//        mvc.perform(delete(BASE_URL + "/" + existingBookId)
+//                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS)))
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(""));
+//
+//        Optional<Book> deletedExistingBookOptional = bookRepository.findById(existingBookId);
+//        assertThat(deletedExistingBookOptional)
+//                .isNotEmpty();
+//
+//        Book deletedExistingBook = deletedExistingBookOptional.get();
+//
+//        assertThat(deletedExistingBook.isDeleted())
+//                .isTrue();
+//    }
 
     @Test
     public void testDeleteBookShouldReturnNotFoundWhenTheTargetBookDoesNotExist() throws Exception {

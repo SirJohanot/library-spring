@@ -324,6 +324,28 @@ public class BookRestControllerIntegrationTest {
     }
 
     @Test
+    public void testCreateBookShouldReturnBadRequestWhenTheBookAmountIsANegativeNumber() throws Exception {
+        //given
+        String title = "Some Book";
+        String authors = "Some Human, Some Non-human";
+        String genre = "Interesting";
+        String publisher = "Smith";
+        Integer publishmentYear = 2023;
+        Integer amount = -144;
+
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+
+        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
+        //then
+        mvc.perform(post(BASE_URL)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
+                        .contentType(APPLICATION_JSON)
+                        .content(editDtoJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error", any(String.class)));
+    }
+
+    @Test
     public void testReadAllBooksShouldReturnTheBookListOfUndeletedBooksWhenNoExistingBooksAreDeleted() throws Exception {
         //given
         List<Book> existingBooksOnTheDatabase = Arrays.asList(

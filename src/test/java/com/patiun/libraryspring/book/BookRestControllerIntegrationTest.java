@@ -625,6 +625,30 @@ public class BookRestControllerIntegrationTest {
                 .andExpect(jsonPath("$.error", any(String.class)));
     }
 
+    @Test
+    public void testUpdateBookShouldReturnBadRequestWhenTheBookAuthorsIsNotHumanNames() throws Exception {
+        //given
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Integer existingBookId = existingBook.getId();
+        String title = "Some Book";
+        String authors = "()wen $mith, @lan &rews";
+        String genre = "Interesting";
+        String publisher = "Smith";
+        Integer publishmentYear = 2014;
+        Integer amount = 10;
+
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+
+        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
+        //then
+        mvc.perform(put(BASE_URL + "/" + existingBookId)
+                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
+                        .contentType(APPLICATION_JSON)
+                        .content(editDtoJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error", any(String.class)));
+    }
+
 //    @Test TODO: figure out why the test does not work
 //    public void testDeleteBookShouldSetTheTargetBookDeletedToTrueWhenTheBookExists() throws Exception {
 //        //given

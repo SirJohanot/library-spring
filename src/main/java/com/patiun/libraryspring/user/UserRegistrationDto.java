@@ -1,13 +1,11 @@
 package com.patiun.libraryspring.user;
 
-import com.patiun.libraryspring.validation.PasswordsMatch;
 import com.patiun.libraryspring.validation.Regexp;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
 
-@PasswordsMatch
 public class UserRegistrationDto {
 
     @NotBlank(message = "Login must not be blank")

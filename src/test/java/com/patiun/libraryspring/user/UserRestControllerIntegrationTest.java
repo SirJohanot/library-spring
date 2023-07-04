@@ -51,7 +51,7 @@ public class UserRestControllerIntegrationTest {
         String firstName = "john";
         String lastName = "smith";
 
-        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, password, firstName, lastName);
+        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, firstName, lastName);
 
         String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
         //then
@@ -70,7 +70,7 @@ public class UserRestControllerIntegrationTest {
         String firstName = "john";
         String lastName = "smith";
 
-        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, password, firstName, lastName);
+        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, firstName, lastName);
 
         String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
         //then
@@ -89,7 +89,7 @@ public class UserRestControllerIntegrationTest {
         String firstName = "";
         String lastName = "smith";
 
-        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, password, firstName, lastName);
+        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, firstName, lastName);
 
         String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
         //then
@@ -108,7 +108,7 @@ public class UserRestControllerIntegrationTest {
         String firstName = "|xX_GigaKiller_xX|";
         String lastName = "smith";
 
-        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, password, firstName, lastName);
+        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, firstName, lastName);
 
         String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
         //then
@@ -127,7 +127,7 @@ public class UserRestControllerIntegrationTest {
         String firstName = "john";
         String lastName = "";
 
-        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, password, firstName, lastName);
+        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, firstName, lastName);
 
         String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
         //then
@@ -146,7 +146,7 @@ public class UserRestControllerIntegrationTest {
         String firstName = "john";
         String lastName = "^_^";
 
-        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, password, firstName, lastName);
+        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, firstName, lastName);
 
         String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
         //then

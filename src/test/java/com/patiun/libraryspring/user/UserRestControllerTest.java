@@ -49,7 +49,7 @@ public class UserRestControllerTest {
         String firstName = "john";
         String lastName = "smith";
 
-        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, password, firstName, lastName);
+        UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, firstName, lastName);
 
         String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
         //then

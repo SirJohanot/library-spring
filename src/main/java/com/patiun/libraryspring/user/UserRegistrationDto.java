@@ -13,7 +13,6 @@ public class UserRegistrationDto {
 
     @NotBlank(message = "Password must not be blank")
     private String password;
-    private String confirmedPassword;
 
     @NotBlank(message = "First name must not be blank")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character")
@@ -26,10 +25,9 @@ public class UserRegistrationDto {
     public UserRegistrationDto() {
     }
 
-    public UserRegistrationDto(String login, String password, String confirmedPassword, String firstName, String lastName) {
+    public UserRegistrationDto(String login, String password, String firstName, String lastName) {
         this.login = login;
         this.password = password;
-        this.confirmedPassword = confirmedPassword;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -48,14 +46,6 @@ public class UserRegistrationDto {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmedPassword() {
-        return confirmedPassword;
-    }
-
-    public void setConfirmedPassword(String confirmedPassword) {
-        this.confirmedPassword = confirmedPassword;
     }
 
     public String getFirstName() {
@@ -91,9 +81,6 @@ public class UserRegistrationDto {
         if (!Objects.equals(password, that.password)) {
             return false;
         }
-        if (!Objects.equals(confirmedPassword, that.confirmedPassword)) {
-            return false;
-        }
         if (!Objects.equals(firstName, that.firstName)) {
             return false;
         }
@@ -104,7 +91,6 @@ public class UserRegistrationDto {
     public int hashCode() {
         int result = login != null ? login.hashCode() : 0;
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (confirmedPassword != null ? confirmedPassword.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         return result;
@@ -115,7 +101,6 @@ public class UserRegistrationDto {
         return "UserRegistrationDto{" +
                 "login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", confirmedPassword='" + confirmedPassword + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';

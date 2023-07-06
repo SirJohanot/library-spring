@@ -59,7 +59,7 @@ public class Book {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    public Book(Integer id, String title, List<Author> authors, Genre genre, Publisher publisher, Integer publishmentYear, Integer amount, boolean isDeleted) {
+    public Book(Integer id, String title, List<Author> authors, @NotNull Genre genre, @NotNull Publisher publisher, @NotNull Integer publishmentYear, @NotNull Integer amount, boolean isDeleted) {
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -94,35 +94,35 @@ public class Book {
         this.authors = authors;
     }
 
-    public Genre getGenre() {
+    public @NotNull Genre getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(@NotNull Genre genre) {
         this.genre = genre;
     }
 
-    public Publisher getPublisher() {
+    public @NotNull Publisher getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(Publisher publisher) {
+    public void setPublisher(@NotNull Publisher publisher) {
         this.publisher = publisher;
     }
 
-    public Integer getPublishmentYear() {
+    public @NotNull Integer getPublishmentYear() {
         return publishmentYear;
     }
 
-    public void setPublishmentYear(Integer publishmentYear) {
+    public void setPublishmentYear(@NotNull Integer publishmentYear) {
         this.publishmentYear = publishmentYear;
     }
 
-    public Integer getAmount() {
+    public @NotNull Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(@NotNull Integer amount) {
         this.amount = amount;
     }
 

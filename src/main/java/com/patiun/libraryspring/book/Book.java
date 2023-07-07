@@ -55,7 +55,6 @@ public class Book {
     @Column(name = "amount")
     private Integer amount;
 
-    @NotNull(message = "Deleted must not be null")
     @Column(name = "is_deleted")
     private boolean isDeleted;
 

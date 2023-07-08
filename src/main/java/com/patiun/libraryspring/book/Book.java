@@ -48,7 +48,7 @@ public class Book {
     @Min(value = 1900, message = "Publishment year must be at least 1900")
     @Max(value = 2500, message = "Publishment year must be at most 2500")
     @Column(name = "publishment_year")
-    private Integer publishmentYear;
+    private int publishmentYear;
 
     @NotNull(message = "Amount must not be null")
     @Min(value = 0, message = "Amount must be at least 0")
@@ -58,7 +58,7 @@ public class Book {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    public Book(Integer id, String title, List<Author> authors, @NotNull Genre genre, @NotNull Publisher publisher, @NotNull Integer publishmentYear, @NotNull Integer amount, boolean isDeleted) {
+    public Book(Integer id, String title, List<Author> authors, @NotNull Genre genre, @NotNull Publisher publisher, int publishmentYear, @NotNull Integer amount, boolean isDeleted) {
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -109,11 +109,11 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public @NotNull Integer getPublishmentYear() {
+    public int getPublishmentYear() {
         return publishmentYear;
     }
 
-    public void setPublishmentYear(@NotNull Integer publishmentYear) {
+    public void setPublishmentYear(int publishmentYear) {
         this.publishmentYear = publishmentYear;
     }
 
@@ -175,7 +175,7 @@ public class Book {
         result = 31 * result + (authors != null ? authors.hashCode() : 0);
         result = 31 * result + (genre != null ? genre.hashCode() : 0);
         result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
-        result = 31 * result + (publishmentYear != null ? publishmentYear.hashCode() : 0);
+        result = 31 * result + publishmentYear;
         result = 31 * result + (amount != null ? amount.hashCode() : 0);
         result = 31 * result + (isDeleted ? 1 : 0);
         return result;

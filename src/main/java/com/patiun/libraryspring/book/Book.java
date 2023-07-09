@@ -44,7 +44,6 @@ public class Book {
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
-    @NotNull(message = "Publishment year must not be null")
     @Min(value = 1900, message = "Publishment year must be at least 1900")
     @Max(value = 2500, message = "Publishment year must be at most 2500")
     @Column(name = "publishment_year")

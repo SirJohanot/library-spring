@@ -52,12 +52,12 @@ public class Book {
     @NotNull(message = "Amount must not be null")
     @Min(value = 0, message = "Amount must be at least 0")
     @Column(name = "amount")
-    private Integer amount;
+    private int amount;
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    public Book(Integer id, String title, List<Author> authors, @NotNull Genre genre, @NotNull Publisher publisher, int publishmentYear, @NotNull Integer amount, boolean isDeleted) {
+    public Book(Integer id, String title, List<Author> authors, @NotNull Genre genre, @NotNull Publisher publisher, int publishmentYear, int amount, boolean isDeleted) {
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -116,11 +116,11 @@ public class Book {
         this.publishmentYear = publishmentYear;
     }
 
-    public @NotNull Integer getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(@NotNull Integer amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
@@ -175,7 +175,7 @@ public class Book {
         result = 31 * result + (genre != null ? genre.hashCode() : 0);
         result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
         result = 31 * result + publishmentYear;
-        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        result = 31 * result + amount;
         result = 31 * result + (isDeleted ? 1 : 0);
         return result;
     }

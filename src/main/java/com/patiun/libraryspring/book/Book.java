@@ -49,7 +49,6 @@ public class Book {
     @Column(name = "publishment_year")
     private int publishmentYear;
 
-    @NotNull(message = "Amount must not be null")
     @Min(value = 0, message = "Amount must be at least 0")
     @Column(name = "amount")
     private int amount;

@@ -171,8 +171,8 @@ public class Book {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (authors != null ? authors.hashCode() : 0);
-        result = 31 * result + (genre != null ? genre.hashCode() : 0);
-        result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
+        result = 31 * result + genre.hashCode();
+        result = 31 * result + publisher.hashCode();
         result = 31 * result + publishmentYear;
         result = 31 * result + amount;
         result = 31 * result + (isDeleted ? 1 : 0);

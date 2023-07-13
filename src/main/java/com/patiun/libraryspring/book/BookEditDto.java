@@ -32,9 +32,6 @@ public class BookEditDto {
     @Min(value = 0, message = "Amount must be at least 0")
     private Integer amount;
 
-    public BookEditDto() {
-    }
-
     public BookEditDto(String title, String authors, String genre, String publisher, Integer publishmentYear, Integer amount) {
         this.title = title;
         this.authors = authors;

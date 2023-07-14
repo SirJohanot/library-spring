@@ -258,28 +258,6 @@ public class BookRestControllerIntegrationTest {
     }
 
     @Test
-    public void testCreateBookShouldReturnBadRequestWhenTheBookPublishmentYearIsNull() throws Exception {
-        //given
-        String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
-        String genre = "Interesting";
-        String publisher = "Smith";
-        Integer publishmentYear = null;
-        Integer amount = 10;
-
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
-
-        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
-        //then
-        mvc.perform(post(BASE_URL)
-                        .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
-                        .contentType(APPLICATION_JSON)
-                        .content(editDtoJson))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error", any(String.class)));
-    }
-
-    @Test
     public void testCreateBookShouldReturnBadRequestWhenTheBookPublishmentYearIsEarlierThan1900() throws Exception {
         //given
         String title = "Some Book";

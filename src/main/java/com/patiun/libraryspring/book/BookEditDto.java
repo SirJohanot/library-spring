@@ -26,13 +26,13 @@ public class BookEditDto {
     @NotNull(message = "Publishment year must not be null")
     @Min(value = 1900, message = "Publishment year must be at least 1900")
     @Max(value = 2500, message = "Publishment year must be at most 2500")
-    private Integer publishmentYear;
+    private int publishmentYear;
 
     @NotNull(message = "Amount must not be null")
     @Min(value = 0, message = "Amount must be at least 0")
     private Integer amount;
 
-    public BookEditDto(String title, String authors, String genre, String publisher, Integer publishmentYear, Integer amount) {
+    public BookEditDto(String title, String authors, String genre, String publisher, int publishmentYear, Integer amount) {
         this.title = title;
         this.authors = authors;
         this.genre = genre;
@@ -73,11 +73,11 @@ public class BookEditDto {
         this.publisher = publisher;
     }
 
-    public Integer getPublishmentYear() {
+    public int getPublishmentYear() {
         return publishmentYear;
     }
 
-    public void setPublishmentYear(Integer publishmentYear) {
+    public void setPublishmentYear(int publishmentYear) {
         this.publishmentYear = publishmentYear;
     }
 
@@ -124,7 +124,7 @@ public class BookEditDto {
         result = 31 * result + (authors != null ? authors.hashCode() : 0);
         result = 31 * result + (genre != null ? genre.hashCode() : 0);
         result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
-        result = 31 * result + (publishmentYear != null ? publishmentYear.hashCode() : 0);
+        result = 31 * result + publishmentYear;
         result = 31 * result + (amount != null ? amount.hashCode() : 0);
         return result;
     }

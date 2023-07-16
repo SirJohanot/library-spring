@@ -23,7 +23,6 @@ public class BookEditDto {
     @Pattern(regexp = Regexp.WORD, message = "Publisher name must start with an alphabetical character or a number")
     private String publisher;
 
-    @NotNull(message = "Publishment year must not be null")
     @Min(value = 1900, message = "Publishment year must be at least 1900")
     @Max(value = 2500, message = "Publishment year must be at most 2500")
     private int publishmentYear;

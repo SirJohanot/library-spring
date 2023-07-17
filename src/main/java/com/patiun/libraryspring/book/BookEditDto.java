@@ -29,9 +29,9 @@ public class BookEditDto {
 
     @NotNull(message = "Amount must not be null")
     @Min(value = 0, message = "Amount must be at least 0")
-    private Integer amount;
+    private int amount;
 
-    public BookEditDto(String title, String authors, String genre, String publisher, int publishmentYear, Integer amount) {
+    public BookEditDto(String title, String authors, String genre, String publisher, int publishmentYear, int amount) {
         this.title = title;
         this.authors = authors;
         this.genre = genre;
@@ -80,11 +80,11 @@ public class BookEditDto {
         this.publishmentYear = publishmentYear;
     }
 
-    public Integer getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
@@ -124,7 +124,7 @@ public class BookEditDto {
         result = 31 * result + (genre != null ? genre.hashCode() : 0);
         result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
         result = 31 * result + publishmentYear;
-        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        result = 31 * result + amount;
         return result;
     }
 

@@ -1,7 +1,10 @@
 package com.patiun.libraryspring.book;
 
 import com.patiun.libraryspring.validation.Regexp;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
 
@@ -27,7 +30,6 @@ public class BookEditDto {
     @Max(value = 2500, message = "Publishment year must be at most 2500")
     private int publishmentYear;
 
-    @NotNull(message = "Amount must not be null")
     @Min(value = 0, message = "Amount must be at least 0")
     private int amount;
 

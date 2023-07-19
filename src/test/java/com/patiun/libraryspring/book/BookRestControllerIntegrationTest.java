@@ -54,8 +54,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -88,8 +88,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -110,8 +110,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -132,8 +132,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -154,8 +154,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "&^%*&$, &*^^%";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -176,8 +176,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -198,8 +198,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "%genre@#";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -220,8 +220,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -242,8 +242,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "*%^^%346534hjbdg";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -264,8 +264,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 1899;
-        Integer amount = 10;
+        int publishmentYear = 1899;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -286,8 +286,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2525;
-        Integer amount = 10;
+        int publishmentYear = 2525;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -308,8 +308,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2023;
-        Integer amount = -144;
+        int publishmentYear = 2023;
+        int amount = -144;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -516,8 +516,8 @@ public class BookRestControllerIntegrationTest {
         String newAuthors = "Some Human, Some Non-human";
         String newGenre = "Interesting";
         String newPublisher = "Smith";
-        Integer newPublishmentYear = 2014;
-        Integer newAmount = 10;
+        int newPublishmentYear = 2014;
+        int newAmount = 10;
 
         BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
 
@@ -540,8 +540,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -564,8 +564,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -588,8 +588,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -612,8 +612,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "()wen $mith, @lan &rews";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -636,8 +636,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -660,8 +660,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "^*cool*^";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -684,8 +684,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -708,8 +708,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "^_^";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -732,8 +732,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 1867;
-        Integer amount = 10;
+        int publishmentYear = 1867;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -756,8 +756,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2504;
-        Integer amount = 10;
+        int publishmentYear = 2504;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -780,8 +780,8 @@ public class BookRestControllerIntegrationTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = -4;
+        int publishmentYear = 2014;
+        int amount = -4;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 

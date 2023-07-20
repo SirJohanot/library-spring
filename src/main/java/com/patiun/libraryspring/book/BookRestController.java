@@ -24,8 +24,8 @@ public class BookRestController {
         String authors = editDto.getAuthors();
         String genre = editDto.getGenre();
         String publisher = editDto.getPublisher();
-        Integer publishmentYear = editDto.getPublishmentYear();
-        Integer amount = editDto.getAmount();
+        int publishmentYear = editDto.getPublishmentYear();
+        int amount = editDto.getAmount();
 
         bookService.createBook(title, authors, genre, publisher, publishmentYear, amount);
     }
@@ -46,8 +46,8 @@ public class BookRestController {
         String authors = editDto.getAuthors();
         String genre = editDto.getGenre();
         String publisher = editDto.getPublisher();
-        Integer publishmentYear = editDto.getPublishmentYear();
-        Integer amount = editDto.getAmount();
+        int publishmentYear = editDto.getPublishmentYear();
+        int amount = editDto.getAmount();
 
         bookService.updateBookById(id, title, authors, genre, publisher, publishmentYear, amount);
     }

@@ -27,7 +27,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void createBook(String title, String authors, String genreName, String publisherName, Integer publishmentYear, Integer amount) {
+    public void createBook(String title, String authors, String genreName, String publisherName, int publishmentYear, int amount) {
         List<Author> authorList = authorsStringToList(authors);
         Book newBook = setupBookToPersist(null, title, authorList, genreName, publisherName, publishmentYear, amount);
         bookRepository.save(newBook);
@@ -51,7 +51,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBookById(Integer id, String title, String authors, String genreName, String publisherName, Integer publishmentYear, Integer amount) {
+    public void updateBookById(Integer id, String title, String authors, String genreName, String publisherName, int publishmentYear, int amount) {
         getExistingBookById(id);
         List<Author> authorList = authorsStringToList(authors);
         Book updatedBook = setupBookToPersist(id, title, authorList, genreName, publisherName, publishmentYear, amount);

@@ -65,7 +65,7 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
-    private Book setupBookToPersist(Integer id, String title, List<Author> authors, String genreName, String publisherName, Integer publishmentYear, Integer amount) {
+    private Book setupBookToPersist(Integer id, String title, List<Author> authors, String genreName, String publisherName, int publishmentYear, int amount) {
         authors = authors.stream()
                 .map(author -> {
                     String authorName = author.getName();

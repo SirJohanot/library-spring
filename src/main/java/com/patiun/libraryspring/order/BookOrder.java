@@ -53,9 +53,6 @@ public class BookOrder {
     @Enumerated(EnumType.STRING)
     private OrderState state;
 
-    public BookOrder() {
-    }
-
     public BookOrder(Integer id, Book book, User user, RentalType rentalType, LocalDate startDate, LocalDate endDate, LocalDate returnDate, OrderState state) {
         this.id = id;
         this.book = book;

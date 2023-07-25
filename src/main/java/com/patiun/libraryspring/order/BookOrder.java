@@ -166,7 +166,7 @@ public class BookOrder {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (book != null ? book.hashCode() : 0);
+        result = 31 * result + book.hashCode();
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (rentalType != null ? rentalType.hashCode() : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);

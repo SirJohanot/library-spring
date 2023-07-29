@@ -53,7 +53,7 @@ public class BookOrder {
     @Enumerated(EnumType.STRING)
     private OrderState state;
 
-    public BookOrder(Integer id, @NotNull Book book, @NotNull User user, @NotNull RentalType rentalType, @NotNull LocalDate startDate, LocalDate endDate, LocalDate returnDate, OrderState state) {
+    public BookOrder(Integer id, @NotNull Book book, @NotNull User user, @NotNull RentalType rentalType, @NotNull LocalDate startDate, @NotNull LocalDate endDate, LocalDate returnDate, OrderState state) {
         this.id = id;
         this.book = book;
         this.user = user;
@@ -104,11 +104,11 @@ public class BookOrder {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public @NotNull LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(@NotNull LocalDate endDate) {
         this.endDate = endDate;
     }
 

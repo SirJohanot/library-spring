@@ -167,12 +167,12 @@ public class BookOrder {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + book.hashCode();
-        result = 31 * result + (user != null ? user.hashCode() : 0);
-        result = 31 * result + (rentalType != null ? rentalType.hashCode() : 0);
-        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
-        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
+        result = 31 * result + user.hashCode();
+        result = 31 * result + rentalType.hashCode();
+        result = 31 * result + startDate.hashCode();
+        result = 31 * result + endDate.hashCode();
         result = 31 * result + (returnDate != null ? returnDate.hashCode() : 0);
-        result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + state.hashCode();
         return result;
     }
 

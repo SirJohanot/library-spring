@@ -13,12 +13,12 @@ public class BookOrderDto {
     private RentalType rentalType;
 
     @NotNull(message = "Days must not be null")
-    private Integer days = 0;
+    private int days = 0;
 
     public BookOrderDto() {
     }
 
-    public BookOrderDto(RentalType rentalType, Integer days) {
+    public BookOrderDto(RentalType rentalType, int days) {
         this.rentalType = rentalType;
         this.days = days;
     }
@@ -31,11 +31,11 @@ public class BookOrderDto {
         this.rentalType = rentalType;
     }
 
-    public Integer getDays() {
+    public int getDays() {
         return days;
     }
 
-    public void setDays(Integer days) {
+    public void setDays(int days) {
         this.days = days;
     }
 
@@ -59,7 +59,7 @@ public class BookOrderDto {
     @Override
     public int hashCode() {
         int result = rentalType != null ? rentalType.hashCode() : 0;
-        result = 31 * result + (days != null ? days.hashCode() : 0);
+        result = 31 * result + days;
         return result;
     }
 

@@ -18,16 +18,16 @@ public class BookOrderDto {
     public BookOrderDto() {
     }
 
-    public BookOrderDto(RentalType rentalType, int days) {
+    public BookOrderDto(@NotNull RentalType rentalType, int days) {
         this.rentalType = rentalType;
         this.days = days;
     }
 
-    public RentalType getRentalType() {
+    public @NotNull RentalType getRentalType() {
         return rentalType;
     }
 
-    public void setRentalType(RentalType rentalType) {
+    public void setRentalType(@NotNull RentalType rentalType) {
         this.rentalType = rentalType;
     }
 

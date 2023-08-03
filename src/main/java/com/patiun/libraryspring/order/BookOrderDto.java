@@ -12,7 +12,6 @@ public class BookOrderDto {
     @NotNull(message = "Rental type must not be null")
     private RentalType rentalType;
 
-    @NotNull(message = "Days must not be null")
     private int days = 0;
 
     public BookOrderDto() {

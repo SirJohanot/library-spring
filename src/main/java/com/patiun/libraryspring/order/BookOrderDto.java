@@ -57,7 +57,7 @@ public class BookOrderDto {
 
     @Override
     public int hashCode() {
-        int result = rentalType != null ? rentalType.hashCode() : 0;
+        int result = rentalType.hashCode();
         result = 31 * result + days;
         return result;
     }

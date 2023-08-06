@@ -12,7 +12,7 @@ public class BookOrderDto {
     @NotNull(message = "Rental type must not be null")
     private RentalType rentalType;
 
-    private int days = 0;
+    private int days;
 
     public BookOrderDto(@NotNull RentalType rentalType, int days) {
         this.rentalType = rentalType;

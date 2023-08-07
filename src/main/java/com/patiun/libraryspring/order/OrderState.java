@@ -6,6 +6,6 @@ public enum OrderState {
     APPROVED,
     DECLINED,
     BOOK_TAKEN,
-    BOOK_RETURNED;
+    BOOK_RETURNED
 
 }

@@ -41,7 +41,7 @@ public class User implements UserDetails {
 
     @NotNull(message = "Blocked must not be null")
     @Column(name = "is_blocked")
-    private Boolean isBlocked;
+    private boolean isBlocked;
 
     @NotNull(message = "Role must not be null")
     @Column(name = "role", length = 64)
@@ -51,7 +51,7 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Integer id, String login, String password, String firstName, String lastName, Boolean isBlocked, UserRole role) {
+    public User(Integer id, String login, String password, String firstName, String lastName, boolean isBlocked, UserRole role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -102,11 +102,11 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    public Boolean getBlocked() {
+    public boolean getBlocked() {
         return isBlocked;
     }
 
-    public void setBlocked(Boolean blocked) {
+    public void setBlocked(boolean blocked) {
         isBlocked = blocked;
     }
 
@@ -193,7 +193,7 @@ public class User implements UserDetails {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (isBlocked != null ? isBlocked.hashCode() : 0);
+        result = 31 * result + (isBlocked ? 1 : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }

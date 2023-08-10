@@ -39,7 +39,6 @@ public class User implements UserDetails {
     @Column(name = "last_name", length = 64)
     private String lastName;
 
-    @NotNull(message = "Blocked must not be null")
     @Column(name = "is_blocked")
     private boolean isBlocked;
 

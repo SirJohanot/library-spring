@@ -50,7 +50,7 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Integer id, String login, String password, String firstName, String lastName, boolean isBlocked, UserRole role) {
+    public User(Integer id, String login, String password, String firstName, String lastName, boolean isBlocked, @NotNull UserRole role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -109,11 +109,11 @@ public class User implements UserDetails {
         isBlocked = blocked;
     }
 
-    public UserRole getRole() {
+    public @NotNull UserRole getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(@NotNull UserRole role) {
         this.role = role;
     }
 

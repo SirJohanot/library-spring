@@ -3,7 +3,6 @@ package com.patiun.libraryspring.user;
 import com.patiun.libraryspring.validation.AcceptableRoles;
 import com.patiun.libraryspring.validation.Regexp;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
@@ -18,7 +17,6 @@ public class UserEditDto {
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character")
     private String lastName;
 
-    @NotNull(message = "Role must not be null")
     @AcceptableRoles({UserRole.READER, UserRole.LIBRARIAN})
     private UserRole role;
 

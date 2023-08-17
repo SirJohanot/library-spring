@@ -21,7 +21,7 @@ public class UserRegistrationDto {
     @NotBlank(message = "Last name must not be blank")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character")
     private String lastName;
-    
+
     public UserRegistrationDto(String login, String password, String firstName, String lastName) {
         this.login = login;
         this.password = password;
@@ -86,10 +86,10 @@ public class UserRegistrationDto {
 
     @Override
     public int hashCode() {
-        int result = login != null ? login.hashCode() : 0;
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        int result = login.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
         return result;
     }
 

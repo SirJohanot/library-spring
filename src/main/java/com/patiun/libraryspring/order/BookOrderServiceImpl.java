@@ -80,7 +80,7 @@ public class BookOrderServiceImpl implements BookOrderService {
     private void advanceOrderStateById(Integer id, OrderState newState) throws ServiceException {
         BookOrder targetOrder = getExistingOrderById(id);
         Book targetOrderBook = targetOrder.getBook();
-        Integer targetOrderBookAmount = targetOrderBook.getAmount();
+        int targetOrderBookAmount = targetOrderBook.getAmount();
 
         OrderState currentState = targetOrder.getState();
         if (currentState == OrderState.DECLINED || currentState == OrderState.BOOK_RETURNED) {

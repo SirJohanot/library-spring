@@ -174,7 +174,7 @@ public class BookOrderServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
+        int publishmentYear = 2014;
         int amount = 16;
         Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
         Book expectedBookToBeSaved = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount - 1, false);
@@ -224,7 +224,7 @@ public class BookOrderServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
+        int publishmentYear = 2014;
         int amount = 0;
         Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
 
@@ -252,7 +252,7 @@ public class BookOrderServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
+        int publishmentYear = 2014;
         int amount = 5;
         Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
 
@@ -280,7 +280,7 @@ public class BookOrderServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
+        int publishmentYear = 2014;
         int amount = 16;
         Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
 
@@ -329,7 +329,7 @@ public class BookOrderServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
+        int publishmentYear = 2014;
         int amount = 4;
         Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
 
@@ -357,7 +357,7 @@ public class BookOrderServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
+        int publishmentYear = 2014;
         int amount = 16;
         Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
 
@@ -406,7 +406,7 @@ public class BookOrderServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
+        int publishmentYear = 2014;
         int amount = 3;
         Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
 
@@ -434,7 +434,7 @@ public class BookOrderServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
+        int publishmentYear = 2014;
         int amount = 16;
         Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
         Book expectedBookToBeSaved = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount + 1, false);
@@ -484,7 +484,7 @@ public class BookOrderServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
+        int publishmentYear = 2014;
         int amount = 10;
         Book orderBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
 

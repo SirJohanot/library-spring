@@ -1,7 +1,5 @@
 package com.patiun.libraryspring.book;
 
-import com.patiun.libraryspring.exception.ServiceException;
-
 import java.util.List;
 
 public interface BookService {
@@ -14,5 +12,5 @@ public interface BookService {
 
     void deleteBookById(Integer id);
 
-    void updateBookById(Integer id, String title, String authors, String genreName, String publisherName, int publishmentYear, int amount) throws ServiceException;
+    void updateBookById(Integer id, String title, String authors, String genreName, String publisherName, int publishmentYear, int amount);
 }

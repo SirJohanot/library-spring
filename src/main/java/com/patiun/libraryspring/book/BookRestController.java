@@ -1,6 +1,5 @@
 package com.patiun.libraryspring.book;
 
-import com.patiun.libraryspring.exception.ServiceException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +40,7 @@ public class BookRestController {
     }
 
     @PutMapping("{id}")
-    public void updateBook(@PathVariable Integer id, @RequestBody @Valid BookEditDto editDto) throws ServiceException {
+    public void updateBook(@PathVariable Integer id, @RequestBody @Valid BookEditDto editDto) {
         String title = editDto.getTitle();
         String authors = editDto.getAuthors();
         String genre = editDto.getGenre();

@@ -16,7 +16,7 @@ public interface UserService {
 
     User getUserByLogin(String login);
 
-    void updateUserById(Integer id, String firstName, String lastName, UserRole role) throws ServiceException;
+    void updateUserById(Integer id, String firstName, String lastName, UserRole role);
 
-    void switchUserBlockedById(Integer id) throws ServiceException;
+    void switchUserBlockedById(Integer id);
 }

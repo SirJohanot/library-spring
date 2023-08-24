@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void switchUserBlockedById(Integer id) {
         User foundUser = getExistingUserById(id);
 
-        Boolean currentUserBlocked = foundUser.getBlocked();
+        boolean currentUserBlocked = foundUser.getBlocked();
         foundUser.setBlocked(!currentUserBlocked);
 
         userRepository.save(foundUser);

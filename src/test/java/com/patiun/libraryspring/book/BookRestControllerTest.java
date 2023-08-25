@@ -48,8 +48,8 @@ public class BookRestControllerTest {
         String authors = "Some Human, Some Non-human";
         String genre = "Interesting";
         String publisher = "Smith";
-        Integer publishmentYear = 2014;
-        Integer amount = 10;
+        int publishmentYear = 2014;
+        int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
 
@@ -149,8 +149,8 @@ public class BookRestControllerTest {
         String newAuthors = "Tolstoy Leo";
         String newGenre = "Inverted Novel";
         String newPublisher = "Some dude";
-        Integer newPublishmentYear = 2020;
-        Integer newAmount = 100;
+        int newPublishmentYear = 2020;
+        int newAmount = 100;
 
         BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
 
@@ -175,8 +175,8 @@ public class BookRestControllerTest {
         String newAuthors = "Tolstoy Leo";
         String newGenre = "Inverted Novel";
         String newPublisher = "Some dude";
-        Integer newPublishmentYear = 2020;
-        Integer newAmount = 100;
+        int newPublishmentYear = 2020;
+        int newAmount = 100;
 
         BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
 

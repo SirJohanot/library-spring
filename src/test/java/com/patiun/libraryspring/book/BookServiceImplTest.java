@@ -44,8 +44,8 @@ public class BookServiceImplTest {
         String authors = "Leo Tolstoy";
         String genreName = "Historical Novel";
         String publisherName = "Hardcover";
-        Integer publishmentYear = 2014;
-        Integer amount = 16;
+        int publishmentYear = 2014;
+        int amount = 16;
 
         given(authorRepository.findByName(authors))
                 .willReturn(Optional.empty());
@@ -68,8 +68,8 @@ public class BookServiceImplTest {
         String authors = "Leo Tolstoy";
         String genreName = "Historical Novel";
         String publisherName = "Hardcover";
-        Integer publishmentYear = 2014;
-        Integer amount = 16;
+        int publishmentYear = 2014;
+        int amount = 16;
 
         Author existingAuthor = new Author(3, authors);
         Genre existingGenre = new Genre(145, genreName);
@@ -155,8 +155,8 @@ public class BookServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
-        Integer amount = 16;
+        int publishmentYear = 2014;
+        int amount = 16;
 
         Book existingBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
         given(bookRepository.findById(targetBookId))
@@ -195,8 +195,8 @@ public class BookServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
-        Integer amount = 16;
+        int publishmentYear = 2014;
+        int amount = 16;
 
         Book existingBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, true);
         given(bookRepository.findById(targetBookId))
@@ -218,8 +218,8 @@ public class BookServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
-        Integer amount = 16;
+        int publishmentYear = 2014;
+        int amount = 16;
 
         Book existingBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, false);
         given(bookRepository.findById(targetBookId))
@@ -230,8 +230,8 @@ public class BookServiceImplTest {
         String newGenre = "Inverted Novel";
         Genre existingGenre = new Genre(3, newGenre);
         String newPublisher = "Some dude";
-        Integer newPublishmentYear = 2020;
-        Integer newAmount = 100;
+        int newPublishmentYear = 2020;
+        int newAmount = 100;
 
         given(authorRepository.findByName(newAuthors))
                 .willReturn(Optional.empty());
@@ -261,8 +261,8 @@ public class BookServiceImplTest {
         String newAuthors = "Tolstoy Leo";
         String newGenre = "Inverted Novel";
         String newPublisher = "Some dude";
-        Integer newPublishmentYear = 2020;
-        Integer newAmount = 100;
+        int newPublishmentYear = 2020;
+        int newAmount = 100;
         //then
         assertThatThrownBy(() -> bookService.updateBookById(targetBookId, newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount))
                 .isInstanceOf(ElementNotFoundException.class);
@@ -280,8 +280,8 @@ public class BookServiceImplTest {
         List<Author> authors = List.of(new Author(1, "Leo Tolstoy"));
         Genre genre = new Genre(1, "Historical Novel");
         Publisher publisher = new Publisher(2, "Hardcover");
-        Integer publishmentYear = 2014;
-        Integer amount = 16;
+        int publishmentYear = 2014;
+        int amount = 16;
 
         Book existingBook = new Book(targetBookId, title, authors, genre, publisher, publishmentYear, amount, true);
         given(bookRepository.findById(targetBookId))
@@ -291,8 +291,8 @@ public class BookServiceImplTest {
         String newAuthors = "Tolstoy Leo";
         String newGenre = "Inverted Novel";
         String newPublisher = "Some dude";
-        Integer newPublishmentYear = 2020;
-        Integer newAmount = 100;
+        int newPublishmentYear = 2020;
+        int newAmount = 100;
         //then
         assertThatThrownBy(() -> bookService.updateBookById(targetBookId, newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount))
                 .isInstanceOf(ElementNotFoundException.class);

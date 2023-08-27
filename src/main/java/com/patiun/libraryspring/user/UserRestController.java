@@ -48,7 +48,7 @@ public class UserRestController {
     }
 
     @PutMapping("{id}")
-    public void updateUser(@PathVariable Integer id, @RequestBody @Valid UserEditDto editDto) throws ServiceException {
+    public void updateUser(@PathVariable Integer id, @RequestBody @Valid UserEditDto editDto) {
         String newFirstName = editDto.getFirstName();
         String newLastName = editDto.getLastName();
         UserRole newRole = editDto.getRole();
@@ -56,7 +56,7 @@ public class UserRestController {
     }
 
     @PatchMapping("{id}/switch-blocked")
-    public void switchUserBlocked(@PathVariable Integer id) throws ServiceException {
+    public void switchUserBlocked(@PathVariable Integer id) {
         userService.switchUserBlockedById(id);
     }
 

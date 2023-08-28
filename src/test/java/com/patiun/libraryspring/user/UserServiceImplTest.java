@@ -110,7 +110,7 @@ public class UserServiceImplTest {
         //given
         List<User> usersFoundByRepository = Arrays.asList(
                 new User(1, "coolGuy", "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN),
-                new User(2, "ookla", "h46jh53h6", "john", "doe", true, UserRole.READER)
+                new User(2, "cloneGuy", "h46jh53h6", "john", "doe", true, UserRole.READER)
         );
         given(userRepository.findAll())
                 .willReturn(usersFoundByRepository);
@@ -126,8 +126,8 @@ public class UserServiceImplTest {
         //given
         List<User> adminsFoundByRepository = Arrays.asList(
                 new User(1, "coolGuy", "86gfd5df", "jack", "buckwheat", false, UserRole.ADMIN),
-                new User(2, "ookla", "h46jh53h6", "john", "doe", true, UserRole.ADMIN),
-                new User(3, "gfjghj", "ghj", "john", "s", false, UserRole.ADMIN)
+                new User(2, "cloneGuy", "h46jh53h6", "john", "doe", true, UserRole.ADMIN),
+                new User(3, "doomSlayer", "ghj", "john", "s", false, UserRole.ADMIN)
         );
         given(userRepository.findByRoleIs(UserRole.ADMIN))
                 .willReturn(adminsFoundByRepository);
@@ -143,7 +143,7 @@ public class UserServiceImplTest {
         //given
         Integer targetUserId = 2;
 
-        User userFoundByRepository = new User(targetUserId, "ookla", "h46jh53h6", "john", "doe", true, UserRole.READER);
+        User userFoundByRepository = new User(targetUserId, "bookWorm", "h46jh53h6", "john", "doe", true, UserRole.READER);
         given(userRepository.findById(targetUserId))
                 .willReturn(Optional.of(userFoundByRepository));
         //when

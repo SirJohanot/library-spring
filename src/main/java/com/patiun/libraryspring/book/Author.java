@@ -2,7 +2,6 @@ package com.patiun.libraryspring.book;
 
 import com.patiun.libraryspring.validation.Regexp;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
@@ -15,7 +14,6 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotBlank(message = "Author name must not be blank")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "Author name must start with an alphabetical character")
     @Column(name = "name", length = 128, unique = true)
     private String name;

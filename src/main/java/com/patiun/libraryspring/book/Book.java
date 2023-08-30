@@ -17,7 +17,6 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotBlank(message = "Book title must not be blank")
     @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number")
     @Column(name = "title", length = 64)
     private String title;

@@ -36,7 +36,6 @@ public class Book {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @NotNull(message = "Publisher must not be null")
     @Valid
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "publisher_id")

@@ -10,7 +10,6 @@ import java.util.Objects;
 
 public class BookEditDto {
 
-    @NotBlank(message = "Book title must not be blank")
     @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number")
     private String title;
 

@@ -13,7 +13,6 @@ public class BookEditDto {
     @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number")
     private String title;
 
-    @NotBlank(message = "Authors must not be blank")
     @Pattern(regexp = Regexp.HUMAN_NAMES_DELIMITED_BY_COMMA, message = "Authors line must be human names delimited by commas")
     private String authors;
 

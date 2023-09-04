@@ -16,7 +16,6 @@ public class BookEditDto {
     @Pattern(regexp = Regexp.HUMAN_NAMES_DELIMITED_BY_COMMA, message = "Authors line must be human names delimited by commas")
     private String authors;
 
-    @NotBlank(message = "Genre name must not be blank")
     @Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number")
     private String genre;
 

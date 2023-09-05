@@ -3,7 +3,6 @@ package com.patiun.libraryspring.book;
 import com.patiun.libraryspring.validation.Regexp;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
@@ -19,7 +18,6 @@ public class BookEditDto {
     @Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number")
     private String genre;
 
-    @NotBlank(message = "Publisher name must not be blank")
     @Pattern(regexp = Regexp.WORD, message = "Publisher name must start with an alphabetical character or a number")
     private String publisher;
 

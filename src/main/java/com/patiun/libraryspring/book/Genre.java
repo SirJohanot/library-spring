@@ -2,7 +2,6 @@ package com.patiun.libraryspring.book;
 
 import com.patiun.libraryspring.validation.Regexp;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
@@ -15,7 +14,6 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotBlank(message = "Genre name must not be blank")
     @Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number")
     @Column(name = "name", length = 64, unique = true)
     private String name;

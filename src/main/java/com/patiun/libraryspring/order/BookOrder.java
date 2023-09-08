@@ -18,7 +18,6 @@ public class BookOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotNull(message = "Book must not be null")
     @Valid
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")

@@ -23,7 +23,6 @@ public class BookOrder {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @NotNull(message = "User must not be null")
     @Valid
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

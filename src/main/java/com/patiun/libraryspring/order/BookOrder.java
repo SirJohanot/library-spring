@@ -33,7 +33,6 @@ public class BookOrder {
     @Enumerated(EnumType.STRING)
     private RentalType rentalType;
 
-    @NotNull(message = "Start date must not be null")
     @PastOrPresent(message = "Start date must be either in the past or in the present")
     @Column(name = "start_date")
     private LocalDate startDate;

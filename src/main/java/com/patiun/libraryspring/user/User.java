@@ -29,7 +29,6 @@ public class User implements UserDetails {
     @JsonIgnore
     private String password;
 
-    @NotBlank(message = "First name must not be blank")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character")
     @Column(name = "first_name", length = 64)
     private String firstName;

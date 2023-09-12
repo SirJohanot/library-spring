@@ -33,7 +33,6 @@ public class User implements UserDetails {
     @Column(name = "first_name", length = 64)
     private String firstName;
 
-    @NotBlank(message = "Last name must not be blank")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character")
     @Column(name = "last_name", length = 64)
     private String lastName;

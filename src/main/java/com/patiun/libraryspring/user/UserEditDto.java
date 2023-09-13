@@ -9,7 +9,6 @@ import java.util.Objects;
 
 public class UserEditDto {
 
-    @NotBlank(message = "First name must not be blank")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character")
     private String firstName;
 

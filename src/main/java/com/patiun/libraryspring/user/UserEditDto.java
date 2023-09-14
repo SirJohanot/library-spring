@@ -2,7 +2,6 @@ package com.patiun.libraryspring.user;
 
 import com.patiun.libraryspring.validation.AcceptableRoles;
 import com.patiun.libraryspring.validation.Regexp;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
@@ -12,7 +11,6 @@ public class UserEditDto {
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character")
     private String firstName;
 
-    @NotBlank(message = "Last name must not be blank")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character")
     private String lastName;
 

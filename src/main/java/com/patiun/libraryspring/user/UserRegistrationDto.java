@@ -14,7 +14,6 @@ public class UserRegistrationDto {
     @NotBlank(message = "Password must not be blank")
     private String password;
 
-    @NotBlank(message = "First name must not be blank")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character")
     private String firstName;
 

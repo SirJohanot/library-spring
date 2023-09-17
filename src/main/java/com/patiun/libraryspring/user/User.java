@@ -87,8 +87,8 @@ public class User implements UserDetails {
         return firstName;
     }
 
-    public void setFirstName(String name) {
-        this.firstName = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {

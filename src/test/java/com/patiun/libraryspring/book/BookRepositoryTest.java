@@ -83,4 +83,21 @@ public class BookRepositoryTest {
                 .hasSize(2)
                 .contains(firstBook, thirdBook);
     }
+
+    @Test
+    public void testFindAllByDeletedFalseShouldReturnAnEmptyListWhenSuchBooksDoNotExist() {
+        //given
+        entityManager.persist(new Book(null, "book1", List.of(new Author("author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, true));
+
+        entityManager.persist(new Book(null, "book2", List.of(new Author("author2")), new Genre(null, "genre2"), new Publisher(null, "publisher2"), 1998, 7, true));
+
+        entityManager.persist(new Book(null, "book3", Arrays.asList(new Author("author3"), new Author("author4")), new Genre(null, "genre3"), new Publisher(null, "publisher3"), 2014, 130, true));
+
+        entityManager.flush();
+        //when
+        List<Book> actualResult = bookRepository.findAllByIsDeletedFalse();
+        //then
+        assertThat(actualResult)
+                .isEmpty();
+    }
 }

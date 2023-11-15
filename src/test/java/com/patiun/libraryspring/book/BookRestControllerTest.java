@@ -41,6 +41,11 @@ public class BookRestControllerTest {
         this.mvc = mvc;
     }
 
+    private static String asJsonString(Object object) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(object);
+    }
+
     @Test
     public void testCreateBookShouldInvokeTheCreateBookMethodOfTheServiceOnce() throws Exception {
         //given

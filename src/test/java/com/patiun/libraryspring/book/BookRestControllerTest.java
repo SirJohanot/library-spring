@@ -156,12 +156,10 @@ public class BookRestControllerTest {
         int newAmount = 100;
 
         BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
-
-        String updateDtoJson = new ObjectMapper().writeValueAsString(editDto);
         //then
         mvc.perform(put(BASE_URL + "/" + targetBookId)
                         .contentType(APPLICATION_JSON)
-                        .content(updateDtoJson))
+                        .content(asJsonString((editDto))))
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
 

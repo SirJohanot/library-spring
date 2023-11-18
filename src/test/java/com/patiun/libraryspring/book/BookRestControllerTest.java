@@ -181,15 +181,13 @@ public class BookRestControllerTest {
 
         BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
 
-        String updateDtoJson = new ObjectMapper().writeValueAsString(editDto);
-
         doThrow(ElementNotFoundException.class)
                 .when(service)
                 .updateBookById(targetBookId, newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
         //then
         mvc.perform(put(BASE_URL + "/" + targetBookId)
                         .contentType(APPLICATION_JSON)
-                        .content(updateDtoJson))
+                        .content(asJsonString(editDto)))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(""));
     }

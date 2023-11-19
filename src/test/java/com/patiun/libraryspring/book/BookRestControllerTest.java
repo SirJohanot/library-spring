@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.patiun.libraryspring.utility.TestUtilities.asJsonString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
@@ -39,11 +40,6 @@ public class BookRestControllerTest {
     @Autowired
     public BookRestControllerTest(MockMvc mvc) {
         this.mvc = mvc;
-    }
-
-    private static String asJsonString(Object object) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(object);
     }
 
     @Test

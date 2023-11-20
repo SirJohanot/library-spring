@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.patiun.libraryspring.utility.TestUtilities.asJsonString;
 import static java.util.function.Predicate.not;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -58,13 +59,11 @@ public class BookRestControllerIntegrationTest {
         int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
-
-        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
                         .contentType(APPLICATION_JSON)
-                        .content(editDtoJson))
+                        .content(asJsonString(editDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
 

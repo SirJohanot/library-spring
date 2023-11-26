@@ -171,13 +171,11 @@ public class BookRestControllerIntegrationTest {
         int amount = 10;
 
         BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
-
-        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
                         .contentType(APPLICATION_JSON)
-                        .content(editDtoJson))
+                        .content(asJsonString(editDto)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error", any(String.class)));
     }

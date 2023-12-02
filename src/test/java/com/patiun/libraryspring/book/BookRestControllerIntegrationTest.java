@@ -499,13 +499,11 @@ public class BookRestControllerIntegrationTest {
         int newAmount = 10;
 
         BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
-
-        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
         //then
         mvc.perform(put(BASE_URL + "/" + 8)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
                         .contentType(APPLICATION_JSON)
-                        .content(editDtoJson))
+                        .content(asJsonString(editDto)))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(""));
     }

@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.patiun.libraryspring.utility.TestUtilities.asJsonString;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
@@ -52,12 +53,10 @@ public class UserRestControllerIntegrationTest {
         String lastName = "smith";
 
         UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, firstName, lastName);
-
-        String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
         //then
         mvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
-                        .content(registrationDtoJson))
+                        .content(asJsonString(registrationDto)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error", any(String.class)));
     }

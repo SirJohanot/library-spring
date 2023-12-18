@@ -121,12 +121,10 @@ public class UserRestControllerIntegrationTest {
         String lastName = "";
 
         UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, firstName, lastName);
-
-        String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
         //then
         mvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
-                        .content(registrationDtoJson))
+                        .content(asJsonString(registrationDto)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error", any(String.class)));
     }

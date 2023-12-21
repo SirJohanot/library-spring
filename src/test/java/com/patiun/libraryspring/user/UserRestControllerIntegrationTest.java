@@ -283,13 +283,11 @@ public class UserRestControllerIntegrationTest {
         UserRole newRole = UserRole.LIBRARIAN;
 
         UserEditDto editDto = new UserEditDto(newFirstName, newLastName, newRole);
-
-        String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
         //then
         mvc.perform(put(BASE_URL + "/" + 8)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
                         .contentType(APPLICATION_JSON)
-                        .content(editDtoJson))
+                        .content(asJsonString(editDto)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error", any(String.class)));
     }

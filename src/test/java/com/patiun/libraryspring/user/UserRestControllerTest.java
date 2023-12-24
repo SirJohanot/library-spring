@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.patiun.libraryspring.utility.TestUtilities.asJsonString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
@@ -50,12 +51,10 @@ public class UserRestControllerTest {
         String lastName = "smith";
 
         UserRegistrationDto registrationDto = new UserRegistrationDto(login, password, firstName, lastName);
-
-        String registrationDtoJson = new ObjectMapper().writeValueAsString(registrationDto);
         //then
         mvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
-                        .content(registrationDtoJson))
+                        .content(asJsonString(registrationDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
 

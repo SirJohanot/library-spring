@@ -144,12 +144,10 @@ public class UserRestControllerTest {
         UserRole newRole = UserRole.LIBRARIAN;
 
         UserEditDto editDto = new UserEditDto(newFirstName, newLastName, newRole);
-
-        String updateDtoJson = new ObjectMapper().writeValueAsString(editDto);
         //then
         mvc.perform(put(BASE_URL + "/" + targetUserId)
                         .contentType(APPLICATION_JSON)
-                        .content(updateDtoJson))
+                        .content(asJsonString(editDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
 

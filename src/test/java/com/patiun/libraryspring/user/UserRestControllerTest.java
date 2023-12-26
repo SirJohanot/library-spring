@@ -166,14 +166,12 @@ public class UserRestControllerTest {
 
         UserEditDto editDto = new UserEditDto(newFirstName, newLastName, newRole);
 
-        String updateDtoJson = new ObjectMapper().writeValueAsString(editDto);
-
         doThrow(ElementNotFoundException.class)
                 .when(service).updateUserById(targetUserId, newFirstName, newLastName, newRole);
         //then
         mvc.perform(put(BASE_URL + "/" + targetUserId)
                         .contentType(APPLICATION_JSON)
-                        .content(updateDtoJson))
+                        .content(asJsonString(editDto)))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(""));
     }

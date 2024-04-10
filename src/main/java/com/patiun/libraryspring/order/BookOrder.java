@@ -50,6 +50,9 @@ public class BookOrder {
     @Enumerated(EnumType.STRING)
     private OrderState state;
 
+    public BookOrder() {
+    }
+
     public BookOrder(Integer id, @NotNull Book book, @NotNull User user, @NotNull RentalType rentalType, @NotNull LocalDate startDate, @NotNull LocalDate endDate, LocalDate returnDate, @NotNull OrderState state) {
         this.id = id;
         this.book = book;

@@ -53,6 +53,9 @@ public class Book {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
+    public Book() {
+    }
+
     public Book(Integer id, String title, List<Author> authors, @NotNull Genre genre, @NotNull Publisher publisher, int publishmentYear, int amount, boolean isDeleted) {
         this.id = id;
         this.title = title;

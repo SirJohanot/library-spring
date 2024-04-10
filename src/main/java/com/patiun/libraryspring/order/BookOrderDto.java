@@ -14,6 +14,9 @@ public class BookOrderDto {
 
     private int days;
 
+    public BookOrderDto() {
+    }
+
     public BookOrderDto(@NotNull RentalType rentalType, int days) {
         this.rentalType = rentalType;
         this.days = days;

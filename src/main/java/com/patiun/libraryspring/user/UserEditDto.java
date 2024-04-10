@@ -17,6 +17,9 @@ public class UserEditDto {
     @AcceptableRoles({UserRole.READER, UserRole.LIBRARIAN})
     private UserRole role;
 
+    public UserEditDto() {
+    }
+
     public UserEditDto(String firstName, String lastName, UserRole role) {
         this.firstName = firstName;
         this.lastName = lastName;

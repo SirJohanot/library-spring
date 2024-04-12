@@ -73,32 +73,13 @@ public class BookOrderRestController {
     }
 
     @PatchMapping("{id}/collect")
-    public void collectOrder(@PathVariable Integer id, final Authentication authentication) throws ServiceException {
-        if (orderDoesNotBelongToTheAuthenticatedUser(id, authentication)) {
-            throw new UnsupportedOperationException("You cannot collect an order which is not yours");
-        }
-
+    public void collectOrder(@PathVariable Integer id) throws ServiceException {
         orderService.collectOrderById(id);
     }
 
     @PatchMapping("{id}/return")
-    public void returnOrder(@PathVariable Integer id, final Authentication authentication) throws ServiceException {
-        if (orderDoesNotBelongToTheAuthenticatedUser(id, authentication)) {
-            throw new UnsupportedOperationException("You cannot return an order which is not yours");
-        }
-
+    public void returnOrder(@PathVariable Integer id) throws ServiceException {
         orderService.returnOrderById(id);
     }
-
-    private boolean orderDoesNotBelongToTheAuthenticatedUser(final Integer orderId, final Authentication authentication) {
-        User currentUser = (User) authentication.getPrincipal();
-        Integer currentUserId = currentUser.getId();
-
-        BookOrder targetOrder = orderService.getOrderById(orderId);
-        User targetOrderUser = targetOrder.getUser();
-        Integer targetOrderUserId = targetOrderUser.getId();
-
-        return !currentUserId.equals(targetOrderUserId);
-    }
-
+    
 }

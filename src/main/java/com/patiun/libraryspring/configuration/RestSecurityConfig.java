@@ -1,6 +1,7 @@
 package com.patiun.libraryspring.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,8 +24,8 @@ public class RestSecurityConfig {
 
     private static final String BOOKS_URL_PATTERN = "/books/**";
 
-    private static final String REACT_FRONT_END_URL = "http://localhost:3000";
-    private static final String ANGULAR_FRONT_END_URL = "http://localhost:4200";
+    @Value("${front-end.url:http://localhost:3000}")
+    private String frontEndUrl;
 
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
@@ -69,7 +70,7 @@ public class RestSecurityConfig {
                     return;
                 }
                 registry.addMapping("/**")
-                        .allowedOrigins(REACT_FRONT_END_URL, ANGULAR_FRONT_END_URL)
+                        .allowedOrigins(frontEndUrl)
                         .allowedMethods("GET", "POST", "PATCH", "PUT", "DELETE");
             }
         };

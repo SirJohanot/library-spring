@@ -24,8 +24,8 @@ public class RestSecurityConfig {
 
     private static final String BOOKS_URL_PATTERN = "/books/**";
 
-    @Value("${front-end.url:http://localhost:3000}")
-    private String frontEndUrl;
+    @Value("${allowed-cors.urls:http://localhost:3000}")
+    private String[] allowedCorsUrls;
 
     private final AuthenticationEntryPoint authenticationEntryPoint;
 
@@ -70,7 +70,7 @@ public class RestSecurityConfig {
                     return;
                 }
                 registry.addMapping("/**")
-                        .allowedOrigins(frontEndUrl)
+                        .allowedOrigins(allowedCorsUrls)
                         .allowedMethods("GET", "POST", "PATCH", "PUT", "DELETE");
             }
         };

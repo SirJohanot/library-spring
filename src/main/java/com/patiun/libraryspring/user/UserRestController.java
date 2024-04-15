@@ -1,5 +1,6 @@
 package com.patiun.libraryspring.user;
 
+import com.patiun.libraryspring.configuration.JwtService;
 import com.patiun.libraryspring.exception.ServiceException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,17 +8,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
 public class UserRestController {
 
     private final UserService userService;
+    private final JwtService jwtService;
 
     @Autowired
-    public UserRestController(UserService userService) {
+    public UserRestController(UserService userService, JwtService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping
@@ -30,11 +32,11 @@ public class UserRestController {
     }
 
     @GetMapping("auth")
-    public Map<String, UserRole[]> authenticate(final Authentication authentication) {
+    public AuthenticationResponseDto authenticate(final Authentication authentication) {
         String login = authentication.getName();
         User authenticatingUser = userService.getUserByLogin(login);
         UserRole authenticatingUserRole = authenticatingUser.getRole();
-        return Map.of("roles", new UserRole[]{authenticatingUserRole});
+        return new AuthenticationResponseDto(jwtService.generateToken(login), new UserRole[]{authenticatingUserRole});
     }
 
     @GetMapping

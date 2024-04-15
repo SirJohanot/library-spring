@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -28,10 +29,12 @@ public class RestSecurityConfig {
     private String[] allowedCorsUrls;
 
     private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final JwtAuthFilter jwtAuthFilter;
 
     @Autowired
-    public RestSecurityConfig(AuthenticationEntryPoint authenticationEntryPoint) {
+    public RestSecurityConfig(AuthenticationEntryPoint authenticationEntryPoint, JwtAuthFilter jwtAuthFilter) {
         this.authenticationEntryPoint = authenticationEntryPoint;
+        this.jwtAuthFilter = jwtAuthFilter;
     }
 
     @Bean
@@ -58,6 +61,7 @@ public class RestSecurityConfig {
                 )
                 .httpBasic((httpSecurityHttpBasicConfigurer) -> httpSecurityHttpBasicConfigurer.authenticationEntryPoint(authenticationEntryPoint))
                 .cors().and()
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

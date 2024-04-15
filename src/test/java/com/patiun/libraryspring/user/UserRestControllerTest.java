@@ -2,12 +2,16 @@ package com.patiun.libraryspring.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.patiun.libraryspring.configuration.JwtAuthFilter;
+import com.patiun.libraryspring.configuration.JwtService;
 import com.patiun.libraryspring.exception.ElementNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -27,13 +31,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = UserRestController.class,
-        excludeAutoConfiguration = SecurityAutoConfiguration.class)
+        excludeAutoConfiguration = SecurityAutoConfiguration.class,
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = JwtAuthFilter.class))
 public class UserRestControllerTest {
 
     private static final String BASE_URL = "/users";
 
     @MockBean
     private UserService service;
+
+    @MockBean
+    private JwtService jwtService;
 
     private final MockMvc mvc;
 

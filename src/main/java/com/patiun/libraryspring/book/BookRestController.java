@@ -20,7 +20,7 @@ public class BookRestController {
     @PostMapping
     public void createBook(@RequestBody @Valid BookEditDto editDto) {
         String title = editDto.getTitle();
-        String authors = editDto.getAuthors();
+        List<String> authors = editDto.getAuthors();
         String genre = editDto.getGenre();
         String publisher = editDto.getPublisher();
         int publishmentYear = editDto.getPublishmentYear();
@@ -42,7 +42,7 @@ public class BookRestController {
     @PutMapping("{id}")
     public void updateBook(@PathVariable Integer id, @RequestBody @Valid BookEditDto editDto) {
         String title = editDto.getTitle();
-        String authors = editDto.getAuthors();
+        List<String> authors = editDto.getAuthors();
         String genre = editDto.getGenre();
         String publisher = editDto.getPublisher();
         int publishmentYear = editDto.getPublishmentYear();

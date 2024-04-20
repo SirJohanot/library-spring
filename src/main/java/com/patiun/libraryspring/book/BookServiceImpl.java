@@ -4,14 +4,11 @@ import com.patiun.libraryspring.exception.ElementNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
-
-    private static final String AUTHORS_DELIMITER_REGEX = " *, *";
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
@@ -27,8 +24,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void createBook(String title, String authors, String genreName, String publisherName, int publishmentYear, int amount) {
-        List<Author> authorList = authorsStringToList(authors);
+    public void createBook(String title, List<String> authors, String genreName, String publisherName, int publishmentYear, int amount) {
+        List<Author> authorList = authorNamesListToAuthorsList(authors);
         Book newBook = setupBookToPersist(null, title, authorList, genreName, publisherName, publishmentYear, amount);
         bookRepository.save(newBook);
     }
@@ -51,16 +48,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBookById(Integer id, String title, String authors, String genreName, String publisherName, int publishmentYear, int amount) {
+    public void updateBookById(Integer id, String title, List<String> authors, String genreName, String publisherName, int publishmentYear, int amount) {
         getExistingBookById(id);
-        List<Author> authorList = authorsStringToList(authors);
+        List<Author> authorList = authorNamesListToAuthorsList(authors);
         Book updatedBook = setupBookToPersist(id, title, authorList, genreName, publisherName, publishmentYear, amount);
         bookRepository.save(updatedBook);
     }
 
-    private List<Author> authorsStringToList(String authors) {
-        String[] splitAuthors = authors.split(AUTHORS_DELIMITER_REGEX);
-        return Arrays.stream(splitAuthors)
+    private List<Author> authorNamesListToAuthorsList(List<String> authors) {
+        return authors.stream()
                 .map(Author::new)
                 .toList();
     }

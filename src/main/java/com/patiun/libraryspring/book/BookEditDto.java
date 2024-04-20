@@ -3,8 +3,10 @@ package com.patiun.libraryspring.book;
 import com.patiun.libraryspring.validation.Regexp;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.List;
 import java.util.Objects;
 
 public class BookEditDto {
@@ -12,8 +14,8 @@ public class BookEditDto {
     @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number")
     private String title;
 
-    @Pattern(regexp = Regexp.HUMAN_NAMES_DELIMITED_BY_COMMA, message = "Authors line must be human names delimited by commas")
-    private String authors;
+    @NotEmpty(message = "Authors array must not be empty")
+    private List<@Pattern(regexp = Regexp.HUMAN_NAME, message = "Author name must be start with an alphabetical character") String> authors;
 
     @Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number")
     private String genre;
@@ -31,7 +33,7 @@ public class BookEditDto {
     public BookEditDto() {
     }
 
-    public BookEditDto(String title, String authors, String genre, String publisher, int publishmentYear, int amount) {
+    public BookEditDto(String title, List<String> authors, String genre, String publisher, int publishmentYear, int amount) {
         this.title = title;
         this.authors = authors;
         this.genre = genre;
@@ -48,11 +50,11 @@ public class BookEditDto {
         this.title = title;
     }
 
-    public String getAuthors() {
+    public List<String> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(String authors) {
+    public void setAuthors(List<String> authors) {
         this.authors = authors;
     }
 
@@ -98,31 +100,15 @@ public class BookEditDto {
         }
 
         BookEditDto that = (BookEditDto) o;
-
-        if (!Objects.equals(title, that.title)) {
-            return false;
-        }
-        if (!Objects.equals(authors, that.authors)) {
-            return false;
-        }
-        if (!Objects.equals(genre, that.genre)) {
-            return false;
-        }
-        if (!Objects.equals(publisher, that.publisher)) {
-            return false;
-        }
-        if (!Objects.equals(publishmentYear, that.publishmentYear)) {
-            return false;
-        }
-        return Objects.equals(amount, that.amount);
+        return publishmentYear == that.publishmentYear && amount == that.amount && Objects.equals(title, that.title) && Objects.equals(authors, that.authors) && Objects.equals(genre, that.genre) && Objects.equals(publisher, that.publisher);
     }
 
     @Override
     public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
-        result = 31 * result + (authors != null ? authors.hashCode() : 0);
-        result = 31 * result + (genre != null ? genre.hashCode() : 0);
-        result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
+        int result = Objects.hashCode(title);
+        result = 31 * result + Objects.hashCode(authors);
+        result = 31 * result + Objects.hashCode(genre);
+        result = 31 * result + Objects.hashCode(publisher);
         result = 31 * result + publishmentYear;
         result = 31 * result + amount;
         return result;
@@ -132,7 +118,7 @@ public class BookEditDto {
     public String toString() {
         return "BookEditDto{" +
                 "title='" + title + '\'' +
-                ", authors='" + authors + '\'' +
+                ", authors=" + authors +
                 ", genre='" + genre + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", publishmentYear=" + publishmentYear +

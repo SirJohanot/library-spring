@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface BookService {
 
-    void createBook(String title, String authors, String genreName, String publisherName, int publishmentYear, int amount);
+    void createBook(String title, List<String> authors, String genreName, String publisherName, int publishmentYear, int amount);
 
     List<Book> getAllBooks();
 
@@ -12,5 +12,5 @@ public interface BookService {
 
     void deleteBookById(Integer id);
 
-    void updateBookById(Integer id, String title, String authors, String genreName, String publisherName, int publishmentYear, int amount);
+    void updateBookById(Integer id, String title, List<String> authors, String genreName, String publisherName, int publishmentYear, int amount);
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -52,7 +53,7 @@ public class BookRestControllerIntegrationTest {
     public void testCreateBookShouldSaveTheNewBookToTheDatabase() throws Exception {
         //given
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -72,7 +73,7 @@ public class BookRestControllerIntegrationTest {
                 .allMatch(b -> Objects.equals(b.getTitle(), title) &&
                         Objects.equals(b.getAuthors().stream()
                                 .map(Author::getName)
-                                .collect(Collectors.joining(", ")), authors) &&
+                                .collect(Collectors.toList()), authors) &&
                         Objects.equals(b.getGenre().getName(), genre) &&
                         Objects.equals(b.getPublisher().getName(), publisher) &&
                         Objects.equals(b.getPublishmentYear(), publishmentYear) &&
@@ -84,7 +85,7 @@ public class BookRestControllerIntegrationTest {
     public void testCreateBookShouldReturnBadRequestWhenTheBookTitleIsBlank() throws Exception {
         //given
         String title = "";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -104,7 +105,7 @@ public class BookRestControllerIntegrationTest {
     public void testCreateBookShouldReturnBadRequestWhenTheBookTitleIsNotAWord() throws Exception {
         //given
         String title = "'%$%^'";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -121,10 +122,10 @@ public class BookRestControllerIntegrationTest {
     }
 
     @Test
-    public void testCreateBookShouldReturnBadRequestWhenTheBookAuthorsIsBlank() throws Exception {
+    public void testCreateBookShouldReturnBadRequestWhenTheBookAuthorsIsEmpty() throws Exception {
         //given
         String title = "Some Book";
-        String authors = "";
+        List<String> authors = new ArrayList<>();
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -144,7 +145,7 @@ public class BookRestControllerIntegrationTest {
     public void testCreateBookShouldReturnBadRequestWhenTheBookAuthorsAreNotHumanNames() throws Exception {
         //given
         String title = "Some Book";
-        String authors = "&^%*&$, &*^^%";
+        List<String> authors = Arrays.asList("&^%*&$", "&*^^%");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -164,7 +165,7 @@ public class BookRestControllerIntegrationTest {
     public void testCreateBookShouldReturnBadRequestWhenTheBookGenreIsBlank() throws Exception {
         //given
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -184,7 +185,7 @@ public class BookRestControllerIntegrationTest {
     public void testCreateBookShouldReturnBadRequestWhenTheBookGenreIsNotAWord() throws Exception {
         //given
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "%genre@#";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -204,7 +205,7 @@ public class BookRestControllerIntegrationTest {
     public void testCreateBookShouldReturnBadRequestWhenTheBookPublisherIsBlank() throws Exception {
         //given
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "";
         int publishmentYear = 2014;
@@ -226,7 +227,7 @@ public class BookRestControllerIntegrationTest {
     public void testCreateBookShouldReturnBadRequestWhenTheBookPublisherIsNotAWord() throws Exception {
         //given
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "*%^^%346534hjbdg";
         int publishmentYear = 2014;
@@ -246,7 +247,7 @@ public class BookRestControllerIntegrationTest {
     public void testCreateBookShouldReturnBadRequestWhenTheBookPublishmentYearIsEarlierThan1900() throws Exception {
         //given
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 1899;
@@ -266,7 +267,7 @@ public class BookRestControllerIntegrationTest {
     public void testCreateBookShouldReturnBadRequestWhenTheBookPublishmentYearIsLaterThan2500() throws Exception {
         //given
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2525;
@@ -286,7 +287,7 @@ public class BookRestControllerIntegrationTest {
     public void testCreateBookShouldReturnBadRequestWhenTheBookAmountIsANegativeNumber() throws Exception {
         //given
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2023;
@@ -492,7 +493,7 @@ public class BookRestControllerIntegrationTest {
     public void testUpdateBookShouldReturnNotFoundWhenTheTargetBookDoesNotExist() throws Exception {
         //given
         String newTitle = "Some Book";
-        String newAuthors = "Some Human, Some Non-human";
+        List<String> newAuthors = Arrays.asList("Some Human", "Some Non-human");
         String newGenre = "Interesting";
         String newPublisher = "Smith";
         int newPublishmentYear = 2014;
@@ -514,7 +515,7 @@ public class BookRestControllerIntegrationTest {
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -536,7 +537,7 @@ public class BookRestControllerIntegrationTest {
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "&Another One";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -558,7 +559,7 @@ public class BookRestControllerIntegrationTest {
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
-        String authors = "";
+        List<String> authors = List.of("");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -580,7 +581,7 @@ public class BookRestControllerIntegrationTest {
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
-        String authors = "()wen $mith, @lan &rews";
+        List<String> authors = Arrays.asList("()wen $mith", "@lan &rews");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -602,7 +603,7 @@ public class BookRestControllerIntegrationTest {
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -624,7 +625,7 @@ public class BookRestControllerIntegrationTest {
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "^*cool*^";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -646,7 +647,7 @@ public class BookRestControllerIntegrationTest {
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "";
         int publishmentYear = 2014;
@@ -668,7 +669,7 @@ public class BookRestControllerIntegrationTest {
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "^_^";
         int publishmentYear = 2014;
@@ -690,7 +691,7 @@ public class BookRestControllerIntegrationTest {
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 1867;
@@ -712,7 +713,7 @@ public class BookRestControllerIntegrationTest {
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2504;
@@ -734,7 +735,7 @@ public class BookRestControllerIntegrationTest {
         Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;

@@ -41,13 +41,13 @@ public class BookServiceImplTest {
     public void testCreateBookShouldSaveNewBookWhenSecondarySubjectsDoNotExist() {
         //given
         String title = "War and Peace";
-        String authors = "Leo Tolstoy";
+        List<String> authors = List.of("Leo Tolstoy");
         String genreName = "Historical Novel";
         String publisherName = "Hardcover";
         int publishmentYear = 2014;
         int amount = 16;
 
-        given(authorRepository.findByName(authors))
+        given(authorRepository.findByName(authors.get(0)))
                 .willReturn(Optional.empty());
         given(genreRepository.findByName(genreName))
                 .willReturn(Optional.empty());
@@ -58,24 +58,24 @@ public class BookServiceImplTest {
         //then
         then(bookRepository)
                 .should(times(1))
-                .save(new Book(null, title, List.of(new Author(authors)), new Genre(null, genreName), new Publisher(null, publisherName), publishmentYear, amount, false));
+                .save(new Book(null, title, List.of(new Author(authors.get(0))), new Genre(null, genreName), new Publisher(null, publisherName), publishmentYear, amount, false));
     }
 
     @Test
     public void testCreateBookShouldSaveNewBookWithTheExistingSecondarySubjectsWhenSecondarySubjectsExist() {
         //given
         String title = "War and Peace";
-        String authors = "Leo Tolstoy";
+        List<String> authors = List.of("Leo Tolstoy");
         String genreName = "Historical Novel";
         String publisherName = "Hardcover";
         int publishmentYear = 2014;
         int amount = 16;
 
-        Author existingAuthor = new Author(3, authors);
+        Author existingAuthor = new Author(3, authors.get(0));
         Genre existingGenre = new Genre(145, genreName);
         Publisher existingPublisher = new Publisher(35, publisherName);
 
-        given(authorRepository.findByName(authors))
+        given(authorRepository.findByName(authors.get(0)))
                 .willReturn(Optional.of(existingAuthor));
         given(genreRepository.findByName(genreName))
                 .willReturn(Optional.of(existingGenre));
@@ -226,21 +226,21 @@ public class BookServiceImplTest {
                 .willReturn(Optional.of(existingBook));
 
         String newTitle = "Peace and War";
-        String newAuthors = "Tolstoy Leo";
+        List<String> newAuthors = List.of("Tolstoy Leo");
         String newGenre = "Inverted Novel";
         Genre existingGenre = new Genre(3, newGenre);
         String newPublisher = "Some dude";
         int newPublishmentYear = 2020;
         int newAmount = 100;
 
-        given(authorRepository.findByName(newAuthors))
+        given(authorRepository.findByName(newAuthors.get(0)))
                 .willReturn(Optional.empty());
         given(genreRepository.findByName(newGenre))
                 .willReturn(Optional.of(existingGenre));
         given(publisherRepository.findByName(newPublisher))
                 .willReturn(Optional.empty());
 
-        Book expectedBookToBeSaved = new Book(targetBookId, newTitle, List.of(new Author(newAuthors)), existingGenre, new Publisher(null, newPublisher), newPublishmentYear, newAmount, false);
+        Book expectedBookToBeSaved = new Book(targetBookId, newTitle, List.of(new Author(newAuthors.get(0))), existingGenre, new Publisher(null, newPublisher), newPublishmentYear, newAmount, false);
         //when
         bookService.updateBookById(targetBookId, newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
         //then
@@ -258,7 +258,7 @@ public class BookServiceImplTest {
                 .willReturn(Optional.empty());
 
         String newTitle = "Peace and War";
-        String newAuthors = "Tolstoy Leo";
+        List<String> newAuthors = List.of("Tolstoy Leo");
         String newGenre = "Inverted Novel";
         String newPublisher = "Some dude";
         int newPublishmentYear = 2020;
@@ -288,7 +288,7 @@ public class BookServiceImplTest {
                 .willReturn(Optional.of(existingBook));
 
         String newTitle = "Peace and War";
-        String newAuthors = "Tolstoy Leo";
+        List<String> newAuthors = List.of("Tolstoy Leo");
         String newGenre = "Inverted Novel";
         String newPublisher = "Some dude";
         int newPublishmentYear = 2020;

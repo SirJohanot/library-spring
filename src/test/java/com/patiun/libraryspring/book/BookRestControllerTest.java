@@ -52,7 +52,7 @@ public class BookRestControllerTest {
     public void testCreateBookShouldInvokeTheCreateBookMethodOfTheServiceOnce() throws Exception {
         //given
         String title = "Some Book";
-        String authors = "Some Human, Some Non-human";
+        List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
@@ -151,7 +151,7 @@ public class BookRestControllerTest {
         //given
         Integer targetBookId = 14;
         String newTitle = "Peace and War";
-        String newAuthors = "Tolstoy Leo";
+        List<String> newAuthors = List.of("Tolstoy Leo");
         String newGenre = "Inverted Novel";
         String newPublisher = "Some dude";
         int newPublishmentYear = 2020;
@@ -175,7 +175,7 @@ public class BookRestControllerTest {
         //given
         Integer targetBookId = 14;
         String newTitle = "Peace and War";
-        String newAuthors = "Tolstoy Leo";
+        List<String> newAuthors = List.of("Tolstoy Leo");
         String newGenre = "Inverted Novel";
         String newPublisher = "Some dude";
         int newPublishmentYear = 2020;

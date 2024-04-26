@@ -23,3 +23,5 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=library_spring
+    volumes:
+      - ./library-data:/var/lib/postgresql/data

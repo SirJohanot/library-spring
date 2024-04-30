@@ -57,9 +57,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -89,9 +91,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -109,9 +113,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -129,9 +135,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -149,9 +157,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -169,9 +179,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -189,9 +201,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "%genre@#";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -209,9 +223,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "Interesting";
         String publisher = "";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
 
         String editDtoJson = new ObjectMapper().writeValueAsString(editDto);
         //then
@@ -231,9 +247,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "Interesting";
         String publisher = "*%^^%346534hjbdg";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -251,9 +269,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 1899;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -271,9 +291,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2525;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -291,9 +313,11 @@ public class BookRestControllerIntegrationTest {
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2023;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = -144;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(post(BASE_URL)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -307,9 +331,9 @@ public class BookRestControllerIntegrationTest {
     public void testReadAllBooksShouldReturnTheBookListOfUndeletedBooksWhenNoExistingBooksAreDeleted() throws Exception {
         //given
         List<Book> existingBooksOnTheDatabase = Arrays.asList(
-                new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false),
-                new Book(null, "book2", List.of(new Author(null, "author2")), new Genre(null, "genre2"), new Publisher(null, "publisher2"), 1998, 7, false),
-                new Book(null, "book3", Arrays.asList(new Author(null, "author3"), new Author(null, "author4")), new Genre(null, "genre3"), new Publisher(null, "publisher3"), 2014, 130, false)
+                new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false),
+                new Book(null, "book2", List.of(new Author(null, "author2")), new Genre(null, "genre2"), new Publisher(null, "publisher2"), 1998, "Moscow", "8461945178395", 7, false),
+                new Book(null, "book3", Arrays.asList(new Author(null, "author3"), new Author(null, "author4")), new Genre(null, "genre3"), new Publisher(null, "publisher3"), 2014, "Moscow", "8461945178395", 130, false)
         );
 
         existingBooksOnTheDatabase = existingBooksOnTheDatabase.stream()
@@ -338,11 +362,11 @@ public class BookRestControllerIntegrationTest {
     public void testReadAllBooksShouldReturnTheBookListOfUndeletedBooksWhenSomeExistingBooksAreDeleted() throws Exception {
         //given
         List<Book> existingBooksOnTheDatabase = Arrays.asList(
-                new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, true),
-                new Book(null, "book2", List.of(new Author(null, "author2")), new Genre(null, "genre2"), new Publisher(null, "publisher2"), 1998, 7, true),
-                new Book(null, "book3", Arrays.asList(new Author(null, "author3"), new Author(null, "author4")), new Genre(null, "genre3"), new Publisher(null, "publisher3"), 2014, 130, false),
-                new Book(null, "book4", List.of(new Author(null, "author5")), new Genre(null, "genre4"), new Publisher(null, "publisher4"), 1995, 201, true),
-                new Book(null, "book5", List.of(new Author(null, "author6")), new Genre(null, "genre5"), new Publisher(null, "publisher5"), 2012, 12, false)
+                new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, true),
+                new Book(null, "book2", List.of(new Author(null, "author2")), new Genre(null, "genre2"), new Publisher(null, "publisher2"), 1998, "Moscow", "8461945178395", 7, true),
+                new Book(null, "book3", Arrays.asList(new Author(null, "author3"), new Author(null, "author4")), new Genre(null, "genre3"), new Publisher(null, "publisher3"), 2014, "Moscow", "8461945178395", 130, false),
+                new Book(null, "book4", List.of(new Author(null, "author5")), new Genre(null, "genre4"), new Publisher(null, "publisher4"), 1995, "Moscow", "8461945178395", 201, true),
+                new Book(null, "book5", List.of(new Author(null, "author6")), new Genre(null, "genre5"), new Publisher(null, "publisher5"), 2012, "Moscow", "8461945178395", 12, false)
         );
 
         existingBooksOnTheDatabase = existingBooksOnTheDatabase.stream()
@@ -384,11 +408,11 @@ public class BookRestControllerIntegrationTest {
     public void testReadAllBooksShouldReturnAnEmptyArrayWhenAllExistingBooksAreDeleted() throws Exception {
         //given
         List<Book> existingBooksOnTheDatabase = Arrays.asList(
-                new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, true),
-                new Book(null, "book2", List.of(new Author(null, "author2")), new Genre(null, "genre2"), new Publisher(null, "publisher2"), 1998, 7, true),
-                new Book(null, "book3", Arrays.asList(new Author(null, "author3"), new Author(null, "author4")), new Genre(null, "genre3"), new Publisher(null, "publisher3"), 2014, 130, true),
-                new Book(null, "book4", List.of(new Author(null, "author5")), new Genre(null, "genre4"), new Publisher(null, "publisher4"), 1995, 201, true),
-                new Book(null, "book5", List.of(new Author(null, "author6")), new Genre(null, "genre5"), new Publisher(null, "publisher5"), 2012, 12, true)
+                new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, true),
+                new Book(null, "book2", List.of(new Author(null, "author2")), new Genre(null, "genre2"), new Publisher(null, "publisher2"), 1998, "Moscow", "8461945178395", 7, true),
+                new Book(null, "book3", Arrays.asList(new Author(null, "author3"), new Author(null, "author4")), new Genre(null, "genre3"), new Publisher(null, "publisher3"), 2014, "Moscow", "8461945178395", 130, true),
+                new Book(null, "book4", List.of(new Author(null, "author5")), new Genre(null, "genre4"), new Publisher(null, "publisher4"), 1995, "Moscow", "8461945178395", 201, true),
+                new Book(null, "book5", List.of(new Author(null, "author6")), new Genre(null, "genre5"), new Publisher(null, "publisher5"), 2012, "Moscow", "8461945178395", 12, true)
         );
 
         existingBooksOnTheDatabase.forEach(testEntityManager::persist);
@@ -402,7 +426,7 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testReadBookShouldReturnTheTargetBookWhenTheBookExistsAndIsNotDeleted() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
 
         //then
@@ -432,7 +456,7 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testReadBookShouldReturnNotFoundAndEmptyBodyWhenTheTargetBookIsDeleted() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, true));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, true));
         Integer existingBookId = existingBook.getId();
         //then
         mvc.perform(get(BASE_URL + "/" + existingBookId)
@@ -497,9 +521,11 @@ public class BookRestControllerIntegrationTest {
         String newGenre = "Interesting";
         String newPublisher = "Smith";
         int newPublishmentYear = 2014;
+        String newPublishmentLocation = "Minsk";
+        String newIsbn = "9426041356172";
         int newAmount = 10;
 
-        BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newAmount);
+        BookEditDto editDto = new BookEditDto(newTitle, newAuthors, newGenre, newPublisher, newPublishmentYear, newPublishmentLocation, newIsbn, newAmount);
         //then
         mvc.perform(put(BASE_URL + "/" + 8)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -512,16 +538,18 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testUpdateBookShouldReturnBadRequestWhenTheBookTitleIsBlank() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "";
         List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(put(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -534,16 +562,18 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testUpdateBookShouldReturnBadRequestWhenTheBookTitleIsNotAWord() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "&Another One";
         List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(put(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -556,16 +586,18 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testUpdateBookShouldReturnBadRequestWhenTheBookAuthorsIsBlank() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
         List<String> authors = List.of("");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(put(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -578,16 +610,18 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testUpdateBookShouldReturnBadRequestWhenTheBookAuthorsIsNotHumanNames() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
         List<String> authors = Arrays.asList("()wen $mith", "@lan &rews");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(put(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -600,16 +634,18 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testUpdateBookShouldReturnBadRequestWhenTheBookGenreIsBlank() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
         List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(put(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -622,16 +658,18 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testUpdateBookShouldReturnBadRequestWhenTheBookGenreIsNotAWord() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
         List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "^*cool*^";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(put(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -644,16 +682,18 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testUpdateBookShouldReturnBadRequestWhenTheBookPublisherIsBlank() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
         List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(put(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -666,16 +706,18 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testUpdateBookShouldReturnBadRequestWhenTheBookPublisherIsNotAWord() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
         List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "^_^";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(put(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -688,16 +730,18 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testUpdateBookShouldReturnBadRequestWhenTheBookPublishmentYearIsEarlierThan1900() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
         List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 1867;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(put(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -710,16 +754,18 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testUpdateBookShouldReturnBadRequestWhenTheBookPublishmentYearIsLaterThan2500() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
         List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2504;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = 10;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(put(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))
@@ -732,16 +778,18 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void testUpdateBookShouldReturnBadRequestWhenTheBookAmountIsANegativeNumber() throws Exception {
         //given
-        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, 12, false));
+        Book existingBook = testEntityManager.persist(new Book(null, "book1", List.of(new Author(null, "author1")), new Genre(null, "genre1"), new Publisher(null, "publisher1"), 2003, "Moscow", "8461945178395", 12, false));
         Integer existingBookId = existingBook.getId();
         String title = "Some Book";
         List<String> authors = Arrays.asList("Some Human", "Some Non-human");
         String genre = "Interesting";
         String publisher = "Smith";
         int publishmentYear = 2014;
+        String publishmentLocation = "Minsk";
+        String isbn = "9426041356172";
         int amount = -4;
 
-        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, amount);
+        BookEditDto editDto = new BookEditDto(title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount);
         //then
         mvc.perform(put(BASE_URL + "/" + existingBookId)
                         .with(httpBasic(DUMMY_ADMIN_CREDENTIALS, DUMMY_ADMIN_CREDENTIALS))

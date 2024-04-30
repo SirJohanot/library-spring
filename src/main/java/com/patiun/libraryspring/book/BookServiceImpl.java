@@ -24,9 +24,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void createBook(String title, List<String> authors, String genreName, String publisherName, int publishmentYear, int amount) {
-        List<Author> authorList = authorNamesListToAuthorsList(authors);
-        Book newBook = setupBookToPersist(null, title, authorList, genreName, publisherName, publishmentYear, amount);
+    public void createBook(Book inputBook) {
+        Book newBook = setupBookToPersist(inputBook);
         bookRepository.save(newBook);
     }
 
@@ -48,10 +47,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBookById(Integer id, String title, List<String> authors, String genreName, String publisherName, int publishmentYear, int amount) {
+    public void updateBookById(Integer id, Book inputBook) {
         getExistingBookById(id);
-        List<Author> authorList = authorNamesListToAuthorsList(authors);
-        Book updatedBook = setupBookToPersist(id, title, authorList, genreName, publisherName, publishmentYear, amount);
+        inputBook.setId(id);
+        Book updatedBook = setupBookToPersist(inputBook);
         bookRepository.save(updatedBook);
     }
 
@@ -61,22 +60,33 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
-    private Book setupBookToPersist(Integer id, String title, List<Author> authors, String genreName, String publisherName, int publishmentYear, int amount) {
-        authors = authors.stream()
+    private Book setupBookToPersist(Book inputBook) {
+        List<Author> authors = inputBook.getAuthors()
+                .stream()
                 .map(author -> {
                     String authorName = author.getName();
                     Optional<Author> existingAuthorOptional = authorRepository.findByName(authorName);
                     return existingAuthorOptional.orElse(author);
                 })
                 .toList();
-
+        String genreName = inputBook.getGenre()
+                .getName();
         Genre genre = genreRepository.findByName(genreName)
                 .orElse(new Genre(null, genreName));
 
+        String publisherName = inputBook.getPublisher()
+                .getName();
         Publisher publisher = publisherRepository.findByName(publisherName)
                 .orElse(new Publisher(null, publisherName));
 
-        return new Book(id, title, authors, genre, publisher, publishmentYear, amount, false);
+        Integer id = inputBook.getId();
+        String title = inputBook.getTitle();
+        int publishmentYear = inputBook.getPublishmentYear();
+        String publishmentLocation = inputBook.getPublishmentLocation();
+        String isbn = inputBook.getIsbn();
+        int amount = inputBook.getAmount();
+
+        return new Book(id, title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount, false);
     }
 
     private Book getExistingBookById(Integer id) {

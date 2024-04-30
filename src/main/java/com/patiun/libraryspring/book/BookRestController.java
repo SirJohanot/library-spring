@@ -11,22 +11,19 @@ import java.util.List;
 public class BookRestController {
 
     private final BookService bookService;
+    private final BookMapper mapper;
 
     @Autowired
-    public BookRestController(BookService bookService) {
+    public BookRestController(BookService bookService, BookMapper mapper) {
         this.bookService = bookService;
+        this.mapper = mapper;
     }
 
     @PostMapping
     public void createBook(@RequestBody @Valid BookEditDto editDto) {
-        String title = editDto.getTitle();
-        List<String> authors = editDto.getAuthors();
-        String genre = editDto.getGenre();
-        String publisher = editDto.getPublisher();
-        int publishmentYear = editDto.getPublishmentYear();
-        int amount = editDto.getAmount();
+        Book inputBook = mapper.toBook(editDto);
 
-        bookService.createBook(title, authors, genre, publisher, publishmentYear, amount);
+        bookService.createBook(inputBook);
     }
 
     @GetMapping
@@ -41,14 +38,9 @@ public class BookRestController {
 
     @PutMapping("{id}")
     public void updateBook(@PathVariable Integer id, @RequestBody @Valid BookEditDto editDto) {
-        String title = editDto.getTitle();
-        List<String> authors = editDto.getAuthors();
-        String genre = editDto.getGenre();
-        String publisher = editDto.getPublisher();
-        int publishmentYear = editDto.getPublishmentYear();
-        int amount = editDto.getAmount();
+        Book inputBook = mapper.toBook(editDto);
 
-        bookService.updateBookById(id, title, authors, genre, publisher, publishmentYear, amount);
+        bookService.updateBookById(id, inputBook);
     }
 
     @DeleteMapping("{id}")

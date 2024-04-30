@@ -27,18 +27,26 @@ public class BookEditDto {
     @Max(value = 2500, message = "Publishment year must be at most 2500")
     private int publishmentYear;
 
+    @Pattern(regexp = Regexp.WORD, message = "Publishment location must start with an alphabetical character or a number")
+    private String publishmentLocation;
+
+    @Pattern(regexp = Regexp.ISBN, message = "Book ISBN must be a 10- or 13-digit number")
+    private String isbn;
+
     @Min(value = 0, message = "Amount must be at least 0")
     private int amount;
 
     public BookEditDto() {
     }
 
-    public BookEditDto(String title, List<String> authors, String genre, String publisher, int publishmentYear, int amount) {
+    public BookEditDto(String title, List<String> authors, String genre, String publisher, int publishmentYear, String publishmentLocation, String isbn, int amount) {
         this.title = title;
         this.authors = authors;
         this.genre = genre;
         this.publisher = publisher;
         this.publishmentYear = publishmentYear;
+        this.publishmentLocation = publishmentLocation;
+        this.isbn = isbn;
         this.amount = amount;
     }
 
@@ -82,6 +90,22 @@ public class BookEditDto {
         this.publishmentYear = publishmentYear;
     }
 
+    public String getPublishmentLocation() {
+        return publishmentLocation;
+    }
+
+    public void setPublishmentLocation(String publishmentLocation) {
+        this.publishmentLocation = publishmentLocation;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
     public int getAmount() {
         return amount;
     }
@@ -100,7 +124,7 @@ public class BookEditDto {
         }
 
         BookEditDto that = (BookEditDto) o;
-        return publishmentYear == that.publishmentYear && amount == that.amount && Objects.equals(title, that.title) && Objects.equals(authors, that.authors) && Objects.equals(genre, that.genre) && Objects.equals(publisher, that.publisher);
+        return publishmentYear == that.publishmentYear && amount == that.amount && Objects.equals(title, that.title) && Objects.equals(authors, that.authors) && Objects.equals(genre, that.genre) && Objects.equals(publisher, that.publisher) && Objects.equals(publishmentLocation, that.publishmentLocation) && Objects.equals(isbn, that.isbn);
     }
 
     @Override
@@ -110,6 +134,8 @@ public class BookEditDto {
         result = 31 * result + Objects.hashCode(genre);
         result = 31 * result + Objects.hashCode(publisher);
         result = 31 * result + publishmentYear;
+        result = 31 * result + Objects.hashCode(publishmentLocation);
+        result = 31 * result + Objects.hashCode(isbn);
         result = 31 * result + amount;
         return result;
     }
@@ -122,6 +148,8 @@ public class BookEditDto {
                 ", genre='" + genre + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", publishmentYear=" + publishmentYear +
+                ", publishmentLocation='" + publishmentLocation + '\'' +
+                ", isbn='" + isbn + '\'' +
                 ", amount=" + amount +
                 '}';
     }

@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,6 +45,14 @@ public class Book {
     @Column(name = "publishment_year")
     private int publishmentYear;
 
+    @Pattern(regexp = Regexp.WORD, message = "Publishment location must start with an alphabetical character or a number")
+    @Column(name = "publishment_location", length = 64)
+    private String publishmentLocation;
+
+    @Pattern(regexp = Regexp.ISBN, message = "Book ISBN must be a 10- or 13-digit number")
+    @Column(name = "isbn", length = 13)
+    private String isbn;
+
     @Min(value = 0, message = "Amount must be at least 0")
     @Column(name = "amount")
     private int amount;
@@ -56,13 +63,15 @@ public class Book {
     public Book() {
     }
 
-    public Book(Integer id, String title, List<Author> authors, @NotNull Genre genre, @NotNull Publisher publisher, int publishmentYear, int amount, boolean isDeleted) {
+    public Book(Integer id, String title, List<Author> authors, @NotNull Genre genre, @NotNull Publisher publisher, int publishmentYear, String publishmentLocation, String isbn, int amount, boolean isDeleted) {
         this.id = id;
         this.title = title;
         this.authors = authors;
         this.genre = genre;
         this.publisher = publisher;
         this.publishmentYear = publishmentYear;
+        this.publishmentLocation = publishmentLocation;
+        this.isbn = isbn;
         this.amount = amount;
         this.isDeleted = isDeleted;
     }
@@ -115,6 +124,22 @@ public class Book {
         this.publishmentYear = publishmentYear;
     }
 
+    public String getPublishmentLocation() {
+        return publishmentLocation;
+    }
+
+    public void setPublishmentLocation(String publishmentLocation) {
+        this.publishmentLocation = publishmentLocation;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
     public int getAmount() {
         return amount;
     }
@@ -141,41 +166,21 @@ public class Book {
         }
 
         Book book = (Book) o;
-
-        if (isDeleted != book.isDeleted) {
-            return false;
-        }
-        if (!Objects.equals(id, book.id)) {
-            return false;
-        }
-        if (!Objects.equals(title, book.title)) {
-            return false;
-        }
-        if (!Arrays.equals(authors.toArray(), book.authors.toArray())) {
-            return false;
-        }
-        if (!Objects.equals(genre, book.genre)) {
-            return false;
-        }
-        if (!Objects.equals(publisher, book.publisher)) {
-            return false;
-        }
-        if (!Objects.equals(publishmentYear, book.publishmentYear)) {
-            return false;
-        }
-        return Objects.equals(amount, book.amount);
+        return publishmentYear == book.publishmentYear && amount == book.amount && isDeleted == book.isDeleted && Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(authors, book.authors) && Objects.equals(genre, book.genre) && Objects.equals(publisher, book.publisher) && Objects.equals(publishmentLocation, book.publishmentLocation) && Objects.equals(isbn, book.isbn);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (authors != null ? authors.hashCode() : 0);
-        result = 31 * result + genre.hashCode();
-        result = 31 * result + publisher.hashCode();
+        int result = Objects.hashCode(id);
+        result = 31 * result + Objects.hashCode(title);
+        result = 31 * result + Objects.hashCode(authors);
+        result = 31 * result + Objects.hashCode(genre);
+        result = 31 * result + Objects.hashCode(publisher);
         result = 31 * result + publishmentYear;
+        result = 31 * result + Objects.hashCode(publishmentLocation);
+        result = 31 * result + Objects.hashCode(isbn);
         result = 31 * result + amount;
-        result = 31 * result + (isDeleted ? 1 : 0);
+        result = 31 * result + Boolean.hashCode(isDeleted);
         return result;
     }
 
@@ -188,6 +193,8 @@ public class Book {
                 ", genre=" + genre +
                 ", publisher=" + publisher +
                 ", publishmentYear=" + publishmentYear +
+                ", publishmentLocation='" + publishmentLocation + '\'' +
+                ", isbn='" + isbn + '\'' +
                 ", amount=" + amount +
                 ", isDeleted=" + isDeleted +
                 '}';

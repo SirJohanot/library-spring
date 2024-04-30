@@ -54,12 +54,6 @@ public class BookServiceImpl implements BookService {
         bookRepository.save(updatedBook);
     }
 
-    private List<Author> authorNamesListToAuthorsList(List<String> authors) {
-        return authors.stream()
-                .map(Author::new)
-                .toList();
-    }
-
     private Book setupBookToPersist(Book inputBook) {
         List<Author> authors = inputBook.getAuthors()
                 .stream()

@@ -11,6 +11,6 @@ public final class Regexp {
 
     public static final String WORD = "[\\p{L}\\w]+.*";
 
-    public static final String ISBN = "^[0-9]{10}|[0-9]{13}$";
+    public static final String ISBN = "^([0-9]{10}|[0-9]{13})$";
 
 }

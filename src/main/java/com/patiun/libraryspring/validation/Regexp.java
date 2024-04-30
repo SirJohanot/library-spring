@@ -7,8 +7,6 @@ public final class Regexp {
 
     public static final String HUMAN_NAME = "\\p{L}+.*";
 
-    public static final String HUMAN_NAMES_DELIMITED_BY_COMMA = "\\p{L}+.*( *, +\\p{L}+.*)*";
-
     public static final String WORD = "[\\p{L}\\w]+.*";
 
     public static final String ISBN = "^([0-9]{10}|[0-9]{13})$";

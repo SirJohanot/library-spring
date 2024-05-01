@@ -12,7 +12,7 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "name", length = 64, unique = true)
+    @Column(name = "name", length = 64, unique = true, nullable = false)
     private String name;
 
     public Genre() {

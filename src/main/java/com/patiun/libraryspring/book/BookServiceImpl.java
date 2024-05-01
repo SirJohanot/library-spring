@@ -12,15 +12,19 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final EditorRepository editorRepository;
     private final GenreRepository genreRepository;
     private final PublisherRepository publisherRepository;
+    private final PrintingHouseRepository printingHouseRepository;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository, PublisherRepository publisherRepository) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, EditorRepository editorRepository, GenreRepository genreRepository, PublisherRepository publisherRepository, PrintingHouseRepository printingHouseRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
+        this.editorRepository = editorRepository;
         this.genreRepository = genreRepository;
         this.publisherRepository = publisherRepository;
+        this.printingHouseRepository = printingHouseRepository;
     }
 
     @Override
@@ -63,6 +67,17 @@ public class BookServiceImpl implements BookService {
                     return existingAuthorOptional.orElse(author);
                 })
                 .toList();
+
+        List<Editor> editors = inputBook.getEditors()
+                .stream()
+                .map(editor -> {
+                    String editorRole = editor.getRole();
+                    String editorName = editor.getName();
+                    Optional<Editor> existingEditorOptional = editorRepository.findByRoleAndName(editorRole, editorName);
+                    return existingEditorOptional.orElse(editor);
+                })
+                .toList();
+
         String genreName = inputBook.getGenre()
                 .getName();
         Genre genre = genreRepository.findByName(genreName)
@@ -70,17 +85,34 @@ public class BookServiceImpl implements BookService {
 
         String publisherName = inputBook.getPublisher()
                 .getName();
-        Publisher publisher = publisherRepository.findByName(publisherName)
-                .orElse(new Publisher(null, publisherName));
+        String publisherPostalCode = inputBook.getPublisher()
+                .getPostalCode();
+        String publisherAddress = inputBook.getPublisher()
+                .getAddress();
+        Publisher publisher = publisherRepository.findByNameAndPostalCodeAndAddress(publisherName, publisherPostalCode, publisherAddress)
+                .orElse(new Publisher(null, publisherName, publisherPostalCode, publisherAddress));
+
+        String printingHouseName = inputBook.getPrintingHouse()
+                .getName();
+        String printingHousePostalCode = inputBook.getPrintingHouse()
+                .getPostalCode();
+        String printingHouseAddress = inputBook.getPrintingHouse()
+                .getAddress();
+        PrintingHouse printingHouse = printingHouseRepository.findByNameAndPostalCodeAndAddress(printingHouseName, printingHousePostalCode, printingHouseAddress)
+                .orElse(new PrintingHouse(null, printingHouseName, printingHousePostalCode, printingHouseAddress));
 
         Integer id = inputBook.getId();
         String title = inputBook.getTitle();
-        int publishmentYear = inputBook.getPublishmentYear();
-        String publishmentLocation = inputBook.getPublishmentLocation();
+        int publicationYear = inputBook.getPublicationYear();
+        String publicationLocation = inputBook.getPublicationLocation();
+        String description = inputBook.getDescription();
+        int pagesNumber = inputBook.getPagesNumber();
         String isbn = inputBook.getIsbn();
+        String udc = inputBook.getUdc();
+        String bbc = inputBook.getBbc();
         int amount = inputBook.getAmount();
 
-        return new Book(id, title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount, false);
+        return new Book(id, title, authors, editors, genre, publisher, printingHouse, publicationYear, publicationLocation, description, pagesNumber, isbn, udc, bbc, amount, false);
     }
 
     private Book getExistingBookById(Integer id) {

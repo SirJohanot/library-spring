@@ -1,6 +1,7 @@
 package com.patiun.libraryspring.book;
 
 import com.patiun.libraryspring.validation.Regexp;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -15,23 +16,40 @@ public class BookEditDto {
     private String title;
 
     @NotEmpty(message = "Authors array must not be empty")
-    private List<@Pattern(regexp = Regexp.HUMAN_NAME, message = "Author name must be start with an alphabetical character") String> authors;
+    private List<@Pattern(regexp = Regexp.HUMAN_NAME, message = "Author name must start with an alphabetical character") String> authors;
+
+    @NotEmpty(message = "Editors array must not be empty")
+    private List<@Valid EditorDto> editors;
 
     @Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number")
     private String genre;
 
-    @Pattern(regexp = Regexp.WORD, message = "Publisher name must start with an alphabetical character or a number")
-    private String publisher;
+    @Valid
+    private PublisherDto publisher;
 
-    @Min(value = 1900, message = "Publishment year must be at least 1900")
-    @Max(value = 2500, message = "Publishment year must be at most 2500")
-    private int publishmentYear;
+    @Valid
+    private PrintingHouseDto printingHouse;
 
-    @Pattern(regexp = Regexp.WORD, message = "Publishment location must start with an alphabetical character or a number")
-    private String publishmentLocation;
+    @Min(value = 1900, message = "Publication year must be at least 1900")
+    @Max(value = 2500, message = "Publication year must be at most 2500")
+    private int publicationYear;
+
+    @Pattern(regexp = Regexp.WORD, message = "Publication location must start with an alphabetical character or a number")
+    private String publicationLocation;
+
+    private String description;
+
+    @Min(value = 2, message = "Pages number must be at least 2")
+    private int pagesNumber;
 
     @Pattern(regexp = Regexp.ISBN, message = "Book ISBN must be a 10- or 13-digit number")
     private String isbn;
+
+    @Pattern(regexp = Regexp.WORD, message = "Book UDC must start with a number or a letter")
+    private String udc;
+
+    @Pattern(regexp = Regexp.WORD, message = "Book BBC must start with a number or a letter")
+    private String bbc;
 
     @Min(value = 0, message = "Amount must be at least 0")
     private int amount;
@@ -39,78 +57,136 @@ public class BookEditDto {
     public BookEditDto() {
     }
 
-    public BookEditDto(String title, List<String> authors, String genre, String publisher, int publishmentYear, String publishmentLocation, String isbn, int amount) {
+    public BookEditDto(String title, List<@Pattern(regexp = Regexp.HUMAN_NAME, message = "Author name must start with an alphabetical character") String> authors, List<@Valid EditorDto> editors, String genre, PublisherDto publisher, PrintingHouseDto printingHouse, int publicationYear, String publicationLocation, String description, int pagesNumber, String isbn, String udc, String bbc, int amount) {
         this.title = title;
         this.authors = authors;
+        this.editors = editors;
         this.genre = genre;
         this.publisher = publisher;
-        this.publishmentYear = publishmentYear;
-        this.publishmentLocation = publishmentLocation;
+        this.printingHouse = printingHouse;
+        this.publicationYear = publicationYear;
+        this.publicationLocation = publicationLocation;
+        this.description = description;
+        this.pagesNumber = pagesNumber;
         this.isbn = isbn;
+        this.udc = udc;
+        this.bbc = bbc;
         this.amount = amount;
     }
 
-    public String getTitle() {
+    public @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number") String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(@Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number") String title) {
         this.title = title;
     }
 
-    public List<String> getAuthors() {
+    public @NotEmpty(message = "Authors array must not be empty") List<@Pattern(regexp = Regexp.HUMAN_NAME, message = "Author name must start with an alphabetical character") String> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<String> authors) {
+    public void setAuthors(@NotEmpty(message = "Authors array must not be empty") List<@Pattern(regexp = Regexp.HUMAN_NAME, message = "Author name must start with an alphabetical character") String> authors) {
         this.authors = authors;
     }
 
-    public String getGenre() {
+    public @NotEmpty(message = "Editors array must not be empty") List<@Valid EditorDto> getEditors() {
+        return editors;
+    }
+
+    public void setEditors(@NotEmpty(message = "Editors array must not be empty") List<@Valid EditorDto> editors) {
+        this.editors = editors;
+    }
+
+    public @Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number") String getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(@Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number") String genre) {
         this.genre = genre;
     }
 
-    public String getPublisher() {
+    public @Valid PublisherDto getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
+    public void setPublisher(@Valid PublisherDto publisher) {
         this.publisher = publisher;
     }
 
-    public int getPublishmentYear() {
-        return publishmentYear;
+    public @Valid PrintingHouseDto getPrintingHouse() {
+        return printingHouse;
     }
 
-    public void setPublishmentYear(int publishmentYear) {
-        this.publishmentYear = publishmentYear;
+    public void setPrintingHouse(@Valid PrintingHouseDto printingHouse) {
+        this.printingHouse = printingHouse;
     }
 
-    public String getPublishmentLocation() {
-        return publishmentLocation;
+    @Min(value = 1900, message = "Publication year must be at least 1900")
+    @Max(value = 2500, message = "Publication year must be at most 2500")
+    public int getPublicationYear() {
+        return publicationYear;
     }
 
-    public void setPublishmentLocation(String publishmentLocation) {
-        this.publishmentLocation = publishmentLocation;
+    public void setPublicationYear(@Min(value = 1900, message = "Publication year must be at least 1900") @Max(value = 2500, message = "Publication year must be at most 2500") int publicationYear) {
+        this.publicationYear = publicationYear;
     }
 
-    public String getIsbn() {
+    public @Pattern(regexp = Regexp.WORD, message = "Publication location must start with an alphabetical character or a number") String getPublicationLocation() {
+        return publicationLocation;
+    }
+
+    public void setPublicationLocation(@Pattern(regexp = Regexp.WORD, message = "Publication location must start with an alphabetical character or a number") String publicationLocation) {
+        this.publicationLocation = publicationLocation;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Min(value = 2, message = "Pages number must be at least 2")
+    public int getPagesNumber() {
+        return pagesNumber;
+    }
+
+    public void setPagesNumber(@Min(value = 2, message = "Pages number must be at least 2") int pagesNumber) {
+        this.pagesNumber = pagesNumber;
+    }
+
+    public @Pattern(regexp = Regexp.ISBN, message = "Book ISBN must be a 10- or 13-digit number") String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
+    public void setIsbn(@Pattern(regexp = Regexp.ISBN, message = "Book ISBN must be a 10- or 13-digit number") String isbn) {
         this.isbn = isbn;
     }
 
+    public @Pattern(regexp = Regexp.WORD, message = "Book UDC must start with a number or a letter") String getUdc() {
+        return udc;
+    }
+
+    public void setUdc(@Pattern(regexp = Regexp.WORD, message = "Book UDC must start with a number or a letter") String udc) {
+        this.udc = udc;
+    }
+
+    public @Pattern(regexp = Regexp.WORD, message = "Book BBC must start with a number or a letter") String getBbc() {
+        return bbc;
+    }
+
+    public void setBbc(@Pattern(regexp = Regexp.WORD, message = "Book BBC must start with a number or a letter") String bbc) {
+        this.bbc = bbc;
+    }
+
+    @Min(value = 0, message = "Amount must be at least 0")
     public int getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(@Min(value = 0, message = "Amount must be at least 0") int amount) {
         this.amount = amount;
     }
 
@@ -124,18 +200,24 @@ public class BookEditDto {
         }
 
         BookEditDto that = (BookEditDto) o;
-        return publishmentYear == that.publishmentYear && amount == that.amount && Objects.equals(title, that.title) && Objects.equals(authors, that.authors) && Objects.equals(genre, that.genre) && Objects.equals(publisher, that.publisher) && Objects.equals(publishmentLocation, that.publishmentLocation) && Objects.equals(isbn, that.isbn);
+        return publicationYear == that.publicationYear && pagesNumber == that.pagesNumber && amount == that.amount && Objects.equals(title, that.title) && Objects.equals(authors, that.authors) && Objects.equals(editors, that.editors) && Objects.equals(genre, that.genre) && Objects.equals(publisher, that.publisher) && Objects.equals(printingHouse, that.printingHouse) && Objects.equals(publicationLocation, that.publicationLocation) && Objects.equals(description, that.description) && Objects.equals(isbn, that.isbn) && Objects.equals(udc, that.udc) && Objects.equals(bbc, that.bbc);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hashCode(title);
         result = 31 * result + Objects.hashCode(authors);
+        result = 31 * result + Objects.hashCode(editors);
         result = 31 * result + Objects.hashCode(genre);
         result = 31 * result + Objects.hashCode(publisher);
-        result = 31 * result + publishmentYear;
-        result = 31 * result + Objects.hashCode(publishmentLocation);
+        result = 31 * result + Objects.hashCode(printingHouse);
+        result = 31 * result + publicationYear;
+        result = 31 * result + Objects.hashCode(publicationLocation);
+        result = 31 * result + Objects.hashCode(description);
+        result = 31 * result + pagesNumber;
         result = 31 * result + Objects.hashCode(isbn);
+        result = 31 * result + Objects.hashCode(udc);
+        result = 31 * result + Objects.hashCode(bbc);
         result = 31 * result + amount;
         return result;
     }
@@ -145,11 +227,17 @@ public class BookEditDto {
         return "BookEditDto{" +
                 "title='" + title + '\'' +
                 ", authors=" + authors +
+                ", editors=" + editors +
                 ", genre='" + genre + '\'' +
-                ", publisher='" + publisher + '\'' +
-                ", publishmentYear=" + publishmentYear +
-                ", publishmentLocation='" + publishmentLocation + '\'' +
+                ", publisher=" + publisher +
+                ", printingHouse=" + printingHouse +
+                ", publicationYear=" + publicationYear +
+                ", publicationLocation='" + publicationLocation + '\'' +
+                ", description='" + description + '\'' +
+                ", pagesNumber=" + pagesNumber +
                 ", isbn='" + isbn + '\'' +
+                ", udc='" + udc + '\'' +
+                ", bbc='" + bbc + '\'' +
                 ", amount=" + amount +
                 '}';
     }

@@ -9,17 +9,44 @@ public class BookMapper {
 
     public Book toBook(BookEditDto editDto) {
         String title = editDto.getTitle();
+
         List<Author> authors = editDto.getAuthors()
                 .stream()
                 .map(Author::new)
                 .toList();
+
+        List<Editor> editors = editDto.getEditors()
+                .stream()
+                .map(editorDto -> {
+                    String role = editorDto.getRole();
+                    String name = editorDto.getName();
+                    return new Editor(null, role, name);
+                })
+                .toList();
+
         Genre genre = new Genre(null, editDto.getGenre());
-        Publisher publisher = new Publisher(null, editDto.getPublisher());
-        int publishmentYear = editDto.getPublishmentYear();
-        String publishmentLocation = editDto.getPublishmentLocation();
+
+        PublisherDto publisherDto = editDto.getPublisher();
+        String publisherName = publisherDto.getName();
+        String publisherPostalCode = publisherDto.getPostalCode();
+        String publisherAddress = publisherDto.getAddress();
+        Publisher publisher = new Publisher(null, publisherName, publisherPostalCode, publisherAddress);
+
+        PrintingHouseDto printingHouseDto = editDto.getPrintingHouse();
+        String printingHouseDtoName = printingHouseDto.getName();
+        String printingHouseDtoPostalCode = printingHouseDto.getPostalCode();
+        String printingHouseDtoAddress = printingHouseDto.getAddress();
+        PrintingHouse printingHouse = new PrintingHouse(null, printingHouseDtoName, printingHouseDtoPostalCode, printingHouseDtoAddress);
+
+        int publicationYear = editDto.getPublicationYear();
+        String publicationLocation = editDto.getPublicationLocation();
+        String description = editDto.getDescription();
+        int pagesNumber = editDto.getPagesNumber();
         String isbn = editDto.getIsbn();
+        String udc = editDto.getUdc();
+        String bbc = editDto.getBbc();
         int amount = editDto.getAmount();
 
-        return new Book(null, title, authors, genre, publisher, publishmentYear, publishmentLocation, isbn, amount, false);
+        return new Book(null, title, authors, editors, genre, publisher, printingHouse, publicationYear, publicationLocation, description, pagesNumber, isbn, udc, bbc, amount, false);
     }
 }

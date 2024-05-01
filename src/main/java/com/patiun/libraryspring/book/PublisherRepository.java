@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface PublisherRepository extends CrudRepository<Publisher, Integer> {
 
-    Optional<Publisher> findByName(String name);
+    Optional<Publisher> findByNameAndPostalCodeAndAddress(String name, String postalCode, String address);
 }

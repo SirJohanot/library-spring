@@ -5,22 +5,30 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "publisher")
+@Table(name = "publisher", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "postal_code", "address"}))
 public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "name", length = 64, unique = true)
+    @Column(name = "name", length = 64, nullable = false)
     private String name;
+
+    @Column(name = "postal_code", length = 10, nullable = false)
+    private String postalCode;
+
+    @Column(name = "address", length = 128, nullable = false)
+    private String address;
 
     public Publisher() {
     }
 
-    public Publisher(Integer id, String name) {
+    public Publisher(Integer id, String name, String postalCode, String address) {
         this.id = id;
         this.name = name;
+        this.postalCode = postalCode;
+        this.address = address;
     }
 
     public Integer getId() {
@@ -39,6 +47,22 @@ public class Publisher {
         this.name = name;
     }
 
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -49,17 +73,15 @@ public class Publisher {
         }
 
         Publisher publisher = (Publisher) o;
-
-        if (!Objects.equals(id, publisher.id)) {
-            return false;
-        }
-        return Objects.equals(name, publisher.name);
+        return Objects.equals(id, publisher.id) && Objects.equals(name, publisher.name) && Objects.equals(postalCode, publisher.postalCode) && Objects.equals(address, publisher.address);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = Objects.hashCode(id);
+        result = 31 * result + Objects.hashCode(name);
+        result = 31 * result + Objects.hashCode(postalCode);
+        result = 31 * result + Objects.hashCode(address);
         return result;
     }
 
@@ -68,6 +90,8 @@ public class Publisher {
         return "Publisher{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

@@ -1,8 +1,6 @@
 package com.patiun.libraryspring.book;
 
-import com.patiun.libraryspring.validation.Regexp;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
 
@@ -14,7 +12,6 @@ public class Publisher {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Pattern(regexp = Regexp.WORD, message = "Publisher name must start with an alphabetical character or a number")
     @Column(name = "name", length = 64, unique = true)
     private String name;
 

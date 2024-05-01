@@ -1,9 +1,6 @@
 package com.patiun.libraryspring.book;
 
-import com.patiun.libraryspring.validation.Regexp;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,12 +13,9 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number")
     @Column(name = "title", length = 64)
     private String title;
 
-    @NotEmpty(message = "Author list must not be empty")
-    @Valid
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "book_author",
@@ -30,30 +24,23 @@ public class Book {
     )
     private List<Author> authors;
 
-    @Valid
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @Valid
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
-    @Min(value = 1900, message = "Publishment year must be at least 1900")
-    @Max(value = 2500, message = "Publishment year must be at most 2500")
     @Column(name = "publishment_year")
     private int publishmentYear;
 
-    @Pattern(regexp = Regexp.WORD, message = "Publishment location must start with an alphabetical character or a number")
     @Column(name = "publishment_location", length = 64)
     private String publishmentLocation;
 
-    @Pattern(regexp = Regexp.ISBN, message = "Book ISBN must be a 10- or 13-digit number")
     @Column(name = "isbn", length = 13)
     private String isbn;
 
-    @Min(value = 0, message = "Amount must be at least 0")
     @Column(name = "amount")
     private int amount;
 
@@ -63,7 +50,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(Integer id, String title, List<Author> authors, @NotNull Genre genre, @NotNull Publisher publisher, int publishmentYear, String publishmentLocation, String isbn, int amount, boolean isDeleted) {
+    public Book(Integer id, String title, List<Author> authors, Genre genre, Publisher publisher, int publishmentYear, String publishmentLocation, String isbn, int amount, boolean isDeleted) {
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -100,19 +87,19 @@ public class Book {
         this.authors = authors;
     }
 
-    public @NotNull Genre getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
-    public void setGenre(@NotNull Genre genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 
-    public @NotNull Publisher getPublisher() {
+    public Publisher getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(@NotNull Publisher publisher) {
+    public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }
 

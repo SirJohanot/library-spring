@@ -12,7 +12,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "name", length = 128, unique = true)
+    @Column(name = "name", length = 128, unique = true, nullable = false)
     private String name;
 
     public Author() {

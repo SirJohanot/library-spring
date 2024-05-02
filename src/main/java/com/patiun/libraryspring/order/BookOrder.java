@@ -3,9 +3,6 @@ package com.patiun.libraryspring.order;
 import com.patiun.libraryspring.book.Book;
 import com.patiun.libraryspring.user.User;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -18,34 +15,27 @@ public class BookOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Valid
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @Valid
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @NotNull(message = "Rental type must not be null")
     @Column(name = "rental_type", length = 64)
     @Enumerated(EnumType.STRING)
     private RentalType rentalType;
 
-    @PastOrPresent(message = "Start date must be either in the past or in the present")
     @Column(name = "start_date")
     private LocalDate startDate;
 
-    @NotNull(message = "End date must not be null")
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @PastOrPresent(message = "Return date must be either in the past or in the present")
     @Column(name = "return_date")
     private LocalDate returnDate;
 
-    @NotNull(message = "State must not be null")
     @Column(name = "state", length = 64)
     @Enumerated(EnumType.STRING)
     private OrderState state;
@@ -53,7 +43,7 @@ public class BookOrder {
     public BookOrder() {
     }
 
-    public BookOrder(Integer id, @NotNull Book book, @NotNull User user, @NotNull RentalType rentalType, @NotNull LocalDate startDate, @NotNull LocalDate endDate, LocalDate returnDate, @NotNull OrderState state) {
+    public BookOrder(Integer id, Book book, User user, RentalType rentalType, LocalDate startDate, LocalDate endDate, LocalDate returnDate, OrderState state) {
         this.id = id;
         this.book = book;
         this.user = user;
@@ -72,43 +62,43 @@ public class BookOrder {
         this.id = id;
     }
 
-    public @NotNull Book getBook() {
+    public Book getBook() {
         return book;
     }
 
-    public void setBook(@NotNull Book book) {
+    public void setBook(Book book) {
         this.book = book;
     }
 
-    public @NotNull User getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(@NotNull User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public @NotNull RentalType getRentalType() {
+    public RentalType getRentalType() {
         return rentalType;
     }
 
-    public void setRentalType(@NotNull RentalType rentalType) {
+    public void setRentalType(RentalType rentalType) {
         this.rentalType = rentalType;
     }
 
-    public @NotNull LocalDate getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(@NotNull LocalDate startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public @NotNull LocalDate getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(@NotNull LocalDate endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -120,11 +110,11 @@ public class BookOrder {
         this.returnDate = returnDate;
     }
 
-    public @NotNull OrderState getState() {
+    public OrderState getState() {
         return state;
     }
 
-    public void setState(@NotNull OrderState state) {
+    public void setState(OrderState state) {
         this.state = state;
     }
 
@@ -138,41 +128,19 @@ public class BookOrder {
         }
 
         BookOrder bookOrder = (BookOrder) o;
-
-        if (!Objects.equals(id, bookOrder.id)) {
-            return false;
-        }
-        if (!Objects.equals(book, bookOrder.book)) {
-            return false;
-        }
-        if (!Objects.equals(user, bookOrder.user)) {
-            return false;
-        }
-        if (rentalType != bookOrder.rentalType) {
-            return false;
-        }
-        if (!Objects.equals(startDate, bookOrder.startDate)) {
-            return false;
-        }
-        if (!Objects.equals(endDate, bookOrder.endDate)) {
-            return false;
-        }
-        if (!Objects.equals(returnDate, bookOrder.returnDate)) {
-            return false;
-        }
-        return state == bookOrder.state;
+        return Objects.equals(id, bookOrder.id) && Objects.equals(book, bookOrder.book) && Objects.equals(user, bookOrder.user) && rentalType == bookOrder.rentalType && Objects.equals(startDate, bookOrder.startDate) && Objects.equals(endDate, bookOrder.endDate) && Objects.equals(returnDate, bookOrder.returnDate) && state == bookOrder.state;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + book.hashCode();
-        result = 31 * result + user.hashCode();
-        result = 31 * result + rentalType.hashCode();
-        result = 31 * result + startDate.hashCode();
-        result = 31 * result + endDate.hashCode();
-        result = 31 * result + (returnDate != null ? returnDate.hashCode() : 0);
-        result = 31 * result + state.hashCode();
+        int result = Objects.hashCode(id);
+        result = 31 * result + Objects.hashCode(book);
+        result = 31 * result + Objects.hashCode(user);
+        result = 31 * result + Objects.hashCode(rentalType);
+        result = 31 * result + Objects.hashCode(startDate);
+        result = 31 * result + Objects.hashCode(endDate);
+        result = 31 * result + Objects.hashCode(returnDate);
+        result = 31 * result + Objects.hashCode(state);
         return result;
     }
 

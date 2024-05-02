@@ -2,15 +2,18 @@ package com.patiun.libraryspring.user;
 
 import com.patiun.libraryspring.validation.AcceptableRoles;
 import com.patiun.libraryspring.validation.Regexp;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
 
 public class UserEditDto {
 
+    @NotNull(message = "First name must not be null")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character")
     private String firstName;
 
+    @NotNull(message = "Last name must not be null")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character")
     private String lastName;
 
@@ -26,19 +29,19 @@ public class UserEditDto {
         this.role = role;
     }
 
-    public String getFirstName() {
+    public @NotNull(message = "First name must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character") String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(@NotNull(message = "First name must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character") String firstName) {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+    public @NotNull(message = "Last name must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character") String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(@NotNull(message = "Last name must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character") String lastName) {
         this.lastName = lastName;
     }
 

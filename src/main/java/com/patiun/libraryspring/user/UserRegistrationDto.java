@@ -2,6 +2,7 @@ package com.patiun.libraryspring.user;
 
 import com.patiun.libraryspring.validation.Regexp;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
@@ -14,9 +15,11 @@ public class UserRegistrationDto {
     @NotBlank(message = "Password must not be blank")
     private String password;
 
+    @NotNull(message = "First name must not be null")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character")
     private String firstName;
 
+    @NotNull(message = "Last name must not be null")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character")
     private String lastName;
 
@@ -30,35 +33,35 @@ public class UserRegistrationDto {
         this.lastName = lastName;
     }
 
-    public String getLogin() {
+    public @NotBlank(message = "Login must not be blank") String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(@NotBlank(message = "Login must not be blank") String login) {
         this.login = login;
     }
 
-    public String getPassword() {
+    public @NotBlank(message = "Password must not be blank") String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(@NotBlank(message = "Password must not be blank") String password) {
         this.password = password;
     }
 
-    public String getFirstName() {
+    public @NotNull(message = "First name must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character") String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(@NotNull(message = "First name must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "First name must start with an alphabetical character") String firstName) {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+    public @NotNull(message = "Last name must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character") String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(@NotNull(message = "Last name must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "Last name must start with an alphabetical character") String lastName) {
         this.lastName = lastName;
     }
 

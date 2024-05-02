@@ -1,18 +1,22 @@
 package com.patiun.libraryspring.book;
 
 import com.patiun.libraryspring.validation.Regexp;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
 
 public class PrintingHouseDto {
 
+    @NotNull(message = "Printing house name must not be null")
     @Pattern(regexp = Regexp.WORD, message = "Publisher name must start with an alphabetical character or a number")
     private String name;
 
+    @NotNull(message = "Printing house postal code must not be null")
     @Pattern(regexp = Regexp.WORD, message = "Publisher postal code must start with an alphabetical character or a number")
     private String postalCode;
 
+    @NotNull(message = "Printing house address must not be null")
     @Pattern(regexp = Regexp.WORD, message = "Publisher address must start with an alphabetical character or a number")
     private String address;
 
@@ -25,27 +29,27 @@ public class PrintingHouseDto {
         this.address = address;
     }
 
-    public @Pattern(regexp = Regexp.WORD, message = "Publisher name must start with an alphabetical character or a number") String getName() {
+    public @NotNull(message = "Printing house name must not be null") @Pattern(regexp = Regexp.WORD, message = "Publisher name must start with an alphabetical character or a number") String getName() {
         return name;
     }
 
-    public void setName(@Pattern(regexp = Regexp.WORD, message = "Publisher name must start with an alphabetical character or a number") String name) {
+    public void setName(@NotNull(message = "Printing house name must not be null") @Pattern(regexp = Regexp.WORD, message = "Publisher name must start with an alphabetical character or a number") String name) {
         this.name = name;
     }
 
-    public @Pattern(regexp = Regexp.WORD, message = "Publisher postal code must start with an alphabetical character or a number") String getPostalCode() {
+    public @NotNull(message = "Printing house postal code must not be null") @Pattern(regexp = Regexp.WORD, message = "Publisher postal code must start with an alphabetical character or a number") String getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(@Pattern(regexp = Regexp.WORD, message = "Publisher postal code must start with an alphabetical character or a number") String postalCode) {
+    public void setPostalCode(@NotNull(message = "Printing house postal code must not be null") @Pattern(regexp = Regexp.WORD, message = "Publisher postal code must start with an alphabetical character or a number") String postalCode) {
         this.postalCode = postalCode;
     }
 
-    public @Pattern(regexp = Regexp.WORD, message = "Publisher address must start with an alphabetical character or a number") String getAddress() {
+    public @NotNull(message = "Printing house address must not be null") @Pattern(regexp = Regexp.WORD, message = "Publisher address must start with an alphabetical character or a number") String getAddress() {
         return address;
     }
 
-    public void setAddress(@Pattern(regexp = Regexp.WORD, message = "Publisher address must start with an alphabetical character or a number") String address) {
+    public void setAddress(@NotNull(message = "Printing house address must not be null") @Pattern(regexp = Regexp.WORD, message = "Publisher address must start with an alphabetical character or a number") String address) {
         this.address = address;
     }
 

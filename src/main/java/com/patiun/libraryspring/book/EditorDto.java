@@ -1,15 +1,18 @@
 package com.patiun.libraryspring.book;
 
 import com.patiun.libraryspring.validation.Regexp;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.util.Objects;
 
 public class EditorDto {
 
+    @NotNull(message = "Editor role must not be null")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "Editor role must start with an alphabetical character")
     private String role;
 
+    @NotNull(message = "Editor name must not be null")
     @Pattern(regexp = Regexp.HUMAN_NAME, message = "Editor name must start with an alphabetical character")
     private String name;
 
@@ -21,19 +24,19 @@ public class EditorDto {
         this.name = name;
     }
 
-    public @Pattern(regexp = Regexp.HUMAN_NAME, message = "Editor role must start with an alphabetical character") String getRole() {
+    public @NotNull(message = "Editor role must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "Editor role must start with an alphabetical character") String getRole() {
         return role;
     }
 
-    public void setRole(@Pattern(regexp = Regexp.HUMAN_NAME, message = "Editor role must start with an alphabetical character") String role) {
+    public void setRole(@NotNull(message = "Editor role must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "Editor role must start with an alphabetical character") String role) {
         this.role = role;
     }
 
-    public @Pattern(regexp = Regexp.HUMAN_NAME, message = "Editor name must start with an alphabetical character") String getName() {
+    public @NotNull(message = "Editor name must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "Editor name must start with an alphabetical character") String getName() {
         return name;
     }
 
-    public void setName(@Pattern(regexp = Regexp.HUMAN_NAME, message = "Editor name must start with an alphabetical character") String name) {
+    public void setName(@NotNull(message = "Editor name must not be null") @Pattern(regexp = Regexp.HUMAN_NAME, message = "Editor name must start with an alphabetical character") String name) {
         this.name = name;
     }
 

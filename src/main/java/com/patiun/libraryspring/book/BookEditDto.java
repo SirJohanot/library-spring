@@ -2,16 +2,14 @@ package com.patiun.libraryspring.book;
 
 import com.patiun.libraryspring.validation.Regexp;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 import java.util.Objects;
 
 public class BookEditDto {
 
+    @NotNull(message = "Title must not be null")
     @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number")
     private String title;
 
@@ -21,12 +19,15 @@ public class BookEditDto {
     @NotEmpty(message = "Editors array must not be empty")
     private List<@Valid EditorDto> editors;
 
+    @NotNull(message = "Genre must not be null")
     @Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number")
     private String genre;
 
+    @NotNull(message = "Publisher must not be null")
     @Valid
     private PublisherDto publisher;
 
+    @NotNull(message = "Printing house must not be null")
     @Valid
     private PrintingHouseDto printingHouse;
 
@@ -34,6 +35,7 @@ public class BookEditDto {
     @Max(value = 2500, message = "Publication year must be at most 2500")
     private int publicationYear;
 
+    @NotNull(message = "Publication location must not be null")
     @Pattern(regexp = Regexp.WORD, message = "Publication location must start with an alphabetical character or a number")
     private String publicationLocation;
 
@@ -74,11 +76,11 @@ public class BookEditDto {
         this.amount = amount;
     }
 
-    public @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number") String getTitle() {
+    public @NotNull(message = "Title must not be null") @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number") String getTitle() {
         return title;
     }
 
-    public void setTitle(@Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number") String title) {
+    public void setTitle(@NotNull(message = "Title must not be null") @Pattern(regexp = Regexp.WORD, message = "Book title must start with an alphabetical character or a number") String title) {
         this.title = title;
     }
 
@@ -98,27 +100,27 @@ public class BookEditDto {
         this.editors = editors;
     }
 
-    public @Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number") String getGenre() {
+    public @NotNull(message = "Genre must not be null") @Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number") String getGenre() {
         return genre;
     }
 
-    public void setGenre(@Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number") String genre) {
+    public void setGenre(@NotNull(message = "Genre must not be null") @Pattern(regexp = Regexp.WORD, message = "Genre name must start with an alphabetical character or a number") String genre) {
         this.genre = genre;
     }
 
-    public @Valid PublisherDto getPublisher() {
+    public @NotNull(message = "Publisher must not be null") @Valid PublisherDto getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(@Valid PublisherDto publisher) {
+    public void setPublisher(@NotNull(message = "Publisher must not be null") @Valid PublisherDto publisher) {
         this.publisher = publisher;
     }
 
-    public @Valid PrintingHouseDto getPrintingHouse() {
+    public @NotNull(message = "Printing house must not be null") @Valid PrintingHouseDto getPrintingHouse() {
         return printingHouse;
     }
 
-    public void setPrintingHouse(@Valid PrintingHouseDto printingHouse) {
+    public void setPrintingHouse(@NotNull(message = "Printing house must not be null") @Valid PrintingHouseDto printingHouse) {
         this.printingHouse = printingHouse;
     }
 
@@ -132,11 +134,11 @@ public class BookEditDto {
         this.publicationYear = publicationYear;
     }
 
-    public @Pattern(regexp = Regexp.WORD, message = "Publication location must start with an alphabetical character or a number") String getPublicationLocation() {
+    public @NotNull(message = "Publication location must not be null") @Pattern(regexp = Regexp.WORD, message = "Publication location must start with an alphabetical character or a number") String getPublicationLocation() {
         return publicationLocation;
     }
 
-    public void setPublicationLocation(@Pattern(regexp = Regexp.WORD, message = "Publication location must start with an alphabetical character or a number") String publicationLocation) {
+    public void setPublicationLocation(@NotNull(message = "Publication location must not be null") @Pattern(regexp = Regexp.WORD, message = "Publication location must start with an alphabetical character or a number") String publicationLocation) {
         this.publicationLocation = publicationLocation;
     }
 

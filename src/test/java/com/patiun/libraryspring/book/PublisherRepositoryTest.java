@@ -23,36 +23,38 @@ public class PublisherRepositoryTest {
     }
 
     @Test
-    public void testFindByNameShouldReturnOptionalOfThePublisherWithTheNameWhenPublisherExists() {
+    public void testFindByNameAndPostalCodeAndAddressShouldReturnOptionalOfThePublisherWithTheNameWhenPublisherExists() {
         //given
-        entityManager.persist(new Publisher(null, "Hardcover"));
+        entityManager.persist(new Publisher(null, "Hardcover", "347568", "John City"));
 
-        entityManager.persist(new Publisher(null, "Book Worm"));
+        entityManager.persist(new Publisher(null, "Book Worm", "547476", "John City"));
 
         String thirdPublisherName = "Target Publisher";
-        Publisher thirdPublisher = new Publisher(null, thirdPublisherName);
+        String thirdPublisherPostalCode = "834751";
+        String thirdPublisherAddress = "PubCity";
+        Publisher thirdPublisher = new Publisher(null, thirdPublisherName, thirdPublisherPostalCode, thirdPublisherAddress);
         entityManager.persist(thirdPublisher);
 
         entityManager.flush();
         //when
-        Optional<Publisher> actualResult = publisherRepository.findByName(thirdPublisherName);
+        Optional<Publisher> actualResult = publisherRepository.findByNameAndPostalCodeAndAddress(thirdPublisherName, thirdPublisherPostalCode, thirdPublisherAddress);
         //then
         assertThat(actualResult)
                 .hasValue(thirdPublisher);
     }
 
     @Test
-    public void testFindByNameShouldReturnEmptyOptionalWhenPublisherDoesNotExist() {
+    public void testFindByNameAndPostalCodeAndAddressShouldReturnEmptyOptionalWhenPublisherDoesNotExist() {
         //given
-        entityManager.persist(new Publisher(null, "Hardcover"));
+        entityManager.persist(new Publisher(null, "Hardcover", "347568", "John City"));
 
-        entityManager.persist(new Publisher(null, "Book Worm"));
+        entityManager.persist(new Publisher(null, "Book Worm", "347568", "John City"));
 
-        entityManager.persist(new Publisher(null, "Target Publisher"));
+        entityManager.persist(new Publisher(null, "Target Publisher", "347568", "John City"));
 
         entityManager.flush();
         //when
-        Optional<Publisher> actualResult = publisherRepository.findByName("Blah blah blah");
+        Optional<Publisher> actualResult = publisherRepository.findByNameAndPostalCodeAndAddress("Blah blah blah", "347568", "John City");
         //then
         assertThat(actualResult)
                 .isEmpty();

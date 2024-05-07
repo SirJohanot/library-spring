@@ -1,9 +1,6 @@
 package com.patiun.libraryspring.order;
 
-import com.patiun.libraryspring.book.Author;
-import com.patiun.libraryspring.book.Book;
-import com.patiun.libraryspring.book.Genre;
-import com.patiun.libraryspring.book.Publisher;
+import com.patiun.libraryspring.book.*;
 import com.patiun.libraryspring.user.User;
 import com.patiun.libraryspring.user.UserRole;
 import org.junit.jupiter.api.Test;
@@ -38,10 +35,10 @@ public class BookOrderRepositoryTest {
         User secondaryUser = new User(null, "login2", "ihiuehgiwreg2", "fi2rstName", "lastN2ame", false, UserRole.READER);
         entityManager.persist(secondaryUser);
 
-        Book firstBook = new Book(null, "book2", List.of(new Author("author1")), new Genre(null, "genre2"), new Publisher(null, "publisher2"), 1998, 7, false);
+        Book firstBook = new Book(null, "book2", List.of(new Author("author1")), List.of(new Editor(null, "editorRole1", "editorName1")), new Genre(null, "genre2"), new Publisher(null, "publisher2", "publisherCode2", "publisherAddress2"), new PrintingHouse(null, "printingHouse2", "printingHouseCode2", "printingHouseAddress2"), 1998, "Moscow", "description1", 100, "6391649261", "70.8", "80.7", 7, false);
         entityManager.persist(firstBook);
 
-        Book secondBook = new Book(null, "book3", List.of(new Author("author2")), new Genre(null, "nice genre"), new Publisher(null, "publisher3"), 2000, 65, false);
+        Book secondBook = new Book(null, "book3", List.of(new Author("author2")), List.of(new Editor(null, "editorRole2", "editorName2")), new Genre(null, "genre3"), new Publisher(null, "publisher3", "publisherCode3", "publisherAddress3"), new PrintingHouse(null, "printingHouse3", "printingHouseCode3", "printingHouseAddress3"), 2003, "Minsk", "description2", 60, "1836583716381", "70.8", "80.7", 14, false);
         entityManager.persist(secondBook);
 
         entityManager.flush();
@@ -72,10 +69,10 @@ public class BookOrderRepositoryTest {
         User secondaryUser = new User(null, "login2", "ihiuehgiwreg2", "fi2rstName", "lastN2ame", false, UserRole.READER);
         entityManager.persist(secondaryUser);
 
-        Book firstBook = new Book(null, "book2", List.of(new Author("author1")), new Genre(null, "genre2"), new Publisher(null, "publisher2"), 1998, 7, false);
+        Book firstBook = new Book(null, "book2", List.of(new Author("author1")), List.of(new Editor(null, "editorRole1", "editorName1")), new Genre(null, "genre2"), new Publisher(null, "publisher2", "publisherCode2", "publisherAddress2"), new PrintingHouse(null, "printingHouse2", "printingHouseCode2", "printingHouseAddress2"), 1998, "Moscow", "description1", 100, "6391649261", "70.8", "80.7", 7, false);
         entityManager.persist(firstBook);
 
-        Book secondBook = new Book(null, "book3", List.of(new Author("author2")), new Genre(null, "nice genre"), new Publisher(null, "publisher3"), 2000, 65, false);
+        Book secondBook = new Book(null, "book3", List.of(new Author("author2")), List.of(new Editor(null, "editorRole2", "editorName2")), new Genre(null, "genre3"), new Publisher(null, "publisher3", "publisherCode3", "publisherAddress3"), new PrintingHouse(null, "printingHouse3", "printingHouseCode3", "printingHouseAddress3"), 2003, "Minsk", "description2", 60, "1836583716381", "70.8", "80.7", 14, false);
         entityManager.persist(secondBook);
 
         entityManager.flush();

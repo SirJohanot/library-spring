@@ -47,10 +47,10 @@ public class BookEditDto {
     @Pattern(regexp = Regexp.ISBN, message = "Book ISBN must be a 10- or 13-digit number")
     private String isbn;
 
-    @Pattern(regexp = Regexp.WORD, message = "Book UDC must start with a number or a letter")
+    @Pattern(regexp = Regexp.UDC_BBC, message = "Invalid UDC format")
     private String udc;
 
-    @Pattern(regexp = Regexp.WORD, message = "Book BBC must start with a number or a letter")
+    @Pattern(regexp = Regexp.UDC_BBC, message = "Invalid BBC format")
     private String bbc;
 
     @Min(value = 0, message = "Amount must be at least 0")

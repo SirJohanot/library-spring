@@ -65,6 +65,9 @@ public class Book {
     @Column(name = "bbc", length = 64)
     private String bbc;
 
+    @Column(name = "author_index", length = 8)
+    private String authorIndex;
+
     @Column(name = "amount", nullable = false)
     private int amount;
 
@@ -89,6 +92,26 @@ public class Book {
         this.isbn = isbn;
         this.udc = udc;
         this.bbc = bbc;
+        this.amount = amount;
+        this.isDeleted = isDeleted;
+    }
+
+    public Book(Integer id, String title, List<Author> authors, List<Editor> editors, Genre genre, Publisher publisher, PrintingHouse printingHouse, int publicationYear, String publicationLocation, String description, int pagesNumber, String isbn, String udc, String bbc, String authorIndex, int amount, boolean isDeleted) {
+        this.id = id;
+        this.title = title;
+        this.authors = authors;
+        this.editors = editors;
+        this.genre = genre;
+        this.publisher = publisher;
+        this.printingHouse = printingHouse;
+        this.publicationYear = publicationYear;
+        this.publicationLocation = publicationLocation;
+        this.description = description;
+        this.pagesNumber = pagesNumber;
+        this.isbn = isbn;
+        this.udc = udc;
+        this.bbc = bbc;
+        this.authorIndex = authorIndex;
         this.amount = amount;
         this.isDeleted = isDeleted;
     }
@@ -205,6 +228,14 @@ public class Book {
         this.bbc = bbc;
     }
 
+    public String getAuthorIndex() {
+        return authorIndex;
+    }
+
+    public void setAuthorIndex(String authorIndex) {
+        this.authorIndex = authorIndex;
+    }
+
     public int getAmount() {
         return amount;
     }
@@ -231,7 +262,7 @@ public class Book {
         }
 
         Book book = (Book) o;
-        return publicationYear == book.publicationYear && pagesNumber == book.pagesNumber && amount == book.amount && isDeleted == book.isDeleted && Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(authors, book.authors) && Objects.equals(editors, book.editors) && Objects.equals(genre, book.genre) && Objects.equals(publisher, book.publisher) && Objects.equals(printingHouse, book.printingHouse) && Objects.equals(publicationLocation, book.publicationLocation) && Objects.equals(description, book.description) && Objects.equals(isbn, book.isbn) && Objects.equals(udc, book.udc) && Objects.equals(bbc, book.bbc);
+        return publicationYear == book.publicationYear && pagesNumber == book.pagesNumber && amount == book.amount && isDeleted == book.isDeleted && Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(authors, book.authors) && Objects.equals(editors, book.editors) && Objects.equals(genre, book.genre) && Objects.equals(publisher, book.publisher) && Objects.equals(printingHouse, book.printingHouse) && Objects.equals(publicationLocation, book.publicationLocation) && Objects.equals(description, book.description) && Objects.equals(isbn, book.isbn) && Objects.equals(udc, book.udc) && Objects.equals(bbc, book.bbc) && Objects.equals(authorIndex, book.authorIndex);
     }
 
     @Override
@@ -250,6 +281,7 @@ public class Book {
         result = 31 * result + Objects.hashCode(isbn);
         result = 31 * result + Objects.hashCode(udc);
         result = 31 * result + Objects.hashCode(bbc);
+        result = 31 * result + Objects.hashCode(authorIndex);
         result = 31 * result + amount;
         result = 31 * result + Boolean.hashCode(isDeleted);
         return result;
@@ -272,6 +304,7 @@ public class Book {
                 ", isbn='" + isbn + '\'' +
                 ", udc='" + udc + '\'' +
                 ", bbc='" + bbc + '\'' +
+                ", authorIndex='" + authorIndex + '\'' +
                 ", amount=" + amount +
                 ", isDeleted=" + isDeleted +
                 '}';

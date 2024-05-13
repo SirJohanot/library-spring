@@ -110,9 +110,10 @@ public class BookServiceImpl implements BookService {
         String isbn = inputBook.getIsbn();
         String udc = inputBook.getUdc();
         String bbc = inputBook.getBbc();
+        String authorIndex = inputBook.getAuthorIndex();
         int amount = inputBook.getAmount();
 
-        return new Book(id, title, authors, editors, genre, publisher, printingHouse, publicationYear, publicationLocation, description, pagesNumber, isbn, udc, bbc, amount, false);
+        return new Book(id, title, authors, editors, genre, publisher, printingHouse, publicationYear, publicationLocation, description, pagesNumber, isbn, udc, bbc, authorIndex, amount, false);
     }
 
     private Book getExistingBookById(Integer id) {

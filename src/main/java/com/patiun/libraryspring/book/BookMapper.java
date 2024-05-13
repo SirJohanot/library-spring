@@ -45,8 +45,9 @@ public class BookMapper {
         String isbn = editDto.getIsbn();
         String udc = editDto.getUdc();
         String bbc = editDto.getBbc();
+        String authorIndex = editDto.getAuthorIndex();
         int amount = editDto.getAmount();
 
-        return new Book(null, title, authors, editors, genre, publisher, printingHouse, publicationYear, publicationLocation, description, pagesNumber, isbn, udc, bbc, amount, false);
+        return new Book(null, title, authors, editors, genre, publisher, printingHouse, publicationYear, publicationLocation, description, pagesNumber, isbn, udc, bbc, authorIndex, amount, false);
     }
 }

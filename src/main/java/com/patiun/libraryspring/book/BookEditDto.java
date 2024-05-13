@@ -53,13 +53,16 @@ public class BookEditDto {
     @Pattern(regexp = Regexp.UDC_BBC, message = "Invalid BBC format")
     private String bbc;
 
+    @Pattern(regexp = Regexp.AUTHOR_INDEX, message = "Invalid author index format")
+    private String authorIndex;
+
     @Min(value = 0, message = "Amount must be at least 0")
     private int amount;
 
     public BookEditDto() {
     }
 
-    public BookEditDto(String title, List<@Pattern(regexp = Regexp.HUMAN_NAME, message = "Author name must start with an alphabetical character") String> authors, List<@Valid EditorDto> editors, String genre, PublisherDto publisher, PrintingHouseDto printingHouse, int publicationYear, String publicationLocation, String description, int pagesNumber, String isbn, String udc, String bbc, int amount) {
+    public BookEditDto(String title, List<@Pattern(regexp = Regexp.HUMAN_NAME, message = "Author name must start with an alphabetical character") String> authors, List<@Valid EditorDto> editors, String genre, PublisherDto publisher, PrintingHouseDto printingHouse, int publicationYear, String publicationLocation, String description, int pagesNumber, String isbn, String udc, String bbc, String authorIndex, int amount) {
         this.title = title;
         this.authors = authors;
         this.editors = editors;
@@ -73,6 +76,7 @@ public class BookEditDto {
         this.isbn = isbn;
         this.udc = udc;
         this.bbc = bbc;
+        this.authorIndex = authorIndex;
         this.amount = amount;
     }
 
@@ -183,6 +187,14 @@ public class BookEditDto {
         this.bbc = bbc;
     }
 
+    public @Pattern(regexp = Regexp.AUTHOR_INDEX, message = "Invalid author index format") String getAuthorIndex() {
+        return authorIndex;
+    }
+
+    public void setAuthorIndex(@Pattern(regexp = Regexp.AUTHOR_INDEX, message = "Invalid author index format") String authorIndex) {
+        this.authorIndex = authorIndex;
+    }
+
     @Min(value = 0, message = "Amount must be at least 0")
     public int getAmount() {
         return amount;
@@ -202,7 +214,7 @@ public class BookEditDto {
         }
 
         BookEditDto that = (BookEditDto) o;
-        return publicationYear == that.publicationYear && pagesNumber == that.pagesNumber && amount == that.amount && Objects.equals(title, that.title) && Objects.equals(authors, that.authors) && Objects.equals(editors, that.editors) && Objects.equals(genre, that.genre) && Objects.equals(publisher, that.publisher) && Objects.equals(printingHouse, that.printingHouse) && Objects.equals(publicationLocation, that.publicationLocation) && Objects.equals(description, that.description) && Objects.equals(isbn, that.isbn) && Objects.equals(udc, that.udc) && Objects.equals(bbc, that.bbc);
+        return publicationYear == that.publicationYear && pagesNumber == that.pagesNumber && amount == that.amount && Objects.equals(title, that.title) && Objects.equals(authors, that.authors) && Objects.equals(editors, that.editors) && Objects.equals(genre, that.genre) && Objects.equals(publisher, that.publisher) && Objects.equals(printingHouse, that.printingHouse) && Objects.equals(publicationLocation, that.publicationLocation) && Objects.equals(description, that.description) && Objects.equals(isbn, that.isbn) && Objects.equals(udc, that.udc) && Objects.equals(bbc, that.bbc) && Objects.equals(authorIndex, that.authorIndex);
     }
 
     @Override
@@ -220,6 +232,7 @@ public class BookEditDto {
         result = 31 * result + Objects.hashCode(isbn);
         result = 31 * result + Objects.hashCode(udc);
         result = 31 * result + Objects.hashCode(bbc);
+        result = 31 * result + Objects.hashCode(authorIndex);
         result = 31 * result + amount;
         return result;
     }
@@ -240,6 +253,7 @@ public class BookEditDto {
                 ", isbn='" + isbn + '\'' +
                 ", udc='" + udc + '\'' +
                 ", bbc='" + bbc + '\'' +
+                ", authorIndex='" + authorIndex + '\'' +
                 ", amount=" + amount +
                 '}';
     }

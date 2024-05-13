@@ -13,4 +13,6 @@ public final class Regexp {
 
     public static final String UDC_BBC = "^\\d+(\\.\\d+)?";
 
+    public static final String AUTHOR_INDEX = "^\\p{L}\\d+$";
+
 }

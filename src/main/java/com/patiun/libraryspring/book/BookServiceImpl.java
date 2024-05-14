@@ -29,8 +29,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void createBook(Book inputBook) {
-        Book newBook = setupBookToPersist(inputBook);
-        bookRepository.save(newBook);
+        setupBookToPersist(inputBook);
+        bookRepository.save(inputBook);
     }
 
     @Override
@@ -54,11 +54,11 @@ public class BookServiceImpl implements BookService {
     public void updateBookById(Integer id, Book inputBook) {
         getExistingBookById(id);
         inputBook.setId(id);
-        Book updatedBook = setupBookToPersist(inputBook);
-        bookRepository.save(updatedBook);
+        setupBookToPersist(inputBook);
+        bookRepository.save(inputBook);
     }
 
-    private Book setupBookToPersist(Book inputBook) {
+    private void setupBookToPersist(Book inputBook) {
         List<Author> authors = inputBook.getAuthors()
                 .stream()
                 .map(author -> {
@@ -67,6 +67,7 @@ public class BookServiceImpl implements BookService {
                     return existingAuthorOptional.orElse(author);
                 })
                 .toList();
+        inputBook.setAuthors(authors);
 
         List<Editor> editors = inputBook.getEditors()
                 .stream()
@@ -77,11 +78,13 @@ public class BookServiceImpl implements BookService {
                     return existingEditorOptional.orElse(editor);
                 })
                 .toList();
+        inputBook.setEditors(editors);
 
         String genreName = inputBook.getGenre()
                 .getName();
         Genre genre = genreRepository.findByName(genreName)
                 .orElse(new Genre(null, genreName));
+        inputBook.setGenre(genre);
 
         String publisherName = inputBook.getPublisher()
                 .getName();
@@ -91,6 +94,7 @@ public class BookServiceImpl implements BookService {
                 .getAddress();
         Publisher publisher = publisherRepository.findByNameAndPostalCodeAndAddress(publisherName, publisherPostalCode, publisherAddress)
                 .orElse(new Publisher(null, publisherName, publisherPostalCode, publisherAddress));
+        inputBook.setPublisher(publisher);
 
         String printingHouseName = inputBook.getPrintingHouse()
                 .getName();
@@ -100,20 +104,7 @@ public class BookServiceImpl implements BookService {
                 .getAddress();
         PrintingHouse printingHouse = printingHouseRepository.findByNameAndPostalCodeAndAddress(printingHouseName, printingHousePostalCode, printingHouseAddress)
                 .orElse(new PrintingHouse(null, printingHouseName, printingHousePostalCode, printingHouseAddress));
-
-        Integer id = inputBook.getId();
-        String title = inputBook.getTitle();
-        int publicationYear = inputBook.getPublicationYear();
-        String publicationLocation = inputBook.getPublicationLocation();
-        String description = inputBook.getDescription();
-        int pagesNumber = inputBook.getPagesNumber();
-        String isbn = inputBook.getIsbn();
-        String udc = inputBook.getUdc();
-        String bbc = inputBook.getBbc();
-        String authorIndex = inputBook.getAuthorIndex();
-        int amount = inputBook.getAmount();
-
-        return new Book(id, title, authors, editors, genre, publisher, printingHouse, publicationYear, publicationLocation, description, pagesNumber, isbn, udc, bbc, authorIndex, amount, false);
+        inputBook.setPrintingHouse(printingHouse);
     }
 
     private Book getExistingBookById(Integer id) {

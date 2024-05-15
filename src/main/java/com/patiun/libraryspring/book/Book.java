@@ -76,26 +76,7 @@ public class Book {
 
     public Book() {
     }
-
-    public Book(Integer id, String title, List<Author> authors, List<Editor> editors, Genre genre, Publisher publisher, PrintingHouse printingHouse, int publicationYear, String publicationLocation, String description, int pagesNumber, String isbn, String udc, String bbc, int amount, boolean isDeleted) {
-        this.id = id;
-        this.title = title;
-        this.authors = authors;
-        this.editors = editors;
-        this.genre = genre;
-        this.publisher = publisher;
-        this.printingHouse = printingHouse;
-        this.publicationYear = publicationYear;
-        this.publicationLocation = publicationLocation;
-        this.description = description;
-        this.pagesNumber = pagesNumber;
-        this.isbn = isbn;
-        this.udc = udc;
-        this.bbc = bbc;
-        this.amount = amount;
-        this.isDeleted = isDeleted;
-    }
-
+    
     public Book(Integer id, String title, List<Author> authors, List<Editor> editors, Genre genre, Publisher publisher, PrintingHouse printingHouse, int publicationYear, String publicationLocation, String description, int pagesNumber, String isbn, String udc, String bbc, String authorIndex, int amount, boolean isDeleted) {
         this.id = id;
         this.title = title;

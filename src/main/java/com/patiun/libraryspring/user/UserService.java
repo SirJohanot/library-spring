@@ -19,4 +19,6 @@ public interface UserService {
     void updateUserById(Integer id, String firstName, String lastName, UserRole role);
 
     void switchUserBlockedById(Integer id);
+
+    void changeUserPasswordById(Integer id, String newPassword);
 }

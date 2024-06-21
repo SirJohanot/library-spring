@@ -81,6 +81,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(foundUser);
     }
 
+    @Override
+    public void changeUserPasswordById(Integer id, String newPassword) {
+        User targetUser = getExistingUserById(id);
+        String encodedNewPassword = passwordEncoder.encode(newPassword);
+
+        targetUser.setPassword(encodedNewPassword);
+
+        userRepository.save(targetUser);
+    }
+
     private User getExistingUserById(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException("Could not find a user by id = " + id));

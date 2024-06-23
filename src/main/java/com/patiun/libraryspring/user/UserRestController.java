@@ -2,12 +2,14 @@ package com.patiun.libraryspring.user;
 
 import com.patiun.libraryspring.configuration.JwtService;
 import com.patiun.libraryspring.exception.ServiceException;
+import com.patiun.libraryspring.exception.UnauthorizedException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -60,6 +62,19 @@ public class UserRestController {
     @PatchMapping("{id}/switch-blocked")
     public void switchUserBlocked(@PathVariable Integer id) {
         userService.switchUserBlockedById(id);
+    }
+
+    @PatchMapping("{id}/change-password")
+    public void changePassword(@PathVariable Integer targetUserId, @RequestBody @Valid NewPasswordDto passwordDto, final Authentication authentication) throws UnauthorizedException {
+        String login = authentication.getName();
+        User authenticatedUser = userService.getUserByLogin(login);
+        Integer authenticatedUserId = authenticatedUser.getId();
+        if (!Objects.equals(targetUserId, authenticatedUserId)) {
+            throw new UnauthorizedException("You cannot change another user's password");
+        }
+
+        String newPassword = passwordDto.getPassword();
+        userService.changeUserPasswordById(targetUserId, newPassword);
     }
 
 }

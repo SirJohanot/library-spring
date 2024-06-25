@@ -6,8 +6,11 @@ import com.patiun.libraryspring.exception.UnauthorizedException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,7 +50,14 @@ public class UserRestController {
     }
 
     @GetMapping("{login}")
-    public User readUser(@PathVariable String login) {
+    public User readUser(@PathVariable String login, final Authentication authentication) throws UnauthorizedException {
+        User requestingUser = (User) authentication.getPrincipal();
+        String requestingUserLogin = requestingUser.getLogin();
+        UserRole requestingUserRole = requestingUser.getRole();
+        Collection<? extends GrantedAuthority> requestingUserAuthorities = requestingUserRole.getAuthorities();
+        if (!requestingUserAuthorities.contains(new SimpleGrantedAuthority("ROLE_" + Authority.READ_USERS.name())) && !requestingUserLogin.equals(login)) {
+            throw new UnauthorizedException("You cannot get another user's information");
+        }
         return userService.getUserByLogin(login);
     }
 

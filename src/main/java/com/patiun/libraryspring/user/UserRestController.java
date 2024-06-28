@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -74,16 +73,13 @@ public class UserRestController {
         userService.switchUserBlockedById(id);
     }
 
-    @PatchMapping("{id}/change-password")
-    public void changePassword(@PathVariable Integer targetUserId, @RequestBody @Valid NewPasswordDto passwordDto, final Authentication authentication) throws UnauthorizedException {
+    @PatchMapping("change-password")
+    public void changePassword(@RequestBody @Valid NewPasswordDto passwordDto, final Authentication authentication) {
         String login = authentication.getName();
         User authenticatedUser = userService.getUserByLogin(login);
-        Integer authenticatedUserId = authenticatedUser.getId();
-        if (!Objects.equals(targetUserId, authenticatedUserId)) {
-            throw new UnauthorizedException("You cannot change another user's password");
-        }
-
+        Integer targetUserId = authenticatedUser.getId();
         String newPassword = passwordDto.getPassword();
+
         userService.changeUserPasswordById(targetUserId, newPassword);
     }
 

@@ -50,7 +50,7 @@ public class RestSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/orders/**").hasAuthority(PLACE_ORDERS.name())
                         .requestMatchers(HttpMethod.GET, BOOKS_URL_PATTERN).permitAll()
                         .requestMatchers(HttpMethod.GET, "/users/auth").authenticated()
-                        .requestMatchers(HttpMethod.PATCH, "/users/*/change-password").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/users/change-password").authenticated()
                         .requestMatchers(HttpMethod.GET, "/users").hasAuthority(READ_USERS.name())
                         .requestMatchers(HttpMethod.GET, "/users/*").authenticated()
                         .requestMatchers(HttpMethod.GET, "/orders/**").hasAuthority(READ_ORDERS.name())

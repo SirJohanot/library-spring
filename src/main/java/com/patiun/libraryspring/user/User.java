@@ -32,6 +32,9 @@ public class User implements UserDetails {
     @Column(name = "is_blocked")
     private boolean isBlocked;
 
+    @Column(name = "is_enabled")
+    private boolean isEnabled = false;
+
     @Column(name = "role", length = 64)
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -98,6 +101,14 @@ public class User implements UserDetails {
         isBlocked = blocked;
     }
 
+    public boolean getEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
     public UserRole getRole() {
         return role;
     }
@@ -139,7 +150,7 @@ public class User implements UserDetails {
     @Override
     @JsonIgnore
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 
     @Override

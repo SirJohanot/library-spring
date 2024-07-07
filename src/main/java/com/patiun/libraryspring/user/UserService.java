@@ -8,6 +8,8 @@ public interface UserService {
 
     User signUp(String login, String password, String firstName, String lastName) throws ServiceException;
 
+    User createUserDirectly(String login, String password, String firstName, String lastName) throws ServiceException;
+
     List<User> getAllUsers();
 
     List<User> getAllAdmins();
@@ -19,6 +21,8 @@ public interface UserService {
     void updateUserById(Integer id, String firstName, String lastName, UserRole role);
 
     void switchUserBlockedById(Integer id);
+
+    void enableUserById(Integer id);
 
     void changeUserPasswordById(Integer id, String newPassword);
 }

@@ -40,6 +40,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User createUserDirectly(String login, String password, String firstName, String lastName) throws ServiceException {
+        if (userRepository.findByLogin(login).isPresent()) {
+            throw new ServiceException("A user with such login already exists");
+        }
+        String encodedPassword = passwordEncoder.encode(password);
+
+        User createdUser = new User(null, login, encodedPassword, firstName, lastName, false, UserRole.READER);
+        createdUser.setEnabled(true);
+
+        return userRepository.save(createdUser);
+    }
+
+    @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -77,6 +90,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         boolean currentUserBlocked = foundUser.getBlocked();
         foundUser.setBlocked(!currentUserBlocked);
+
+        userRepository.save(foundUser);
+    }
+
+    @Override
+    public void enableUserById(Integer id) {
+        User foundUser = getExistingUserById(id);
+
+        boolean currentUserEnabled = foundUser.getEnabled();
+        foundUser.setEnabled(!currentUserEnabled);
 
         userRepository.save(foundUser);
     }

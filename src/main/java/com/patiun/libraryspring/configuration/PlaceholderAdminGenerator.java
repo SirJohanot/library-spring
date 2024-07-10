@@ -38,7 +38,7 @@ public class PlaceholderAdminGenerator {
     public void generatePlaceholderAdmin() throws ServiceException {
         List<User> existingAdmins = userService.getAllAdmins();
         if (existingAdmins.isEmpty()) {
-            User savedAdmin = userService.signUp(placeholderAdminLogin, placeholderAdminPassword, placeholderAdminFirstName, placeholderAdminLastName);
+            User savedAdmin = userService.createUserDirectly(placeholderAdminLogin, placeholderAdminPassword, placeholderAdminFirstName, placeholderAdminLastName);
             Integer savedAdminId = savedAdmin.getId();
             userService.updateUserById(savedAdminId, placeholderAdminFirstName, placeholderAdminLastName, UserRole.ADMIN);
         }

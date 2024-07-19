@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         String encodedPassword = passwordEncoder.encode(password);
 
-        return userRepository.save(new User(null, login, encodedPassword, firstName, lastName, false, UserRole.READER));
+        return userRepository.save(new User(null, login, encodedPassword, firstName, lastName, false, false, UserRole.READER));
     }
 
     @Override
@@ -46,8 +46,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         String encodedPassword = passwordEncoder.encode(password);
 
-        User createdUser = new User(null, login, encodedPassword, firstName, lastName, false, UserRole.READER);
-        createdUser.setEnabled(true);
+        User createdUser = new User(null, login, encodedPassword, firstName, lastName, false, true, UserRole.READER);
 
         return userRepository.save(createdUser);
     }

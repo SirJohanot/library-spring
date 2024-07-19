@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private boolean isBlocked;
 
     @Column(name = "is_enabled")
-    private boolean isEnabled = false;
+    private boolean isEnabled;
 
     @Column(name = "role", length = 64)
     @Enumerated(EnumType.STRING)
@@ -42,13 +42,14 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Integer id, String login, String password, String firstName, String lastName, boolean isBlocked, UserRole role) {
+    public User(Integer id, String login, String password, String firstName, String lastName, boolean isBlocked, boolean isEnabled, UserRole role) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.login = login;
         this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.isBlocked = isBlocked;
+        this.isEnabled = isEnabled;
         this.role = role;
     }
 

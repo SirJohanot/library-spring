@@ -164,7 +164,7 @@ public class User implements UserDetails {
         }
 
         User user = (User) o;
-        return isBlocked == user.isBlocked && Objects.equals(id, user.id) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && role == user.role;
+        return isBlocked == user.isBlocked && isEnabled == user.isEnabled && Objects.equals(id, user.id) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && role == user.role;
     }
 
     @Override
@@ -175,6 +175,7 @@ public class User implements UserDetails {
         result = 31 * result + Objects.hashCode(firstName);
         result = 31 * result + Objects.hashCode(lastName);
         result = 31 * result + Boolean.hashCode(isBlocked);
+        result = 31 * result + Boolean.hashCode(isEnabled);
         result = 31 * result + Objects.hashCode(role);
         return result;
     }
@@ -188,6 +189,7 @@ public class User implements UserDetails {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", isBlocked=" + isBlocked +
+                ", isEnabled=" + isEnabled +
                 ", role=" + role +
                 '}';
     }

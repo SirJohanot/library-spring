@@ -54,7 +54,7 @@ public class UserRestController {
         String requestingUserLogin = requestingUser.getLogin();
         UserRole requestingUserRole = requestingUser.getRole();
         Collection<? extends GrantedAuthority> requestingUserAuthorities = requestingUserRole.getAuthorities();
-        if (!requestingUserAuthorities.contains(new SimpleGrantedAuthority("ROLE_" + Authority.READ_USERS.name())) && !requestingUserLogin.equals(login)) {
+        if (!requestingUserAuthorities.contains(new SimpleGrantedAuthority(Authority.READ_USERS.name())) && !requestingUserLogin.equals(login)) {
             throw new UnauthorizedException("You cannot get another user's information");
         }
         return userService.getUserByLogin(login);

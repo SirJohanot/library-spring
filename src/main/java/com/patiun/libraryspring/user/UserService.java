@@ -25,4 +25,6 @@ public interface UserService {
     void enableUserById(Integer id);
 
     void changeUserPasswordById(Integer id, String newPassword);
+
+    void activateUserById(Integer id);
 }

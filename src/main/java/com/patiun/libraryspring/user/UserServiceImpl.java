@@ -113,6 +113,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(targetUser);
     }
 
+    @Override
+    public void activateUserById(Integer id) {
+        User foundUser = getExistingUserById(id);
+
+        foundUser.setEnabled(true);
+
+        userRepository.save(foundUser);
+    }
+
     private User getExistingUserById(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException("Could not find a user by id = " + id));

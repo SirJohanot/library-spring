@@ -73,6 +73,11 @@ public class UserRestController {
         userService.switchUserBlockedById(id);
     }
 
+    @PatchMapping("{id}/activate")
+    public void activateUser(@PathVariable Integer id) {
+        userService.activateUserById(id);
+    }
+
     @PatchMapping("change-password")
     public void changePassword(@RequestBody @Valid NewPasswordDto passwordDto, final Authentication authentication) {
         String login = authentication.getName();
